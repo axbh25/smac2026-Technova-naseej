@@ -1,17 +1,12 @@
 # SMAC 2026 Compliance Notes
 
-## Team Status
+## Team Technova
 
-The official orientation requires two to three participants per project.
+- Abdullah Haider — Flutter development, architecture, testing, and documentation
+- Shoug Almaashari — Figma, documentation, testing
 
-Current active participant count: 1
-
-Required action:
-
-- Obtain written confirmation that a solo entry is permitted, or
-- Add an eligible participant who genuinely contributes and understands the app
-
-A fake contributor, shared account, or fabricated history is prohibited.
+Both participants use their own GitHub accounts and must understand every
+merged feature.
 
 ## Mobile Requirement
 

@@ -25,13 +25,13 @@ Day 1 foundation:
 - GitHub: axbh25
 - Role: product design, Flutter development, testing, documentation, and demo
 
-## Competition Team Status
+## Team Technova
 
-The official SMAC orientation requires a team of two to three participants.
-The current repository has one active developer. Eligibility must be confirmed
-with the organizers or an eligible teammate must be added before submission.
+- Abdullah Haider — Flutter development, architecture, testing, and documentation
+- Shoug Almaashari — Figma, documentation, testing
 
-No second contributor will be fabricated.
+Both participants use their own GitHub accounts and must understand every
+merged feature.
 
 ## Planned MVP
 
@@ -67,3 +67,4 @@ flutter pub get
 flutter analyze
 flutter test
 flutter run
+```
