@@ -11,15 +11,16 @@ the activity and then be encouraged to teach a skill in return.
 
 ## Current Development Status
 
-Day 1 foundation:
+Day 2 bilingual shell:
 
-- Android-only Flutter project created
-- Pixel 7 Pro API 36 reference emulator configured
-- GitHub development history started
-- Figma design foundation created
-- AI-assisted development log established
-- No production feature is complete yet
-
+- Android-only Flutter project runs on the Pixel 7 Pro API 36 emulator
+- English and Arabic localization is generated from ARB files
+- Welcome screen supports immediate language switching
+- Arabic uses RTL layout
+- Shared design tokens and application theme are implemented
+- Automated Welcome-screen and accessibility tests are included
+- English and Arabic visual evidence is stored under `docs/testing/`
+- Profile setup and production AI features are not yet implemented
 ## Current Developer
 
 - GitHub: axbh25
