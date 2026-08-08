@@ -68,3 +68,39 @@ flutter analyze
 flutter test
 flutter run
 ```
+## Figma
+
+Design file: https://www.figma.com/design/RXh2fTPhOhP317qzky4pKE/Naseej-%E2%80%94-SMAC-2026?node-id=0-1&t=FKwfnrCDavmYx0M6-1
+
+Primary reference frame:
+
+- Pixel 7 Pro
+- 412 × 892 logical pixels
+- English and Arabic screens are reviewed separately
+
+See `docs/design/figma-handoff.md`.
+
+## Development Evidence
+
+Evidence is stored in:
+
+- `docs/development-logs/`
+- `docs/testing/`
+- `docs/design/`
+- `docs/ai-usage/`
+- `docs/competition/`
+
+## AI-Assisted Development
+
+AI is used only for documented planning, explanations, isolated code
+assistance, wording drafts, and debugging support.
+
+AI is not used to generate the complete application.
+
+Every meaningful prompt and contribution is recorded in
+`docs/ai-usage/development-ai-log.md`.
+
+## Privacy Direction
+
+The planned MVP will avoid unnecessary accounts, location tracking, public
+feeds, advertising, and cloud photo storage.
