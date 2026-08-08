@@ -7,7 +7,7 @@ Every meaningful AI interaction used in the project is recorded here.
 
 | Date | Developer | Tool | Exact Prompt File | Purpose | Contribution Used | Human Review and Changes | Related Commit |
 |---|---|---|---|---|---|---|---|
-| 2026-08-06 | axbh25 | ChatGPT | `prompts/2026-08-06-day-01-clean-setup.md` | Plan a clean Windows, Flutter, Android, GitHub, Figma, and emulator setup | Installation sequence, repository structure, emulator choice, documentation templates | Developer executed each step manually, checked current official documentation, and did not accept a generated application | Add commit hash after committing |
+| 2026-08-06 | axbh25 | ChatGPT | `prompts/2026-08-06-day-01-clean-setup.md` | Plan a clean Windows, Flutter, Android, GitHub, Figma, and emulator setup | Installation sequence, repository structure, emulator choice, documentation templates | Developer executed each step manually, checked current official documentation, and did not accept a generated application | `8dd4e73` created the log; `be5fbae` expanded the documented rules |
 
 ## Rules
 
