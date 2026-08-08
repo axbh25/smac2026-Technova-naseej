@@ -1,30 +1,83 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:naseej/app.dart';
 
-import 'package:naseej/main.dart';
+Future<void> pumpReferenceApp(WidgetTester tester) async {
+  await tester.binding.setSurfaceSize(const Size(412, 892));
+
+  addTearDown(() async {
+    await tester.binding.setSurfaceSize(null);
+  });
+
+  await tester.pumpWidget(const NaseejApp());
+  await tester.pumpAndSettle();
+}
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('shows the English Welcome screen by default', (
+    WidgetTester tester,
+  ) async {
+    await pumpReferenceApp(tester);
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    expect(
+      find.byKey(const ValueKey<String>('welcome_screen')),
+      findsOneWidget,
+    );
+    expect(find.text('Naseej'), findsOneWidget);
+    expect(
+      find.text('Every generation teaches. Every generation learns.'),
+      findsOneWidget,
+    );
+    expect(find.text('Private by design'), findsOneWidget);
+    expect(find.text('Continue'), findsOneWidget);
+  });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+  testWidgets('switches to Arabic and uses RTL direction', (
+    WidgetTester tester,
+  ) async {
+    await pumpReferenceApp(tester);
+
+    await tester.tap(find.byKey(const ValueKey<String>('language_ar_button')));
+    await tester.pumpAndSettle();
+
+    expect(find.text('كل جيل يعلّم، وكل جيل يتعلّم.'), findsOneWidget);
+    expect(find.text('الخصوصية أولًا'), findsOneWidget);
+    expect(find.text('متابعة'), findsOneWidget);
+
+    final BuildContext welcomeContext = tester.element(
+      find.byKey(const ValueKey<String>('welcome_screen')),
+    );
+
+    expect(Directionality.of(welcomeContext), TextDirection.rtl);
+  });
+
+  testWidgets('Continue button gives honest temporary feedback', (
+    WidgetTester tester,
+  ) async {
+    await pumpReferenceApp(tester);
+
+    await tester.tap(find.byKey(const ValueKey<String>('continue_button')));
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(
+      find.text('Profile setup will be added in the next build.'),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('Welcome screen meets basic accessibility guidelines', (
+    WidgetTester tester,
+  ) async {
+    final SemanticsHandle semanticsHandle = tester.ensureSemantics();
+
+    try {
+      await pumpReferenceApp(tester);
+
+      await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+      await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
+      await expectLater(tester, meetsGuideline(textContrastGuideline));
+    } finally {
+      semanticsHandle.dispose();
+    }
   });
 }
