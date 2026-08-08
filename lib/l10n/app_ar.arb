@@ -1,0 +1,13 @@
+{
+  "@@locale": "ar",
+  "appTitle": "نسيج",
+  "appNameEnglish": "Naseej",
+  "appNameArabic": "نسيج",
+  "tagline": "كل جيل يعلّم، وكل جيل يتعلّم.",
+  "englishLanguage": "English",
+  "arabicLanguage": "العربية",
+  "privacyTitle": "الخصوصية أولًا",
+  "privacyBody": "لا تحتاج إلى حساب أو مشاركة موقعك للبدء.",
+  "continueLabel": "متابعة",
+  "nextStepPlaceholder": "ستُضاف خطوة إعداد الملف الشخصي في الإصدار القادم."
+}

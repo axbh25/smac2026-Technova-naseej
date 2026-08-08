@@ -1,0 +1,16 @@
+{
+  "@@locale": "en",
+  "appTitle": "Naseej",
+  "@appTitle": {
+    "description": "The application title"
+  },
+  "appNameEnglish": "Naseej",
+  "appNameArabic": "نسيج",
+  "tagline": "Every generation teaches. Every generation learns.",
+  "englishLanguage": "English",
+  "arabicLanguage": "العربية",
+  "privacyTitle": "Private by design",
+  "privacyBody": "No account or location is needed to begin.",
+  "continueLabel": "Continue",
+  "nextStepPlaceholder": "Profile setup will be added in the next build."
+}
