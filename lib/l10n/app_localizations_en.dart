@@ -36,6 +36,68 @@ class AppLocalizationsEn extends AppLocalizations {
   String get continueLabel => 'Continue';
 
   @override
-  String get nextStepPlaceholder =>
-      'Profile setup will be added in the next build.';
+  String get changeLanguageLabel => 'Change language';
+
+  @override
+  String get profileSetupTitle => 'Create your local profile';
+
+  @override
+  String get profileSetupBody =>
+      'Choose a nickname and role. This information stays on this phone.';
+
+  @override
+  String get nicknameLabel => 'Nickname';
+
+  @override
+  String get nicknameHint => 'For example, Fatima';
+
+  @override
+  String get chooseRoleLabel => 'Choose your role';
+
+  @override
+  String get roleGrandparent => 'Grandparent';
+
+  @override
+  String get roleParent => 'Parent';
+
+  @override
+  String get roleTeen => 'Teen';
+
+  @override
+  String get roleChild => 'Child';
+
+  @override
+  String get saveProfileLabel => 'Save profile';
+
+  @override
+  String get savingProfileLabel => 'Saving...';
+
+  @override
+  String get profileSaveError =>
+      'We could not save this profile. Please try again.';
+
+  @override
+  String homeGreeting(String name) {
+    return 'Hello, $name';
+  }
+
+  @override
+  String get profileStoredLocally => 'Saved on this phone';
+
+  @override
+  String get emptyWeaveTitle => 'Your family weave starts here';
+
+  @override
+  String get emptyWeaveBody =>
+      'Teach one skill and learn one skill to create your first thread.';
+
+  @override
+  String get teachSkillLabel => 'Teach a Skill';
+
+  @override
+  String get learnSkillLabel => 'Learn a Skill';
+
+  @override
+  String get featureComingSoon =>
+      'This feature will be connected in the next build.';
 }

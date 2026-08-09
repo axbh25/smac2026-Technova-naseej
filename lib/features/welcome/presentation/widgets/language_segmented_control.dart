@@ -11,7 +11,7 @@ class LanguageSegmentedControl extends StatelessWidget {
   });
 
   final String selectedLanguageCode;
-  final ValueChanged<Locale> onLocaleChanged;
+  final Future<void> Function(Locale) onLocaleChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,9 @@ class LanguageSegmentedControl extends StatelessWidget {
                 key: const ValueKey<String>('language_en_button'),
                 label: localizations.englishLanguage,
                 selected: selectedLanguageCode == 'en',
-                onTap: () => onLocaleChanged(const Locale('en')),
+                onTap: () async {
+                  await onLocaleChanged(const Locale('en'));
+                },
               ),
             ),
             const SizedBox(width: AppSpacing.xxs),
@@ -43,7 +45,9 @@ class LanguageSegmentedControl extends StatelessWidget {
                 key: const ValueKey<String>('language_ar_button'),
                 label: localizations.arabicLanguage,
                 selected: selectedLanguageCode == 'ar',
-                onTap: () => onLocaleChanged(const Locale('ar')),
+                onTap: () async {
+                  await onLocaleChanged(const Locale('ar'));
+                },
               ),
             ),
           ],

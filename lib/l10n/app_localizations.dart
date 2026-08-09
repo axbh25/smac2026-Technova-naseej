@@ -152,11 +152,125 @@ abstract class AppLocalizations {
   /// **'Continue'**
   String get continueLabel;
 
-  /// No description provided for @nextStepPlaceholder.
+  /// No description provided for @changeLanguageLabel.
   ///
   /// In en, this message translates to:
-  /// **'Profile setup will be added in the next build.'**
-  String get nextStepPlaceholder;
+  /// **'Change language'**
+  String get changeLanguageLabel;
+
+  /// No description provided for @profileSetupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create your local profile'**
+  String get profileSetupTitle;
+
+  /// No description provided for @profileSetupBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a nickname and role. This information stays on this phone.'**
+  String get profileSetupBody;
+
+  /// No description provided for @nicknameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Nickname'**
+  String get nicknameLabel;
+
+  /// No description provided for @nicknameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'For example, Fatima'**
+  String get nicknameHint;
+
+  /// No description provided for @chooseRoleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your role'**
+  String get chooseRoleLabel;
+
+  /// No description provided for @roleGrandparent.
+  ///
+  /// In en, this message translates to:
+  /// **'Grandparent'**
+  String get roleGrandparent;
+
+  /// No description provided for @roleParent.
+  ///
+  /// In en, this message translates to:
+  /// **'Parent'**
+  String get roleParent;
+
+  /// No description provided for @roleTeen.
+  ///
+  /// In en, this message translates to:
+  /// **'Teen'**
+  String get roleTeen;
+
+  /// No description provided for @roleChild.
+  ///
+  /// In en, this message translates to:
+  /// **'Child'**
+  String get roleChild;
+
+  /// No description provided for @saveProfileLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Save profile'**
+  String get saveProfileLabel;
+
+  /// No description provided for @savingProfileLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving...'**
+  String get savingProfileLabel;
+
+  /// No description provided for @profileSaveError.
+  ///
+  /// In en, this message translates to:
+  /// **'We could not save this profile. Please try again.'**
+  String get profileSaveError;
+
+  /// No description provided for @homeGreeting.
+  ///
+  /// In en, this message translates to:
+  /// **'Hello, {name}'**
+  String homeGreeting(String name);
+
+  /// No description provided for @profileStoredLocally.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved on this phone'**
+  String get profileStoredLocally;
+
+  /// No description provided for @emptyWeaveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your family weave starts here'**
+  String get emptyWeaveTitle;
+
+  /// No description provided for @emptyWeaveBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Teach one skill and learn one skill to create your first thread.'**
+  String get emptyWeaveBody;
+
+  /// No description provided for @teachSkillLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Teach a Skill'**
+  String get teachSkillLabel;
+
+  /// No description provided for @learnSkillLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Learn a Skill'**
+  String get learnSkillLabel;
+
+  /// No description provided for @featureComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'This feature will be connected in the next build.'**
+  String get featureComingSoon;
 }
 
 class _AppLocalizationsDelegate
