@@ -12,5 +12,31 @@
   "privacyTitle": "Private by design",
   "privacyBody": "No account or location is needed to begin.",
   "continueLabel": "Continue",
-  "nextStepPlaceholder": "Profile setup will be added in the next build."
+  "changeLanguageLabel": "Change language",
+  "profileSetupTitle": "Create your local profile",
+  "profileSetupBody": "Choose a nickname and role. This information stays on this phone.",
+  "nicknameLabel": "Nickname",
+  "nicknameHint": "For example, Fatima",
+  "chooseRoleLabel": "Choose your role",
+  "roleGrandparent": "Grandparent",
+  "roleParent": "Parent",
+  "roleTeen": "Teen",
+  "roleChild": "Child",
+  "saveProfileLabel": "Save profile",
+  "savingProfileLabel": "Saving...",
+  "profileSaveError": "We could not save this profile. Please try again.",
+  "homeGreeting": "Hello, {name}",
+  "@homeGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profileStoredLocally": "Saved on this phone",
+  "emptyWeaveTitle": "Your family weave starts here",
+  "emptyWeaveBody": "Teach one skill and learn one skill to create your first thread.",
+  "teachSkillLabel": "Teach a Skill",
+  "learnSkillLabel": "Learn a Skill",
+  "featureComingSoon": "This feature will be connected in the next build."
 }

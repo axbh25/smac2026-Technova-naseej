@@ -9,11 +9,13 @@ class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({
     required this.selectedLanguageCode,
     required this.onLocaleChanged,
+    required this.onContinue,
     super.key,
   });
 
   final String selectedLanguageCode;
-  final ValueChanged<Locale> onLocaleChanged;
+  final Future<void> Function(Locale) onLocaleChanged;
+  final VoidCallback onContinue;
 
   @override
   Widget build(BuildContext context) {
@@ -72,17 +74,7 @@ class WelcomeScreen extends StatelessWidget {
                                   key: const ValueKey<String>(
                                     'continue_button',
                                   ),
-                                  onPressed: () {
-                                    ScaffoldMessenger.of(context)
-                                      ..hideCurrentSnackBar()
-                                      ..showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            localizations.nextStepPlaceholder,
-                                          ),
-                                        ),
-                                      );
-                                  },
+                                  onPressed: onContinue,
                                   child: Text(localizations.continueLabel),
                                 ),
                               ),

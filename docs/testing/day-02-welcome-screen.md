@@ -9,30 +9,30 @@
 
 | Check | Result | Notes |
 |---|---|---|
-| `dart format --output=none --set-exit-if-changed lib test` | Pass / Fail | |
-| `flutter analyze` | Pass / Fail | |
-| `flutter test` | Pass / Fail | |
-| English screen test | Pass / Fail | |
-| Arabic locale test | Pass / Fail | |
-| RTL direction test | Pass / Fail | |
-| Continue feedback test | Pass / Fail | |
-| Android tap-target guideline | Pass / Fail | |
-| Labeled-control guideline | Pass / Fail | |
-| Text-contrast guideline | Pass / Fail | |
+| `dart format --output=none --set-exit-if-changed lib test` | Pass | |
+| `flutter analyze` | Pass |
+| `flutter test` | Pass |
+| English screen test | Pass | |
+| Arabic locale test | Pass | |
+| RTL direction test | Pass | |
+| Continue feedback test | Pass | |
+| Android tap-target guideline | Pass | |
+| Labeled-control guideline | Pass | |
+| Text-contrast guideline | Pass | |
 
 ## Manual Emulator Checks
 
 | Check | Result | Notes |
 |---|---|---|
-| English screen launches | Pass / Fail | |
-| Arabic selector works | Pass / Fail | |
-| Arabic screen uses RTL | Pass / Fail | |
-| Privacy icon changes side | Pass / Fail | |
-| Continue button produces feedback | Pass / Fail | |
-| No layout overflow appears | Pass / Fail | |
-| App survives hot restart | Pass / Fail | |
-| Figma English overlay reviewed | Pass / Fail | |
-| Figma Arabic overlay reviewed | Pass / Fail | |
+| English screen launches | Pass | |
+| Arabic selector works | Pass | |
+| Arabic screen uses RTL | Pass | |
+| Privacy icon changes side | Pass | |
+| Continue button produces feedback | Pass | |
+| No layout overflow appears | Pass | |
+| App survives hot restart | Pass | |
+| Figma English overlay reviewed | Pass | |
+| Figma Arabic overlay reviewed | Pass | |
 
 ## Evidence
 
@@ -41,8 +41,11 @@
 
 ## Differences Remaining
 
-Record any visual differences honestly.
+No blocking visual difference was observed at the 412 × 892 reference
+viewport. Small platform-specific font-rendering differences may remain
+between Figma and the Android emulator.
 
 ## Result
 
-Day 2 passed / requires additional corrections.
+Day 2 passed after English, Arabic, RTL, interaction, accessibility, and
+emulator checks.

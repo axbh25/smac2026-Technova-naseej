@@ -36,6 +36,65 @@ class AppLocalizationsAr extends AppLocalizations {
   String get continueLabel => 'متابعة';
 
   @override
-  String get nextStepPlaceholder =>
-      'ستُضاف خطوة إعداد الملف الشخصي في الإصدار القادم.';
+  String get changeLanguageLabel => 'تغيير اللغة';
+
+  @override
+  String get profileSetupTitle => 'أنشئ ملفك المحلي';
+
+  @override
+  String get profileSetupBody =>
+      'اختر اسمًا مختصرًا ودورك في الأسرة. تبقى هذه البيانات على هذا الهاتف.';
+
+  @override
+  String get nicknameLabel => 'الاسم أو اللقب';
+
+  @override
+  String get nicknameHint => 'مثل: فاطمة';
+
+  @override
+  String get chooseRoleLabel => 'اختر دورك';
+
+  @override
+  String get roleGrandparent => 'جد أو جدة';
+
+  @override
+  String get roleParent => 'أب أو أم';
+
+  @override
+  String get roleTeen => 'مراهق أو مراهقة';
+
+  @override
+  String get roleChild => 'طفل أو طفلة';
+
+  @override
+  String get saveProfileLabel => 'حفظ الملف';
+
+  @override
+  String get savingProfileLabel => 'جارٍ الحفظ...';
+
+  @override
+  String get profileSaveError => 'تعذر حفظ هذا الملف. حاول مرة أخرى.';
+
+  @override
+  String homeGreeting(String name) {
+    return 'مرحبًا، $name';
+  }
+
+  @override
+  String get profileStoredLocally => 'محفوظ على هذا الهاتف';
+
+  @override
+  String get emptyWeaveTitle => 'يبدأ نسيج عائلتك من هنا';
+
+  @override
+  String get emptyWeaveBody => 'علِّم مهارة وتعلَّم مهارة لتضيفوا أول خيط.';
+
+  @override
+  String get teachSkillLabel => 'علِّم مهارة';
+
+  @override
+  String get learnSkillLabel => 'تعلَّم مهارة';
+
+  @override
+  String get featureComingSoon => 'ستُربط هذه الميزة في الإصدار القادم.';
 }

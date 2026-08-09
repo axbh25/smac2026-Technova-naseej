@@ -9,5 +9,31 @@
   "privacyTitle": "الخصوصية أولًا",
   "privacyBody": "لا تحتاج إلى حساب أو مشاركة موقعك للبدء.",
   "continueLabel": "متابعة",
-  "nextStepPlaceholder": "ستُضاف خطوة إعداد الملف الشخصي في الإصدار القادم."
+  "changeLanguageLabel": "تغيير اللغة",
+  "profileSetupTitle": "أنشئ ملفك المحلي",
+  "profileSetupBody": "اختر اسمًا مختصرًا ودورك في الأسرة. تبقى هذه البيانات على هذا الهاتف.",
+  "nicknameLabel": "الاسم أو اللقب",
+  "nicknameHint": "مثل: فاطمة",
+  "chooseRoleLabel": "اختر دورك",
+  "roleGrandparent": "جد أو جدة",
+  "roleParent": "أب أو أم",
+  "roleTeen": "مراهق أو مراهقة",
+  "roleChild": "طفل أو طفلة",
+  "saveProfileLabel": "حفظ الملف",
+  "savingProfileLabel": "جارٍ الحفظ...",
+  "profileSaveError": "تعذر حفظ هذا الملف. حاول مرة أخرى.",
+  "homeGreeting": "مرحبًا، {name}",
+  "@homeGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profileStoredLocally": "محفوظ على هذا الهاتف",
+  "emptyWeaveTitle": "يبدأ نسيج عائلتك من هنا",
+  "emptyWeaveBody": "علِّم مهارة وتعلَّم مهارة لتضيفوا أول خيط.",
+  "teachSkillLabel": "علِّم مهارة",
+  "learnSkillLabel": "تعلَّم مهارة",
+  "featureComingSoon": "ستُربط هذه الميزة في الإصدار القادم."
 }

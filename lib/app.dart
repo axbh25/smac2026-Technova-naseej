@@ -1,43 +1,56 @@
 import 'package:flutter/material.dart';
+import 'package:naseej/core/state/app_controller.dart';
 import 'package:naseej/core/theme/app_theme.dart';
+import 'package:naseej/features/home/presentation/home_screen.dart';
+import 'package:naseej/features/profile/presentation/profile_setup_screen.dart';
 import 'package:naseej/features/welcome/presentation/welcome_screen.dart';
 import 'package:naseej/l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
-class NaseejApp extends StatefulWidget {
+class NaseejApp extends StatelessWidget {
   const NaseejApp({super.key});
 
   @override
-  State<NaseejApp> createState() => _NaseejAppState();
-}
-
-class _NaseejAppState extends State<NaseejApp> {
-  Locale _locale = const Locale('en');
-
-  void _setLocale(Locale locale) {
-    if (_locale == locale) {
-      return;
-    }
-
-    setState(() {
-      _locale = locale;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final AppController controller = context.watch<AppController>();
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      locale: _locale,
+      locale: controller.locale,
       onGenerateTitle: (BuildContext context) {
         return AppLocalizations.of(context)!.appTitle;
       },
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       theme: AppTheme.light,
-      home: WelcomeScreen(
-        selectedLanguageCode: _locale.languageCode,
-        onLocaleChanged: _setLocale,
-      ),
+      home: const _AppGate(),
+    );
+  }
+}
+
+class _AppGate extends StatelessWidget {
+  const _AppGate();
+
+  @override
+  Widget build(BuildContext context) {
+    final AppController controller = context.watch<AppController>();
+
+    if (controller.hasProfile) {
+      return const HomeScreen();
+    }
+
+    return WelcomeScreen(
+      selectedLanguageCode: controller.locale.languageCode,
+      onLocaleChanged: controller.setLocale,
+      onContinue: () {
+        Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) {
+              return const ProfileSetupScreen();
+            },
+          ),
+        );
+      },
     );
   }
 }
