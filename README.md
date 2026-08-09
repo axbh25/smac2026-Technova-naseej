@@ -11,16 +11,19 @@ the activity and then be encouraged to teach a skill in return.
 
 ## Current Development Status
 
-Day 2 bilingual shell:
+Day 3 persistent local profile:
 
-- Android-only Flutter project runs on the Pixel 7 Pro API 36 emulator
+- Android-only Flutter project runs on Pixel 7 Pro API 36
 - English and Arabic localization is generated from ARB files
 - Welcome screen supports immediate language switching
-- Arabic uses RTL layout
-- Shared design tokens and application theme are implemented
-- Automated Welcome-screen and accessibility tests are included
-- English and Arabic visual evidence is stored under `docs/testing/`
-- Profile setup and production AI features are not yet implemented
+- User can create one local profile with a nickname and family role
+- Profile roles include Grandparent, Parent, Teen, and Child
+- Selected language persists after restarting the app
+- Saved profile persists after restarting the app
+- Saved users open directly to the bilingual empty Home screen
+- Automated profile, persistence, RTL, and accessibility tests are included
+- Day 2 and Day 3 visual evidence is stored under `docs/testing/`
+- Production AI, voice input, camera input, and skill cards are not yet implemented
 ## Current Developer
 
 - GitHub: axbh25
