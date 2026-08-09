@@ -54,10 +54,14 @@ class RoleChoiceCard extends StatelessWidget {
                       color: AppColors.primary,
                     ),
                     const SizedBox(height: AppSpacing.xs),
-                    Text(
-                      label,
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.titleMedium,
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        label,
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
                     ),
                   ],
                 ),
