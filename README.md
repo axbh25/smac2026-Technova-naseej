@@ -47,7 +47,8 @@ merged feature.
 6. Local storage and transparent offline fallback
 
 ## Technology
-
+- Provider for shared application state
+- SharedPreferencesAsync for small non-critical local preferences
 - Flutter and Dart
 - Android
 - Figma
