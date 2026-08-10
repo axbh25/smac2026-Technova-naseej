@@ -11,23 +11,23 @@ the activity and then be encouraged to teach a skill in return.
 
 ## Current Development Status
 
-Day 4 persistent skill draft:
+Day 5 editable speech transcription:
 
 - Android-only Flutter project runs on Pixel 7 Pro API 36
 - English and Arabic localization is generated from ARB files
 - A local profile and selected language persist after restart
-- The saved profile opens directly to the bilingual Home screen
-- Teach a Skill opens a bilingual, RTL-ready draft form
-- The current profile is shown as the teacher
-- A learner nickname and family role can be selected
-- Four skill categories are available
-- Typed explanations require 20–600 characters
-- One skill draft is saved locally
-- Saved drafts survive application restart
-- Continue Draft restores all draft fields
-- Automated model, validation, persistence, RTL, and accessibility tests are included
-- Day 2 through Day 4 visual evidence is stored under `docs/testing/`
-- Production AI, voice input, camera input, and generated skill cards are not yet implemented
+- One bilingual Teach-a-Skill draft persists locally
+- Learner nickname, role, category, and explanation are restored
+- English and Arabic short speech transcription is integrated
+- Voice input has visible Idle, Listening, and Fallback states
+- Recognized words appear in the editable explanation field
+- Existing typed text is preserved when voice input begins
+- Manual typing remains available after permission or service failure
+- Naseej stores recognized text but does not save an audio file
+- The device speech service may require internet access
+- Automated speech-controller, fallback, persistence, RTL, and accessibility tests are included
+- Day 2 through Day 5 visual evidence is stored under `docs/testing/`
+- Camera input, production AI generation, skill cards, and notifications are not yet implemented
 
 ## Current Developer
 - GitHub: axbh25
@@ -60,7 +60,8 @@ merged feature.
 - Local JSON serialization for the current skill draft
 Camera, production AI generation, and notifications will be added gradually
 only when the relevant feature is implemented and tested.
-
+- `speech_to_text` for short user-initiated device speech recognition
+- A testable speech-engine abstraction with a shared SpeechController
 ## Android Reference Device
 
 - Hardware profile: Pixel 7 Pro
