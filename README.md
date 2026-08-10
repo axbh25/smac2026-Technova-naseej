@@ -11,21 +11,23 @@ the activity and then be encouraged to teach a skill in return.
 
 ## Current Development Status
 
-Day 3 persistent local profile:
+Day 4 persistent skill draft:
 
 - Android-only Flutter project runs on Pixel 7 Pro API 36
 - English and Arabic localization is generated from ARB files
-- Welcome screen supports immediate language switching
-- User can create one local profile with a nickname and family role
-- Profile roles include Grandparent, Parent, Teen, and Child
-- Selected language persists after restarting the app
-- Saved profile persists after restarting the app
-- Saved users open directly to the bilingual empty Home screen
-- Automated profile, persistence, RTL, and accessibility tests are included
-- Day 2 and Day 3 visual evidence is stored under `docs/testing/`
-- Production AI, voice input, camera input, and skill cards are not yet implemented
-
-## Current Developer
+- A local profile and selected language persist after restart
+- The saved profile opens directly to the bilingual Home screen
+- Teach a Skill opens a bilingual, RTL-ready draft form
+- The current profile is shown as the teacher
+- A learner nickname and family role can be selected
+- Four skill categories are available
+- Typed explanations require 20–600 characters
+- One skill draft is saved locally
+- Saved drafts survive application restart
+- Continue Draft restores all draft fields
+- Automated model, validation, persistence, RTL, and accessibility tests are included
+- Day 2 through Day 4 visual evidence is stored under `docs/testing/`
+- Production AI, voice input, camera input, and generated skill cards are not yet implemented
 
 - GitHub: axbh25
 - Role: product design, Flutter development, testing, documentation, and demo
@@ -54,6 +56,8 @@ merged feature.
 - Android
 - Figma
 - Git and GitHub
+- Local JSON serialization for the current skill draft
+
 
 AI, storage, camera, speech, and notification packages will be added gradually
 only when the relevant feature is implemented and tested.
