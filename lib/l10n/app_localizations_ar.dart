@@ -171,4 +171,53 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get continueDraftLabel => 'متابعة المسودة';
+
+  @override
+  String get voiceInputSectionTitle => 'الإدخال الصوتي';
+
+  @override
+  String get voiceInputTitle => 'تحدّث بشرحك';
+
+  @override
+  String get voiceInputBody =>
+      'تحدّث بشرح قصير، وستظهر الكلمات التي تم التعرف إليها في الحقل القابل للتعديل أدناه.';
+
+  @override
+  String get speechListeningTitle => 'جارٍ الاستماع…';
+
+  @override
+  String get speechListeningBody =>
+      'تحدّث بوضوح. تظهر الكلمات التي تم التعرف إليها أدناه.';
+
+  @override
+  String get speechUnavailableTitle => 'الميكروفون غير متاح';
+
+  @override
+  String get speechPermissionDenied =>
+      'تم رفض إذن الميكروفون. تابع بالكتابة أدناه. ويمكنك تفعيل الإذن لاحقًا من إعدادات Android.';
+
+  @override
+  String get speechNetworkError =>
+      'تعذر اتصال خدمة التعرّف إلى الكلام. تابع بالكتابة أو حاول مرة أخرى لاحقًا.';
+
+  @override
+  String get speechNoMatch =>
+      'لم يتم التعرف إلى كلام واضح. حاول مرة أخرى أو تابع بالكتابة.';
+
+  @override
+  String get speechGenericError =>
+      'توقف الإدخال الصوتي. حاول مرة أخرى أو تابع بالكتابة.';
+
+  @override
+  String get startSpeakingLabel => 'ابدأ التحدث';
+
+  @override
+  String get stopListeningLabel => 'إيقاف الاستماع';
+
+  @override
+  String get typedFallbackLabel => 'تابع بالكتابة أدناه';
+
+  @override
+  String get voicePrivacyNotice =>
+      'لا يحفظ نسيج التسجيل الصوتي. قد تعالج خدمة التعرّف في جهازك الكلام عبر الإنترنت. راجع النص وعدّله قبل الحفظ.';
 }

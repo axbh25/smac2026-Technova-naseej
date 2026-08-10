@@ -51,5 +51,19 @@
   "draftLearnerSummary": "المتعلّم: {name} — {role}",
   "draftCategorySummary": "الفئة: {category}",
   "draftStoredLocally": "محفوظة على هذا الهاتف وجاهزة للمتابعة.",
-  "continueDraftLabel": "متابعة المسودة"
+  "continueDraftLabel": "متابعة المسودة",
+  "voiceInputSectionTitle": "الإدخال الصوتي",
+  "voiceInputTitle": "تحدّث بشرحك",
+  "voiceInputBody": "تحدّث بشرح قصير، وستظهر الكلمات التي تم التعرف إليها في الحقل القابل للتعديل أدناه.",
+  "speechListeningTitle": "جارٍ الاستماع…",
+  "speechListeningBody": "تحدّث بوضوح. تظهر الكلمات التي تم التعرف إليها أدناه.",
+  "speechUnavailableTitle": "الميكروفون غير متاح",
+  "speechPermissionDenied": "تم رفض إذن الميكروفون. تابع بالكتابة أدناه. ويمكنك تفعيل الإذن لاحقًا من إعدادات Android.",
+  "speechNetworkError": "تعذر اتصال خدمة التعرّف إلى الكلام. تابع بالكتابة أو حاول مرة أخرى لاحقًا.",
+  "speechNoMatch": "لم يتم التعرف إلى كلام واضح. حاول مرة أخرى أو تابع بالكتابة.",
+  "speechGenericError": "توقف الإدخال الصوتي. حاول مرة أخرى أو تابع بالكتابة.",
+  "startSpeakingLabel": "ابدأ التحدث",
+  "stopListeningLabel": "إيقاف الاستماع",
+  "typedFallbackLabel": "تابع بالكتابة أدناه",
+  "voicePrivacyNotice": "لا يحفظ نسيج التسجيل الصوتي. قد تعالج خدمة التعرّف في جهازك الكلام عبر الإنترنت. راجع النص وعدّله قبل الحفظ."
 }

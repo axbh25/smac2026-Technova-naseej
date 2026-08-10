@@ -29,6 +29,7 @@ Day 4 persistent skill draft:
 - Day 2 through Day 4 visual evidence is stored under `docs/testing/`
 - Production AI, voice input, camera input, and generated skill cards are not yet implemented
 
+## Current Developer
 - GitHub: axbh25
 - Role: product design, Flutter development, testing, documentation, and demo
 
@@ -57,9 +58,7 @@ merged feature.
 - Figma
 - Git and GitHub
 - Local JSON serialization for the current skill draft
-
-
-AI, storage, camera, speech, and notification packages will be added gradually
+Camera, production AI generation, and notifications will be added gradually
 only when the relevant feature is implemented and tested.
 
 ## Android Reference Device

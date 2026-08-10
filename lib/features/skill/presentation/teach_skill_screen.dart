@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:naseej/core/speech/speech_controller.dart';
 import 'package:naseej/core/state/app_controller.dart';
 import 'package:naseej/core/theme/app_colors.dart';
 import 'package:naseej/core/theme/app_spacing.dart';
@@ -9,6 +12,7 @@ import 'package:naseej/features/profile/presentation/widgets/role_choice_card.da
 import 'package:naseej/features/skill/domain/skill_draft.dart';
 import 'package:naseej/features/skill/presentation/skill_category_ui.dart';
 import 'package:naseej/features/skill/presentation/widgets/skill_category_choice_card.dart';
+import 'package:naseej/features/skill/presentation/widgets/speech_input_card.dart';
 import 'package:naseej/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
@@ -25,6 +29,9 @@ class TeachSkillScreen extends StatefulWidget {
 class _TeachSkillScreenState extends State<TeachSkillScreen> {
   late final TextEditingController _learnerNicknameController;
   late final TextEditingController _explanationController;
+
+  SpeechController? _speechController;
+  String _speechBaseText = '';
 
   FamilyRole? _selectedLearnerRole;
   SkillCategory? _selectedCategory;
@@ -61,14 +68,105 @@ class _TeachSkillScreenState extends State<TeachSkillScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    _speechController ??= context.read<SpeechController>();
+  }
+
+  @override
   void dispose() {
+    final SpeechController? speechController = _speechController;
+
+    if (speechController != null) {
+      unawaited(speechController.cancelListening());
+    }
+
     _learnerNicknameController.dispose();
     _explanationController.dispose();
+
     super.dispose();
+  }
+
+  Future<void> _toggleSpeechInput() async {
+    final SpeechController speechController = context.read<SpeechController>();
+
+    if (speechController.isListening) {
+      await speechController.stopListening();
+      return;
+    }
+
+    _speechBaseText = _explanationController.text.trim();
+
+    await speechController.startListening(
+      locale: Localizations.localeOf(context),
+      onWords: (String words, bool _) {
+        if (!mounted) {
+          return;
+        }
+
+        final String recognizedWords = words.trim();
+
+        final String mergedText;
+
+        if (recognizedWords.isEmpty) {
+          mergedText = _speechBaseText;
+        } else if (_speechBaseText.isEmpty) {
+          mergedText = recognizedWords;
+        } else {
+          mergedText = '$_speechBaseText $recognizedWords';
+        }
+
+        final String limitedText =
+            mergedText.length <= SkillDraft.maximumExplanationLength
+            ? mergedText
+            : mergedText.substring(0, SkillDraft.maximumExplanationLength);
+
+        _explanationController.value = TextEditingValue(
+          text: limitedText,
+          selection: TextSelection.collapsed(offset: limitedText.length),
+        );
+
+        setState(() {});
+      },
+    );
+  }
+
+  String? _speechErrorMessage(
+    AppLocalizations localizations,
+    SpeechController speechController,
+  ) {
+    final String? errorCode = speechController.lastErrorCode;
+
+    if (errorCode == null) {
+      return null;
+    }
+
+    final String normalizedCode = errorCode.toLowerCase();
+
+    if (normalizedCode.contains('permission') ||
+        normalizedCode.contains('insufficient')) {
+      return localizations.speechPermissionDenied;
+    }
+
+    if (normalizedCode.contains('network')) {
+      return localizations.speechNetworkError;
+    }
+
+    if (normalizedCode.contains('no_match') ||
+        normalizedCode.contains('timeout')) {
+      return localizations.speechNoMatch;
+    }
+
+    return localizations.speechGenericError;
   }
 
   Future<void> _saveDraft() async {
     final AppLocalizations localizations = AppLocalizations.of(context)!;
+
+    final SpeechController speechController = context.read<SpeechController>();
+
+    final AppController appController = context.read<AppController>();
 
     final FamilyRole? learnerRole = _selectedLearnerRole;
     final SkillCategory? category = _selectedCategory;
@@ -82,12 +180,18 @@ class _TeachSkillScreenState extends State<TeachSkillScreen> {
 
     FocusScope.of(context).unfocus();
 
+    await speechController.stopListening();
+
+    if (!mounted) {
+      return;
+    }
+
     setState(() {
       _isSaving = true;
     });
 
     try {
-      await context.read<AppController>().saveSkillDraft(
+      await appController.saveSkillDraft(
         SkillDraft(
           teacherNickname: widget.teacher.nickname,
           teacherRole: widget.teacher.role,
@@ -122,11 +226,40 @@ class _TeachSkillScreenState extends State<TeachSkillScreen> {
   Widget build(BuildContext context) {
     final AppLocalizations localizations = AppLocalizations.of(context)!;
 
+    final SpeechController speechController = context.watch<SpeechController>();
+
+    final String? speechErrorMessage = _speechErrorMessage(
+      localizations,
+      speechController,
+    );
+
+    final bool permanentlyUnavailable =
+        speechController.initializationAttempted &&
+        !speechController.isAvailable;
+
+    final String speechTitle = speechController.isListening
+        ? localizations.speechListeningTitle
+        : speechErrorMessage != null
+        ? localizations.speechUnavailableTitle
+        : localizations.voiceInputTitle;
+
+    final String speechBody = speechController.isListening
+        ? localizations.speechListeningBody
+        : permanentlyUnavailable
+        ? localizations.typedFallbackLabel
+        : localizations.voiceInputBody;
+
+    final String speechButtonLabel = speechController.isListening
+        ? localizations.stopListeningLabel
+        : localizations.startSpeakingLabel;
+
     return Scaffold(
       key: const ValueKey<String>('skill_draft_screen'),
       appBar: AppBar(
         title: Text(localizations.teachSkillScreenTitle),
-        actions: const <Widget>[LanguageToggleButton()],
+        actions: <Widget>[
+          LanguageToggleButton(enabled: !speechController.isListening),
+        ],
       ),
       body: SafeArea(
         top: false,
@@ -254,6 +387,26 @@ class _TeachSkillScreenState extends State<TeachSkillScreen> {
               ),
               const SizedBox(height: AppSpacing.lg),
               Text(
+                localizations.voiceInputSectionTitle,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              SpeechInputCard(
+                isListening: speechController.isListening,
+                initializationAttempted:
+                    speechController.initializationAttempted,
+                isAvailable: speechController.isAvailable,
+                title: speechTitle,
+                body: speechBody,
+                buttonLabel: speechButtonLabel,
+                privacyLabel: localizations.voicePrivacyNotice,
+                errorMessage: speechErrorMessage,
+                onPressed: () {
+                  unawaited(_toggleSpeechInput());
+                },
+              ),
+              const SizedBox(height: AppSpacing.lg),
+              Text(
                 localizations.explanationSectionTitle,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
@@ -266,6 +419,11 @@ class _TeachSkillScreenState extends State<TeachSkillScreen> {
                 maxLength: SkillDraft.maximumExplanationLength,
                 keyboardType: TextInputType.multiline,
                 textInputAction: TextInputAction.newline,
+                onTap: () {
+                  if (speechController.isListening) {
+                    unawaited(speechController.stopListening());
+                  }
+                },
                 onChanged: (_) {
                   setState(() {});
                 },
@@ -352,6 +510,7 @@ class _TeacherSummaryCard extends StatelessWidget {
           const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
