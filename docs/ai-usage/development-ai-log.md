@@ -28,3 +28,4 @@ Every meaningful AI interaction used in the project is recorded here.
 10. Do not use AI to fabricate GitHub history or a second contributor.
 
 
+| 2026-08-11 | Abdullah Haider and Shoug Almaashari | ChatGPT | `prompts/2026-08-11-day-05-plan.md` | Audit the Day 4 repository and plan one short speech-transcription feature | Repository findings, Figma states, Android setup, isolated speech-engine, controller, UI, localization, fallback, and test templates | The team reviewed each file, configured microphone permissions manually, tested English and Arabic recognition, verified typed fallback and editable text, and compared device screenshots with Figma; AI did not generate the complete application | Replace with final Day 5 commit hashes |
