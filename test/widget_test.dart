@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:naseej/app.dart';
+import 'package:naseej/core/speech/speech_controller.dart';
 import 'package:naseej/core/state/app_controller.dart';
 import 'package:naseej/features/profile/domain/family_profile.dart';
 import 'package:naseej/features/skill/domain/skill_draft.dart';
 import 'package:provider/provider.dart';
 
 import 'support/fake_app_storage.dart';
+import 'support/fake_speech_engine.dart';
 
 Future<AppController> pumpReferenceApp(
   WidgetTester tester, {
   FakeAppStorage? storage,
+  SpeechController? speechController,
 }) async {
   await tester.binding.setSurfaceSize(const Size(412, 892));
 
@@ -22,11 +25,21 @@ Future<AppController> pumpReferenceApp(
 
   await controller.initialize();
 
+  final SpeechController activeSpeechController =
+      speechController ?? SpeechController(FakeSpeechEngine());
+
   addTearDown(controller.dispose);
 
+  addTearDown(activeSpeechController.dispose);
+
   await tester.pumpWidget(
-    ChangeNotifierProvider<AppController>.value(
-      value: controller,
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<AppController>.value(value: controller),
+        ChangeNotifierProvider<SpeechController>.value(
+          value: activeSpeechController,
+        ),
+      ],
       child: const NaseejApp(),
     ),
   );
@@ -54,8 +67,13 @@ FakeAppStorage storageWithProfile({
 Future<void> openTeachSkillScreen(
   WidgetTester tester, {
   required FakeAppStorage storage,
+  SpeechController? speechController,
 }) async {
-  await pumpReferenceApp(tester, storage: storage);
+  await pumpReferenceApp(
+    tester,
+    storage: storage,
+    speechController: speechController,
+  );
 
   final Finder teachButton = find.byKey(
     const ValueKey<String>('teach_skill_button'),
@@ -81,6 +99,7 @@ Future<void> completeSkillDraftForm(WidgetTester tester) async {
   );
 
   await tester.ensureVisible(learnerNicknameFinder);
+
   await tester.pumpAndSettle();
 
   await tester.enterText(learnerNicknameFinder, 'Mariam');
@@ -92,9 +111,11 @@ Future<void> completeSkillDraftForm(WidgetTester tester) async {
   );
 
   await tester.ensureVisible(learnerRoleFinder);
+
   await tester.pumpAndSettle();
 
   await tester.tap(learnerRoleFinder);
+
   await tester.pump();
 
   final Finder categoryFinder = find.byKey(
@@ -102,9 +123,11 @@ Future<void> completeSkillDraftForm(WidgetTester tester) async {
   );
 
   await tester.ensureVisible(categoryFinder);
+
   await tester.pumpAndSettle();
 
   await tester.tap(categoryFinder);
+
   await tester.pump();
 
   final Finder explanationFinder = find.byKey(
@@ -112,6 +135,7 @@ Future<void> completeSkillDraftForm(WidgetTester tester) async {
   );
 
   await tester.ensureVisible(explanationFinder);
+
   await tester.pumpAndSettle();
 
   await tester.enterText(
@@ -134,6 +158,7 @@ void main() {
     );
 
     expect(find.text('Naseej'), findsOneWidget);
+
     expect(find.text('Continue'), findsOneWidget);
   });
 
@@ -293,6 +318,7 @@ void main() {
     );
 
     await tester.ensureVisible(learnerNicknameFinder);
+
     await tester.pumpAndSettle();
 
     await tester.enterText(learnerNicknameFinder, 'Mariam');
@@ -304,9 +330,11 @@ void main() {
     );
 
     await tester.ensureVisible(learnerRoleFinder);
+
     await tester.pumpAndSettle();
 
     await tester.tap(learnerRoleFinder);
+
     await tester.pump();
 
     final Finder categoryFinder = find.byKey(
@@ -314,9 +342,11 @@ void main() {
     );
 
     await tester.ensureVisible(categoryFinder);
+
     await tester.pumpAndSettle();
 
     await tester.tap(categoryFinder);
+
     await tester.pump();
 
     final Finder explanationFinder = find.byKey(
@@ -324,6 +354,7 @@ void main() {
     );
 
     await tester.ensureVisible(explanationFinder);
+
     await tester.pumpAndSettle();
 
     await tester.enterText(explanationFinder, 'Too short');
@@ -331,6 +362,7 @@ void main() {
     await tester.pump();
 
     await tester.ensureVisible(saveDraftFinder);
+
     await tester.pumpAndSettle();
 
     saveButton = tester.widget<FilledButton>(saveDraftFinder);
@@ -345,6 +377,7 @@ void main() {
     await tester.pump();
 
     await tester.ensureVisible(saveDraftFinder);
+
     await tester.pumpAndSettle();
 
     saveButton = tester.widget<FilledButton>(saveDraftFinder);
@@ -366,9 +399,11 @@ void main() {
     );
 
     await tester.ensureVisible(saveDraftFinder);
+
     await tester.pumpAndSettle();
 
     await tester.tap(saveDraftFinder);
+
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey<String>('home_screen')), findsOneWidget);
@@ -404,9 +439,11 @@ void main() {
     );
 
     await tester.ensureVisible(teachButton);
+
     await tester.pumpAndSettle();
 
     await tester.tap(teachButton);
+
     await tester.pumpAndSettle();
 
     expect(
@@ -442,6 +479,154 @@ void main() {
     );
 
     expect(Directionality.of(screenContext), TextDirection.rtl);
+  });
+
+  testWidgets('voice input inserts recognized words into the editable field', (
+    WidgetTester tester,
+  ) async {
+    final FakeSpeechEngine engine = FakeSpeechEngine();
+
+    final SpeechController speechController = SpeechController(engine);
+
+    await openTeachSkillScreen(
+      tester,
+      storage: storageWithProfile(),
+      speechController: speechController,
+    );
+
+    final Finder speechButton = find.byKey(
+      const ValueKey<String>('speech_button'),
+    );
+
+    await tester.ensureVisible(speechButton);
+    await tester.pumpAndSettle();
+
+    await tester.tap(speechButton);
+    await tester.pumpAndSettle();
+
+    expect(engine.isListening, isTrue);
+
+    engine.emitWords('Explain how our family welcomes guests', isFinal: true);
+
+    await tester.pump();
+
+    final TextField explanationField = tester.widget<TextField>(
+      find.byKey(const ValueKey<String>('explanation_field')),
+    );
+
+    expect(
+      explanationField.controller?.text,
+      'Explain how our family welcomes guests',
+    );
+
+    expect(engine.isListening, isFalse);
+  });
+
+  testWidgets('voice input appends to existing typed text', (
+    WidgetTester tester,
+  ) async {
+    final FakeSpeechEngine engine = FakeSpeechEngine();
+
+    final SpeechController speechController = SpeechController(engine);
+
+    await openTeachSkillScreen(
+      tester,
+      storage: storageWithProfile(),
+      speechController: speechController,
+    );
+
+    final Finder explanationFinder = find.byKey(
+      const ValueKey<String>('explanation_field'),
+    );
+
+    await tester.ensureVisible(explanationFinder);
+
+    await tester.pumpAndSettle();
+
+    await tester.enterText(explanationFinder, 'First I prepare the items. ');
+
+    await tester.pump();
+
+    final Finder speechButton = find.byKey(
+      const ValueKey<String>('speech_button'),
+    );
+
+    await tester.ensureVisible(speechButton);
+    await tester.pumpAndSettle();
+
+    await tester.tap(speechButton);
+    await tester.pumpAndSettle();
+
+    expect(engine.isListening, isTrue);
+
+    engine.emitWords('Then I demonstrate the skill slowly.', isFinal: true);
+
+    await tester.pump();
+
+    final TextField explanationField = tester.widget<TextField>(
+      explanationFinder,
+    );
+
+    expect(
+      explanationField.controller?.text,
+      'First I prepare the items. '
+      'Then I demonstrate the skill slowly.',
+    );
+
+    expect(engine.isListening, isFalse);
+  });
+
+  testWidgets('microphone denial preserves the typed fallback', (
+    WidgetTester tester,
+  ) async {
+    final FakeSpeechEngine engine = FakeSpeechEngine(initializeResult: false);
+
+    final SpeechController speechController = SpeechController(engine);
+
+    await openTeachSkillScreen(
+      tester,
+      storage: storageWithProfile(),
+      speechController: speechController,
+    );
+
+    final Finder speechButton = find.byKey(
+      const ValueKey<String>('speech_button'),
+    );
+
+    await tester.ensureVisible(speechButton);
+    await tester.pumpAndSettle();
+
+    await tester.tap(speechButton);
+    await tester.pumpAndSettle();
+
+    expect(
+      find.byKey(const ValueKey<String>('speech_fallback_message')),
+      findsOneWidget,
+    );
+
+    final Finder explanationFinder = find.byKey(
+      const ValueKey<String>('explanation_field'),
+    );
+
+    await tester.ensureVisible(explanationFinder);
+
+    await tester.pumpAndSettle();
+
+    await tester.enterText(
+      explanationFinder,
+      'Manual typing remains available after permission denial.',
+    );
+
+    await tester.pump();
+
+    final TextField explanationField = tester.widget<TextField>(
+      explanationFinder,
+    );
+
+    expect(
+      explanationField.controller?.text,
+      'Manual typing remains available after permission denial.',
+    );
   });
 
   // Keep the semantics-heavy accessibility test last.

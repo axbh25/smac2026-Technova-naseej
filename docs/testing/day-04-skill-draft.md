@@ -9,50 +9,55 @@
 
 | Check | Result | Notes |
 |---|---|---|
-| `flutter gen-l10n` | Pass / Fail | |
-| Dart formatting | Pass / Fail | |
-| `flutter analyze` | Pass / Fail | |
-| `flutter test` | Pass / Fail | |
-| SkillDraft JSON round trip | Pass / Fail | |
-| Damaged JSON rejection | Pass / Fail | |
-| Unknown-category rejection | Pass / Fail | |
-| Short-explanation rejection | Pass / Fail | |
-| Required-field validation | Pass / Fail | |
-| Draft save-to-Home flow | Pass / Fail | |
-| Saved-draft restoration | Pass / Fail | |
-| Arabic RTL test | Pass / Fail | |
+| `flutter gen-l10n` | Pass | |
+| Dart formatting | Pass | |
+| `flutter analyze` | Pass | |
+| `flutter test` | Pass | |
+| SkillDraft JSON round trip | Pass | |
+| Damaged JSON rejection | Pass | |
+| Unknown-category rejection | Pass | |
+| Short-explanation rejection | Pass | |
+| Required-field validation | Pass | |
+| Draft save-to-Home flow | Pass | |
+| Saved-draft restoration | Pass | |
+| Arabic RTL test | Pass | |
 
 ## Real Android Checks
 
 | Check | Result | Notes |
 |---|---|---|
-| English Teach screen opens | Pass / Fail | |
-| Arabic Teach screen opens | Pass / Fail | |
-| Arabic Teach screen uses RTL | Pass / Fail | |
-| Teacher profile is correct | Pass / Fail | |
-| Learner nickname is required | Pass / Fail | |
-| Learner role is required | Pass / Fail | |
-| Category is required | Pass / Fail | |
-| 20-character minimum works | Pass / Fail | |
-| 600-character maximum works | Pass / Fail | |
-| Draft saves in airplane mode | Pass / Fail | |
-| Draft survives restart | Pass / Fail | |
-| Continue Draft restores fields | Pass / Fail | |
-| No overflow at 412 × 892 | Pass / Fail | |
-| English overlays reviewed | Pass / Fail | |
-| Arabic overlays reviewed | Pass / Fail | |
+| English Teach screen opens | Pass | |
+| Arabic Teach screen opens | Pass | |
+| Arabic Teach screen uses RTL | Pass | |
+| Teacher profile is correct | Pass | |
+| Learner nickname is required | Pass | |
+| Learner role is required | Pass | |
+| Category is required | Pass | |
+| 20-character minimum works | Pass | |
+| 600-character maximum works | Pass | |
+| Draft saves in airplane mode | Pass | |
+| Draft survives restart | Pass | |
+| Continue Draft restores fields | Pass | |
+| No overflow at 412 × 892 | Pass | |
+| English overlays reviewed | Pass | |
+| Arabic overlays reviewed | Pass | |
 
 ## Evidence
 
-- `screenshots/day-04/teach_skill_en.png`
-- `screenshots/day-04/teach_skill_ar.png`
+- `screenshots/day-04/teach1_skill_en.png`
+- `screenshots/day-04/teach2_skill_en.png`
+- `screenshots/day-04/teach1_skill_ar.png`
+- `screenshots/day-04/teach2_skill_ar.png`
 - `screenshots/day-04/home_draft_en.png`
 - `screenshots/day-04/home_draft_ar.png`
 
 ## Differences Remaining
 
-Record any actual difference.
+No blocking difference remained at the 412 × 892 reference viewport.
+The scrollable Teach-a-Skill form required two screenshots per language.
+Small platform-specific font-rendering differences may remain.
 
 ## Result
 
-Day 4 passed / requires correction.
+Day 4 passed after model, validation, local persistence, airplane-mode,
+restart-restoration, English, Arabic, RTL, and visual checks.

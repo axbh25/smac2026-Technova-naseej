@@ -409,6 +409,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Continue Draft'**
   String get continueDraftLabel;
+
+  /// No description provided for @voiceInputSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Voice input'**
+  String get voiceInputSectionTitle;
+
+  /// No description provided for @voiceInputTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Speak your explanation'**
+  String get voiceInputTitle;
+
+  /// No description provided for @voiceInputBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Speak a short explanation. Recognized words will appear in the editable field below.'**
+  String get voiceInputBody;
+
+  /// No description provided for @speechListeningTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Listening…'**
+  String get speechListeningTitle;
+
+  /// No description provided for @speechListeningBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Speak clearly. Recognized words are appearing below.'**
+  String get speechListeningBody;
+
+  /// No description provided for @speechUnavailableTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Microphone unavailable'**
+  String get speechUnavailableTitle;
+
+  /// No description provided for @speechPermissionDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Microphone permission was denied. Continue by typing below. To enable it later, use Android Settings.'**
+  String get speechPermissionDenied;
+
+  /// No description provided for @speechNetworkError.
+  ///
+  /// In en, this message translates to:
+  /// **'The speech service could not connect. Continue by typing or try again later.'**
+  String get speechNetworkError;
+
+  /// No description provided for @speechNoMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'No clear speech was recognized. Try again or continue typing.'**
+  String get speechNoMatch;
+
+  /// No description provided for @speechGenericError.
+  ///
+  /// In en, this message translates to:
+  /// **'Voice input was interrupted. Try again or continue typing.'**
+  String get speechGenericError;
+
+  /// No description provided for @startSpeakingLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Start speaking'**
+  String get startSpeakingLabel;
+
+  /// No description provided for @stopListeningLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop listening'**
+  String get stopListeningLabel;
+
+  /// No description provided for @typedFallbackLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Type below instead'**
+  String get typedFallbackLabel;
+
+  /// No description provided for @voicePrivacyNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'Naseej does not save audio. Your device’s speech service may process speech online. Review and edit the text before saving.'**
+  String get voicePrivacyNotice;
 }
 
 class _AppLocalizationsDelegate

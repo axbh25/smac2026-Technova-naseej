@@ -177,4 +177,53 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get continueDraftLabel => 'Continue Draft';
+
+  @override
+  String get voiceInputSectionTitle => 'Voice input';
+
+  @override
+  String get voiceInputTitle => 'Speak your explanation';
+
+  @override
+  String get voiceInputBody =>
+      'Speak a short explanation. Recognized words will appear in the editable field below.';
+
+  @override
+  String get speechListeningTitle => 'Listening…';
+
+  @override
+  String get speechListeningBody =>
+      'Speak clearly. Recognized words are appearing below.';
+
+  @override
+  String get speechUnavailableTitle => 'Microphone unavailable';
+
+  @override
+  String get speechPermissionDenied =>
+      'Microphone permission was denied. Continue by typing below. To enable it later, use Android Settings.';
+
+  @override
+  String get speechNetworkError =>
+      'The speech service could not connect. Continue by typing or try again later.';
+
+  @override
+  String get speechNoMatch =>
+      'No clear speech was recognized. Try again or continue typing.';
+
+  @override
+  String get speechGenericError =>
+      'Voice input was interrupted. Try again or continue typing.';
+
+  @override
+  String get startSpeakingLabel => 'Start speaking';
+
+  @override
+  String get stopListeningLabel => 'Stop listening';
+
+  @override
+  String get typedFallbackLabel => 'Type below instead';
+
+  @override
+  String get voicePrivacyNotice =>
+      'Naseej does not save audio. Your device’s speech service may process speech online. Review and edit the text before saving.';
 }
