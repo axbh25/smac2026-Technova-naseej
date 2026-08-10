@@ -9,33 +9,33 @@
 
 | Check | Result | Notes |
 |---|---|---|
-| `flutter gen-l10n` | Pass / Fail | |
-| Dart formatting | Pass / Fail | |
-| `flutter analyze` | Pass / Fail | |
-| `flutter test` | Pass / Fail | |
-| Profile JSON round trip | Pass / Fail | |
-| Invalid JSON rejection | Pass / Fail | |
-| Nickname requirement | Pass / Fail | |
-| Role requirement | Pass / Fail | |
-| Save-to-Home flow | Pass / Fail | |
-| Stored Arabic-profile restoration | Pass / Fail | |
-| Accessibility guidelines | Pass / Fail | |
+| `flutter gen-l10n` | Pass | |
+| Dart formatting | Pass | |
+| `flutter analyze` | Pass | |
+| `flutter test` | Pass | |
+| Profile JSON round trip | Pass | |
+| Invalid JSON rejection | Pass | |
+| Nickname requirement | Pass | |
+| Role requirement | Pass | |
+| Save-to-Home flow | Pass | |
+| Stored Arabic-profile restoration | Pass | |
+| Accessibility guidelines | Pass | |
 
 ## Real Android Checks
 
 | Check | Result | Notes |
 |---|---|---|
-| English Profile Setup opens | Pass / Fail | |
-| Arabic Profile Setup opens | Pass / Fail | |
-| Arabic Profile Setup uses RTL | Pass / Fail | |
-| Profile saves without internet | Pass / Fail | |
-| Locale survives process restart | Pass / Fail | |
-| Profile survives process restart | Pass / Fail | |
-| Saved profile skips onboarding | Pass / Fail | |
-| Keyboard causes no inaccessible content | Pass / Fail | |
-| No overflow at 412 × 892 | Pass / Fail | |
-| English Figma overlays reviewed | Pass / Fail | |
-| Arabic Figma overlays reviewed | Pass / Fail | |
+| English Profile Setup opens | Pass | |
+| Arabic Profile Setup opens | Pass | |
+| Arabic Profile Setup uses RTL | Pass | |
+| Profile saves without internet | Pass | |
+| Locale survives process restart | Pass | |
+| Profile survives process restart | Pass | |
+| Saved profile skips onboarding | Pass | |
+| Keyboard causes no inaccessible content | Pass | |
+| No overflow at 412 × 892 | Pass | |
+| English Figma overlays reviewed | Pass | |
+| Arabic Figma overlays reviewed | Pass | |
 
 ## Evidence
 
@@ -46,8 +46,11 @@
 
 ## Differences Remaining
 
-Record any real differences.
+No blocking visual difference remained at the 412 × 892 reference viewport.
+Small platform-specific differences in font rasterization may remain between
+Figma and the Android emulator.
 
 ## Result
 
-Day 3 passed / requires correction.
+Day 3 passed after automated tests, English and Arabic device checks,
+persistence verification, restart restoration, and visual comparison.

@@ -100,4 +100,81 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get featureComingSoon =>
       'This feature will be connected in the next build.';
+
+  @override
+  String get teachSkillScreenTitle => 'Teach a Skill';
+
+  @override
+  String get teacherSectionTitle => 'Teacher';
+
+  @override
+  String get teacherCardBody =>
+      'This profile will be the teacher for this draft.';
+
+  @override
+  String get learnerSectionTitle => 'Who will learn?';
+
+  @override
+  String get learnerNicknameLabel => 'Learner nickname';
+
+  @override
+  String get learnerNicknameHint => 'For example, Mariam';
+
+  @override
+  String get learnerRoleLabel => 'Choose the learner\'s role';
+
+  @override
+  String get categorySectionTitle => 'Choose a skill category';
+
+  @override
+  String get skillCategoryHeritage => 'Heritage & Etiquette';
+
+  @override
+  String get skillCategoryEveryday => 'Everyday Skill';
+
+  @override
+  String get skillCategoryDigital => 'Digital Confidence';
+
+  @override
+  String get skillCategoryFamilyCare => 'Family Care';
+
+  @override
+  String get explanationSectionTitle => 'Explain the skill';
+
+  @override
+  String get explanationHint =>
+      'Describe what you want to teach in your own words.';
+
+  @override
+  String get explanationHelper =>
+      'Write at least 20 characters. Voice input will be added next.';
+
+  @override
+  String get saveDraftLabel => 'Save Draft';
+
+  @override
+  String get savingDraftLabel => 'Saving...';
+
+  @override
+  String get draftSaveError =>
+      'We could not save this draft. Please try again.';
+
+  @override
+  String get savedDraftTitle => 'Saved skill draft';
+
+  @override
+  String draftLearnerSummary(String name, String role) {
+    return 'Learner: $name — $role';
+  }
+
+  @override
+  String draftCategorySummary(String category) {
+    return 'Category: $category';
+  }
+
+  @override
+  String get draftStoredLocally => 'Saved on this phone and ready to continue.';
+
+  @override
+  String get continueDraftLabel => 'Continue Draft';
 }

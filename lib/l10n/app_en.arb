@@ -38,5 +38,45 @@
   "emptyWeaveBody": "Teach one skill and learn one skill to create your first thread.",
   "teachSkillLabel": "Teach a Skill",
   "learnSkillLabel": "Learn a Skill",
-  "featureComingSoon": "This feature will be connected in the next build."
+  "featureComingSoon": "This feature will be connected in the next build.",
+  "teachSkillScreenTitle": "Teach a Skill",
+  "teacherSectionTitle": "Teacher",
+  "teacherCardBody": "This profile will be the teacher for this draft.",
+  "learnerSectionTitle": "Who will learn?",
+  "learnerNicknameLabel": "Learner nickname",
+  "learnerNicknameHint": "For example, Mariam",
+  "learnerRoleLabel": "Choose the learner's role",
+  "categorySectionTitle": "Choose a skill category",
+  "skillCategoryHeritage": "Heritage & Etiquette",
+  "skillCategoryEveryday": "Everyday Skill",
+  "skillCategoryDigital": "Digital Confidence",
+  "skillCategoryFamilyCare": "Family Care",
+  "explanationSectionTitle": "Explain the skill",
+  "explanationHint": "Describe what you want to teach in your own words.",
+  "explanationHelper": "Write at least 20 characters. Voice input will be added next.",
+  "saveDraftLabel": "Save Draft",
+  "savingDraftLabel": "Saving...",
+  "draftSaveError": "We could not save this draft. Please try again.",
+  "savedDraftTitle": "Saved skill draft",
+  "draftLearnerSummary": "Learner: {name} — {role}",
+  "@draftLearnerSummary": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "draftCategorySummary": "Category: {category}",
+  "@draftCategorySummary": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "draftStoredLocally": "Saved on this phone and ready to continue.",
+  "continueDraftLabel": "Continue Draft"
 }

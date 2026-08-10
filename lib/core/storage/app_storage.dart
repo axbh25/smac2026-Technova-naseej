@@ -8,4 +8,10 @@ abstract interface class AppStorage {
   Future<void> writeProfileJson(String profileJson);
 
   Future<void> clearProfile();
+
+  Future<String?> readSkillDraftJson();
+
+  Future<void> writeSkillDraftJson(String skillDraftJson);
+
+  Future<void> clearSkillDraft();
 }
