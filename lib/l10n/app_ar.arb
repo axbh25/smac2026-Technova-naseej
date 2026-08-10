@@ -23,17 +23,33 @@
   "savingProfileLabel": "جارٍ الحفظ...",
   "profileSaveError": "تعذر حفظ هذا الملف. حاول مرة أخرى.",
   "homeGreeting": "مرحبًا، {name}",
-  "@homeGreeting": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
   "profileStoredLocally": "محفوظ على هذا الهاتف",
   "emptyWeaveTitle": "يبدأ نسيج عائلتك من هنا",
   "emptyWeaveBody": "علِّم مهارة وتعلَّم مهارة لتضيفوا أول خيط.",
   "teachSkillLabel": "علِّم مهارة",
   "learnSkillLabel": "تعلَّم مهارة",
-  "featureComingSoon": "ستُربط هذه الميزة في الإصدار القادم."
+  "featureComingSoon": "ستُربط هذه الميزة في الإصدار القادم.",
+  "teachSkillScreenTitle": "علِّم مهارة",
+  "teacherSectionTitle": "المعلّم",
+  "teacherCardBody": "سيكون هذا الملف هو المعلّم في هذه المسودة.",
+  "learnerSectionTitle": "من سيتعلّم؟",
+  "learnerNicknameLabel": "اسم المتعلّم أو لقبه",
+  "learnerNicknameHint": "مثل: مريم",
+  "learnerRoleLabel": "اختر دور المتعلّم في الأسرة",
+  "categorySectionTitle": "اختر فئة المهارة",
+  "skillCategoryHeritage": "التراث والآداب",
+  "skillCategoryEveryday": "مهارة يومية",
+  "skillCategoryDigital": "الثقة الرقمية",
+  "skillCategoryFamilyCare": "الرعاية العائلية",
+  "explanationSectionTitle": "اشرح المهارة",
+  "explanationHint": "اكتب ما تريد تعليمه بكلماتك.",
+  "explanationHelper": "اكتب 20 حرفًا على الأقل. ستُضاف ميزة الإدخال الصوتي لاحقًا.",
+  "saveDraftLabel": "حفظ المسودة",
+  "savingDraftLabel": "جارٍ الحفظ...",
+  "draftSaveError": "تعذر حفظ المسودة. حاول مرة أخرى.",
+  "savedDraftTitle": "مسودة مهارة محفوظة",
+  "draftLearnerSummary": "المتعلّم: {name} — {role}",
+  "draftCategorySummary": "الفئة: {category}",
+  "draftStoredLocally": "محفوظة على هذا الهاتف وجاهزة للمتابعة.",
+  "continueDraftLabel": "متابعة المسودة"
 }

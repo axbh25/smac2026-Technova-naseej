@@ -271,6 +271,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This feature will be connected in the next build.'**
   String get featureComingSoon;
+
+  /// No description provided for @teachSkillScreenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Teach a Skill'**
+  String get teachSkillScreenTitle;
+
+  /// No description provided for @teacherSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Teacher'**
+  String get teacherSectionTitle;
+
+  /// No description provided for @teacherCardBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This profile will be the teacher for this draft.'**
+  String get teacherCardBody;
+
+  /// No description provided for @learnerSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Who will learn?'**
+  String get learnerSectionTitle;
+
+  /// No description provided for @learnerNicknameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Learner nickname'**
+  String get learnerNicknameLabel;
+
+  /// No description provided for @learnerNicknameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'For example, Mariam'**
+  String get learnerNicknameHint;
+
+  /// No description provided for @learnerRoleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the learner\'s role'**
+  String get learnerRoleLabel;
+
+  /// No description provided for @categorySectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a skill category'**
+  String get categorySectionTitle;
+
+  /// No description provided for @skillCategoryHeritage.
+  ///
+  /// In en, this message translates to:
+  /// **'Heritage & Etiquette'**
+  String get skillCategoryHeritage;
+
+  /// No description provided for @skillCategoryEveryday.
+  ///
+  /// In en, this message translates to:
+  /// **'Everyday Skill'**
+  String get skillCategoryEveryday;
+
+  /// No description provided for @skillCategoryDigital.
+  ///
+  /// In en, this message translates to:
+  /// **'Digital Confidence'**
+  String get skillCategoryDigital;
+
+  /// No description provided for @skillCategoryFamilyCare.
+  ///
+  /// In en, this message translates to:
+  /// **'Family Care'**
+  String get skillCategoryFamilyCare;
+
+  /// No description provided for @explanationSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Explain the skill'**
+  String get explanationSectionTitle;
+
+  /// No description provided for @explanationHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe what you want to teach in your own words.'**
+  String get explanationHint;
+
+  /// No description provided for @explanationHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Write at least 20 characters. Voice input will be added next.'**
+  String get explanationHelper;
+
+  /// No description provided for @saveDraftLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Draft'**
+  String get saveDraftLabel;
+
+  /// No description provided for @savingDraftLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving...'**
+  String get savingDraftLabel;
+
+  /// No description provided for @draftSaveError.
+  ///
+  /// In en, this message translates to:
+  /// **'We could not save this draft. Please try again.'**
+  String get draftSaveError;
+
+  /// No description provided for @savedDraftTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved skill draft'**
+  String get savedDraftTitle;
+
+  /// No description provided for @draftLearnerSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Learner: {name} — {role}'**
+  String draftLearnerSummary(String name, String role);
+
+  /// No description provided for @draftCategorySummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Category: {category}'**
+  String draftCategorySummary(String category);
+
+  /// No description provided for @draftStoredLocally.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved on this phone and ready to continue.'**
+  String get draftStoredLocally;
+
+  /// No description provided for @continueDraftLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue Draft'**
+  String get continueDraftLabel;
 }
 
 class _AppLocalizationsDelegate

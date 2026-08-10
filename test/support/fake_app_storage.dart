@@ -1,10 +1,11 @@
 import 'package:naseej/core/storage/app_storage.dart';
 
 class FakeAppStorage implements AppStorage {
-  FakeAppStorage({this.localeCode, this.profileJson});
+  FakeAppStorage({this.localeCode, this.profileJson, this.skillDraftJson});
 
   String? localeCode;
   String? profileJson;
+  String? skillDraftJson;
 
   @override
   Future<String?> readLocaleCode() async {
@@ -29,5 +30,20 @@ class FakeAppStorage implements AppStorage {
   @override
   Future<void> clearProfile() async {
     profileJson = null;
+  }
+
+  @override
+  Future<String?> readSkillDraftJson() async {
+    return skillDraftJson;
+  }
+
+  @override
+  Future<void> writeSkillDraftJson(String skillDraftJson) async {
+    this.skillDraftJson = skillDraftJson;
+  }
+
+  @override
+  Future<void> clearSkillDraft() async {
+    skillDraftJson = null;
   }
 }

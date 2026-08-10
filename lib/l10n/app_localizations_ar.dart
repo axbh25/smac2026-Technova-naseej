@@ -97,4 +97,78 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get featureComingSoon => 'ستُربط هذه الميزة في الإصدار القادم.';
+
+  @override
+  String get teachSkillScreenTitle => 'علِّم مهارة';
+
+  @override
+  String get teacherSectionTitle => 'المعلّم';
+
+  @override
+  String get teacherCardBody => 'سيكون هذا الملف هو المعلّم في هذه المسودة.';
+
+  @override
+  String get learnerSectionTitle => 'من سيتعلّم؟';
+
+  @override
+  String get learnerNicknameLabel => 'اسم المتعلّم أو لقبه';
+
+  @override
+  String get learnerNicknameHint => 'مثل: مريم';
+
+  @override
+  String get learnerRoleLabel => 'اختر دور المتعلّم في الأسرة';
+
+  @override
+  String get categorySectionTitle => 'اختر فئة المهارة';
+
+  @override
+  String get skillCategoryHeritage => 'التراث والآداب';
+
+  @override
+  String get skillCategoryEveryday => 'مهارة يومية';
+
+  @override
+  String get skillCategoryDigital => 'الثقة الرقمية';
+
+  @override
+  String get skillCategoryFamilyCare => 'الرعاية العائلية';
+
+  @override
+  String get explanationSectionTitle => 'اشرح المهارة';
+
+  @override
+  String get explanationHint => 'اكتب ما تريد تعليمه بكلماتك.';
+
+  @override
+  String get explanationHelper =>
+      'اكتب 20 حرفًا على الأقل. ستُضاف ميزة الإدخال الصوتي لاحقًا.';
+
+  @override
+  String get saveDraftLabel => 'حفظ المسودة';
+
+  @override
+  String get savingDraftLabel => 'جارٍ الحفظ...';
+
+  @override
+  String get draftSaveError => 'تعذر حفظ المسودة. حاول مرة أخرى.';
+
+  @override
+  String get savedDraftTitle => 'مسودة مهارة محفوظة';
+
+  @override
+  String draftLearnerSummary(String name, String role) {
+    return 'المتعلّم: $name — $role';
+  }
+
+  @override
+  String draftCategorySummary(String category) {
+    return 'الفئة: $category';
+  }
+
+  @override
+  String get draftStoredLocally => 'محفوظة على هذا الهاتف وجاهزة للمتابعة.';
+
+  @override
+  String get continueDraftLabel => 'متابعة المسودة';
 }

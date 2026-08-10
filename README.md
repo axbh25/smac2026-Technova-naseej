@@ -24,6 +24,7 @@ Day 3 persistent local profile:
 - Automated profile, persistence, RTL, and accessibility tests are included
 - Day 2 and Day 3 visual evidence is stored under `docs/testing/`
 - Production AI, voice input, camera input, and skill cards are not yet implemented
+
 ## Current Developer
 
 - GitHub: axbh25
@@ -73,6 +74,7 @@ flutter analyze
 flutter test
 flutter run
 ```
+
 ## Figma
 
 Design file: https://www.figma.com/design/RXh2fTPhOhP317qzky4pKE/Naseej-%E2%80%94-SMAC-2026?node-id=0-1&t=FKwfnrCDavmYx0M6-1
