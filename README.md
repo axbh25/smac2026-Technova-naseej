@@ -3,40 +3,45 @@
 Naseej is a bilingual English–Arabic mobile application being developed for
 SMAC 2026.
 
-The planned product helps family members from different generations teach one
-another practical, cultural, and digital skills. A family member will explain
-a skill using voice or text, and AI will help restructure the approved
-explanation into a short three-step learning card. The learner will complete
-the activity and then be encouraged to teach a skill in return.
+The product helps family members from different generations teach one another
+practical, cultural, and digital skills. A family member explains a skill
+using voice or text, may add one private context photo, and will later use AI
+to restructure the approved explanation into a short three-step learning
+card.
 
 ## Current Development Status
 
-Day 5 editable speech transcription:
+Day 6 private context photo:
 
 - Android-only Flutter project runs on Pixel 7 Pro API 36
 - English and Arabic localization is generated from ARB files
 - A local profile and selected language persist after restart
 - One bilingual Teach-a-Skill draft persists locally
 - Learner nickname, role, category, and explanation are restored
-- English and Arabic short speech transcription is integrated
-- Voice input has visible Idle, Listening, and Fallback states
-- Recognized words appear in the editable explanation field
-- Existing typed text is preserved when voice input begins
-- Manual typing remains available after permission or service failure
-- Naseej stores recognized text but does not save an audio file
-- The device speech service may require internet access
-- Automated speech-controller, fallback, persistence, RTL, and accessibility tests are included
-- Day 2 through Day 5 visual evidence is stored under `docs/testing/`
-- Camera input, production AI generation, skill cards, and notifications are not yet implemented
+- Short English and Arabic speech transcription is integrated
+- Recognized speech remains editable
+- Manual typing remains available after speech failure
+- One optional context photo can be captured or selected
+- Selected photos are copied into private app storage
+- Context photos appear in the Teach Skill form and Home draft
+- Context photos survive application restart
+- Photos can be replaced or removed
+- Android lost picker data is handled
+- Naseej stores recognized text but does not save audio
+- Naseej keeps context photos local and does not send them to AI in the MVP
+- Automated model, speech, photo, persistence, RTL, and accessibility tests are included
+- Day 2 through Day 6 visual evidence is stored under `docs/testing/`
+- Production AI generation, skill cards, teach-back, and notifications are not yet implemented
 
 ## Current Developer
+
 - GitHub: axbh25
 - Role: product design, Flutter development, testing, documentation, and demo
 
 ## Team Technova
 
 - Abdullah Haider — Flutter development, architecture, testing, and documentation
-- Shoug Almaashari — Figma, documentation, testing
+- Shoug Almaashari — Figma, documentation, bilingual review, and testing
 
 Both participants use their own GitHub accounts and must understand every
 merged feature.
@@ -44,24 +49,31 @@ merged feature.
 ## Planned MVP
 
 1. Voice or typed skill explanation
-2. AI-assisted three-step learning card
-3. Learner completion and teach-back
-4. Reciprocal skill suggestion
-5. English and Arabic interface with RTL support
-6. Local storage and transparent offline fallback
+2. Optional private context photo
+3. AI-assisted three-step learning card
+4. Learner completion and teach-back
+5. Reciprocal skill suggestion
+6. English and Arabic interface with RTL support
+7. Local storage and transparent offline fallback
 
 ## Technology
-- Provider for shared application state
-- SharedPreferencesAsync for small non-critical local preferences
+
 - Flutter and Dart
 - Android
-- Figma
-- Git and GitHub
+- Provider for shared application state
+- SharedPreferencesAsync for small non-critical local preferences
 - Local JSON serialization for the current skill draft
-Camera, production AI generation, and notifications will be added gradually
-only when the relevant feature is implemented and tested.
 - `speech_to_text` for short user-initiated device speech recognition
 - A testable speech-engine abstraction with a shared SpeechController
+- `image_picker` for camera and gallery image selection
+- `path_provider` for private application file locations
+- A testable context-photo service abstraction
+- Figma
+- Git and GitHub
+
+Production AI generation and notifications will be added gradually only when
+the relevant feature is implemented and tested.
+
 ## Android Reference Device
 
 - Hardware profile: Pixel 7 Pro
@@ -69,7 +81,6 @@ only when the relevant feature is implemented and tested.
 - Physical profile: 1440 × 3120 at 560 dpi
 - Approximate Flutter logical size: 412 × 892
 - Orientation: Portrait
-
 ## Run the Current Project
 
 ```bash
