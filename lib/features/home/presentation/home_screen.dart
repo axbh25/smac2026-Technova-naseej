@@ -5,6 +5,7 @@ import 'package:naseej/core/state/app_controller.dart';
 import 'package:naseej/core/theme/app_colors.dart';
 import 'package:naseej/core/theme/app_spacing.dart';
 import 'package:naseej/core/widgets/language_toggle_button.dart';
+import 'package:naseej/features/home/presentation/widgets/ai_readiness_card.dart';
 import 'package:naseej/features/profile/domain/family_profile.dart';
 import 'package:naseej/features/profile/presentation/family_role_ui.dart';
 import 'package:naseej/features/skill/domain/skill_draft.dart';
@@ -43,6 +44,7 @@ class HomeScreen extends StatelessWidget {
     final AppLocalizations localizations = AppLocalizations.of(context)!;
 
     final FamilyProfile? profile = controller.profile;
+
     final SkillDraft? draft = controller.skillDraft;
 
     if (profile == null) {
@@ -98,6 +100,10 @@ class HomeScreen extends StatelessWidget {
                 photoUnavailableLabel: localizations.contextPhotoUnavailable,
                 storedLocallyLabel: localizations.draftStoredLocally,
               ),
+            if (draft != null) ...<Widget>[
+              const SizedBox(height: AppSpacing.lg),
+              const AiReadinessCard(),
+            ],
             const SizedBox(height: AppSpacing.lg),
             SizedBox(
               height: 56,
@@ -362,6 +368,7 @@ class _DraftPhotoPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final File photoFile = File(photoPath);
+
     final bool exists = photoFile.existsSync();
 
     return ClipRRect(
