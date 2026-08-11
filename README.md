@@ -64,12 +64,23 @@ merged feature.
 - SharedPreferencesAsync for small non-critical local preferences
 - Local JSON serialization for the current skill draft
 - `speech_to_text` for short user-initiated device speech recognition
-- A testable speech-engine abstraction with a shared SpeechController
+- A testable speech-engine abstraction
 - `image_picker` for camera and gallery image selection
 - `path_provider` for private application file locations
 - A testable context-photo service abstraction
+- Firebase Core
+- Firebase AI Logic
+- Firebase App Check
+- A testable AI readiness-service abstraction
 - Figma
 - Git and GitHub
+
+## Day 7 AI Data Boundary
+
+The current AI request sends only:
+
+```text
+Return exactly NASEEJ_READY.
 
 Production AI generation and notifications will be added gradually only when
 the relevant feature is implemented and tested.
