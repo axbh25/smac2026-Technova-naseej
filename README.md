@@ -11,27 +11,27 @@ card.
 
 ## Current Development Status
 
-Day 6 private context photo:
+Day 7 secure AI foundation:
 
 - Android-only Flutter project runs on Pixel 7 Pro API 36
 - English and Arabic localization is generated from ARB files
 - A local profile and selected language persist after restart
 - One bilingual Teach-a-Skill draft persists locally
-- Learner nickname, role, category, and explanation are restored
-- Short English and Arabic speech transcription is integrated
-- Recognized speech remains editable
-- Manual typing remains available after speech failure
-- One optional context photo can be captured or selected
-- Selected photos are copied into private app storage
-- Context photos appear in the Teach Skill form and Home draft
-- Context photos survive application restart
-- Photos can be replaced or removed
-- Android lost picker data is handled
-- Naseej stores recognized text but does not save audio
-- Naseej keeps context photos local and does not send them to AI in the MVP
-- Automated model, speech, photo, persistence, RTL, and accessibility tests are included
-- Day 2 through Day 6 visual evidence is stored under `docs/testing/`
-- Production AI generation, skill cards, teach-back, and notifications are not yet implemented
+- Short speech transcription remains editable
+- One optional context photo remains in private local app storage
+- Firebase Core is configured for Android
+- Firebase AI Logic is integrated
+- Firebase App Check is activated
+- Debug builds use the App Check debug provider
+- Release builds are configured for Play Integrity
+- A real `gemini-2.5-flash-lite` readiness check is available
+- The readiness check has Idle, Checking, Ready, and Unavailable states
+- The readiness check sends one fixed test phrase only
+- No profile, draft, transcript, or photo is sent during Day 7
+- Firebase or network failure does not block local app functionality
+- Automated AI-controller, UI, fallback, RTL, and existing feature tests are included
+- Day 2 through Day 7 visual evidence is stored under `docs/testing/`
+- Production lesson-card generation, structured AI output, teach-back, and notifications are not yet implemented
 
 ## Current Developer
 
