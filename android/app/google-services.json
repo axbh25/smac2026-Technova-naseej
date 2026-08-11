@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "264538760936",
+    "project_id": "naseej-smac-2026",
+    "storage_bucket": "naseej-smac-2026.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:264538760936:android:653d57bf5e560543d7cb5d",
+        "android_client_info": {
+          "package_name": "com.axbh25.naseej"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGDgxug-TE9LfaFTyQ4mxa8XklBBiXfKI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -595,6 +595,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Continue Draft'**
   String get continueDraftLabel;
+
+  /// No description provided for @aiReadinessTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'AI connection'**
+  String get aiReadinessTitle;
+
+  /// No description provided for @aiReadinessIdleBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the secure AI connection before generating a family lesson.'**
+  String get aiReadinessIdleBody;
+
+  /// No description provided for @aiCheckingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking AI connection…'**
+  String get aiCheckingTitle;
+
+  /// No description provided for @aiCheckingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Naseej is sending one fixed test phrase only.'**
+  String get aiCheckingBody;
+
+  /// No description provided for @aiReadyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'AI connection is ready'**
+  String get aiReadyTitle;
+
+  /// No description provided for @aiReadyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Firebase AI Logic responded successfully. Lesson generation will be added in the next build.'**
+  String get aiReadyBody;
+
+  /// No description provided for @aiUnavailableTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'AI is unavailable right now'**
+  String get aiUnavailableTitle;
+
+  /// No description provided for @aiCheckConnectionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Check AI connection'**
+  String get aiCheckConnectionLabel;
+
+  /// No description provided for @aiCheckAgainLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Check again'**
+  String get aiCheckAgainLabel;
+
+  /// No description provided for @aiCheckingButtonLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking…'**
+  String get aiCheckingButtonLabel;
+
+  /// No description provided for @aiNoFamilyDataNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'This check does not send your draft text or context photo.'**
+  String get aiNoFamilyDataNotice;
+
+  /// No description provided for @aiModelLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Model: {model}'**
+  String aiModelLabel(String model);
+
+  /// No description provided for @aiFirebaseConfigError.
+  ///
+  /// In en, this message translates to:
+  /// **'Firebase is not configured correctly in this build. Your local draft remains safe.'**
+  String get aiFirebaseConfigError;
+
+  /// No description provided for @aiOfflineError.
+  ///
+  /// In en, this message translates to:
+  /// **'The AI service could not be reached. Continue using your locally saved draft and try again when connected.'**
+  String get aiOfflineError;
+
+  /// No description provided for @aiAppCheckError.
+  ///
+  /// In en, this message translates to:
+  /// **'This test device has not been approved by App Check yet. Register its debug token and try again.'**
+  String get aiAppCheckError;
+
+  /// No description provided for @aiQuotaError.
+  ///
+  /// In en, this message translates to:
+  /// **'The AI request limit has been reached. Your local draft remains available.'**
+  String get aiQuotaError;
+
+  /// No description provided for @aiServiceDisabledError.
+  ///
+  /// In en, this message translates to:
+  /// **'Firebase AI Logic is not enabled for this project yet.'**
+  String get aiServiceDisabledError;
+
+  /// No description provided for @aiInvalidResponseError.
+  ///
+  /// In en, this message translates to:
+  /// **'The AI service responded, but the connection test result was unexpected. Try again.'**
+  String get aiInvalidResponseError;
+
+  /// No description provided for @aiGenericError.
+  ///
+  /// In en, this message translates to:
+  /// **'The AI check could not be completed. Continue using the local app and try again later.'**
+  String get aiGenericError;
 }
 
 class _AppLocalizationsDelegate

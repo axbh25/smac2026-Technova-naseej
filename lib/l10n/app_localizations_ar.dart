@@ -278,4 +278,73 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get continueDraftLabel => 'متابعة المسودة';
+
+  @override
+  String get aiReadinessTitle => 'اتصال الذكاء الاصطناعي';
+
+  @override
+  String get aiReadinessIdleBody =>
+      'تحقّق من الاتصال الآمن قبل إنشاء درس عائلي.';
+
+  @override
+  String get aiCheckingTitle => 'جارٍ التحقق من الاتصال…';
+
+  @override
+  String get aiCheckingBody => 'يرسل نسيج عبارة اختبار ثابتة فقط.';
+
+  @override
+  String get aiReadyTitle => 'اتصال الذكاء الاصطناعي جاهز';
+
+  @override
+  String get aiReadyBody =>
+      'استجابت خدمة Firebase AI Logic بنجاح. ستُضاف ميزة إنشاء الدرس في الإصدار القادم.';
+
+  @override
+  String get aiUnavailableTitle => 'الذكاء الاصطناعي غير متاح الآن';
+
+  @override
+  String get aiCheckConnectionLabel => 'التحقق من اتصال الذكاء الاصطناعي';
+
+  @override
+  String get aiCheckAgainLabel => 'التحقق مرة أخرى';
+
+  @override
+  String get aiCheckingButtonLabel => 'جارٍ التحقق…';
+
+  @override
+  String get aiNoFamilyDataNotice =>
+      'لا يرسل هذا التحقق نص المسودة أو الصورة التوضيحية.';
+
+  @override
+  String aiModelLabel(String model) {
+    return 'النموذج: $model';
+  }
+
+  @override
+  String get aiFirebaseConfigError =>
+      'لم تتم تهيئة Firebase بصورة صحيحة في هذا الإصدار. تبقى مسودتك المحلية آمنة.';
+
+  @override
+  String get aiOfflineError =>
+      'تعذر الوصول إلى خدمة الذكاء الاصطناعي. تابع باستخدام المسودة المحلية وحاول مرة أخرى عند توفر الاتصال.';
+
+  @override
+  String get aiAppCheckError =>
+      'لم تتم الموافقة على جهاز الاختبار في App Check بعد. سجّل رمز التصحيح وحاول مرة أخرى.';
+
+  @override
+  String get aiQuotaError =>
+      'تم بلوغ حد طلبات الذكاء الاصطناعي. تبقى مسودتك المحلية متاحة.';
+
+  @override
+  String get aiServiceDisabledError =>
+      'لم يتم تفعيل Firebase AI Logic لهذا المشروع بعد.';
+
+  @override
+  String get aiInvalidResponseError =>
+      'استجابت خدمة الذكاء الاصطناعي، لكن نتيجة اختبار الاتصال كانت غير متوقعة. حاول مرة أخرى.';
+
+  @override
+  String get aiGenericError =>
+      'تعذر إكمال التحقق من الذكاء الاصطناعي. تابع باستخدام التطبيق المحلي وحاول لاحقًا.';
 }

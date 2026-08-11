@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:naseej/app.dart';
+import 'package:naseej/core/ai/ai_readiness_controller.dart';
+import 'package:naseej/core/ai/ai_readiness_service.dart';
 import 'package:naseej/core/speech/speech_controller.dart';
 import 'package:naseej/core/state/app_controller.dart';
 import 'package:naseej/features/profile/domain/family_profile.dart';
 import 'package:naseej/features/skill/domain/skill_draft.dart';
 import 'package:provider/provider.dart';
 
+import 'support/fake_ai_readiness_service.dart';
 import 'support/fake_app_storage.dart';
 import 'support/fake_speech_engine.dart';
 
@@ -14,6 +17,7 @@ Future<AppController> pumpReferenceApp(
   WidgetTester tester, {
   FakeAppStorage? storage,
   SpeechController? speechController,
+  AiReadinessController? aiReadinessController,
 }) async {
   await tester.binding.setSurfaceSize(const Size(412, 892));
 
@@ -28,9 +32,17 @@ Future<AppController> pumpReferenceApp(
   final SpeechController activeSpeechController =
       speechController ?? SpeechController(FakeSpeechEngine());
 
-  addTearDown(controller.dispose);
+  final AiReadinessController activeAiReadinessController =
+      aiReadinessController ??
+      AiReadinessController(
+        FakeAiReadinessService(
+          result: const AiReadinessResult.ready('gemini-2.5-flash-lite'),
+        ),
+      );
 
+  addTearDown(controller.dispose);
   addTearDown(activeSpeechController.dispose);
+  addTearDown(activeAiReadinessController.dispose);
 
   await tester.pumpWidget(
     MultiProvider(
@@ -38,6 +50,9 @@ Future<AppController> pumpReferenceApp(
         ChangeNotifierProvider<AppController>.value(value: controller),
         ChangeNotifierProvider<SpeechController>.value(
           value: activeSpeechController,
+        ),
+        ChangeNotifierProvider<AiReadinessController>.value(
+          value: activeAiReadinessController,
         ),
       ],
       child: const NaseejApp(),
@@ -68,11 +83,13 @@ Future<void> openTeachSkillScreen(
   WidgetTester tester, {
   required FakeAppStorage storage,
   SpeechController? speechController,
+  AiReadinessController? aiReadinessController,
 }) async {
   await pumpReferenceApp(
     tester,
     storage: storage,
     speechController: speechController,
+    aiReadinessController: aiReadinessController,
   );
 
   final Finder teachButton = find.byKey(
@@ -99,7 +116,6 @@ Future<void> completeSkillDraftForm(WidgetTester tester) async {
   );
 
   await tester.ensureVisible(learnerNicknameFinder);
-
   await tester.pumpAndSettle();
 
   await tester.enterText(learnerNicknameFinder, 'Mariam');
@@ -111,11 +127,9 @@ Future<void> completeSkillDraftForm(WidgetTester tester) async {
   );
 
   await tester.ensureVisible(learnerRoleFinder);
-
   await tester.pumpAndSettle();
 
   await tester.tap(learnerRoleFinder);
-
   await tester.pump();
 
   final Finder categoryFinder = find.byKey(
@@ -123,11 +137,9 @@ Future<void> completeSkillDraftForm(WidgetTester tester) async {
   );
 
   await tester.ensureVisible(categoryFinder);
-
   await tester.pumpAndSettle();
 
   await tester.tap(categoryFinder);
-
   await tester.pump();
 
   final Finder explanationFinder = find.byKey(
@@ -135,7 +147,6 @@ Future<void> completeSkillDraftForm(WidgetTester tester) async {
   );
 
   await tester.ensureVisible(explanationFinder);
-
   await tester.pumpAndSettle();
 
   await tester.enterText(
@@ -438,9 +449,15 @@ void main() {
       const ValueKey<String>('teach_skill_button'),
     );
 
-    await tester.ensureVisible(teachButton);
+    await tester.scrollUntilVisible(
+      teachButton,
+      300,
+      scrollable: find.byType(Scrollable).last,
+    );
 
     await tester.pumpAndSettle();
+
+    expect(teachButton, findsOneWidget);
 
     await tester.tap(teachButton);
 
@@ -499,9 +516,11 @@ void main() {
     );
 
     await tester.ensureVisible(speechButton);
+
     await tester.pumpAndSettle();
 
     await tester.tap(speechButton);
+
     await tester.pumpAndSettle();
 
     expect(engine.isListening, isTrue);
@@ -552,9 +571,11 @@ void main() {
     );
 
     await tester.ensureVisible(speechButton);
+
     await tester.pumpAndSettle();
 
     await tester.tap(speechButton);
+
     await tester.pumpAndSettle();
 
     expect(engine.isListening, isTrue);
@@ -594,9 +615,11 @@ void main() {
     );
 
     await tester.ensureVisible(speechButton);
+
     await tester.pumpAndSettle();
 
     await tester.tap(speechButton);
+
     await tester.pumpAndSettle();
 
     expect(

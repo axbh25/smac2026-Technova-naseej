@@ -285,4 +285,73 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get continueDraftLabel => 'Continue Draft';
+
+  @override
+  String get aiReadinessTitle => 'AI connection';
+
+  @override
+  String get aiReadinessIdleBody =>
+      'Check the secure AI connection before generating a family lesson.';
+
+  @override
+  String get aiCheckingTitle => 'Checking AI connection…';
+
+  @override
+  String get aiCheckingBody => 'Naseej is sending one fixed test phrase only.';
+
+  @override
+  String get aiReadyTitle => 'AI connection is ready';
+
+  @override
+  String get aiReadyBody =>
+      'Firebase AI Logic responded successfully. Lesson generation will be added in the next build.';
+
+  @override
+  String get aiUnavailableTitle => 'AI is unavailable right now';
+
+  @override
+  String get aiCheckConnectionLabel => 'Check AI connection';
+
+  @override
+  String get aiCheckAgainLabel => 'Check again';
+
+  @override
+  String get aiCheckingButtonLabel => 'Checking…';
+
+  @override
+  String get aiNoFamilyDataNotice =>
+      'This check does not send your draft text or context photo.';
+
+  @override
+  String aiModelLabel(String model) {
+    return 'Model: $model';
+  }
+
+  @override
+  String get aiFirebaseConfigError =>
+      'Firebase is not configured correctly in this build. Your local draft remains safe.';
+
+  @override
+  String get aiOfflineError =>
+      'The AI service could not be reached. Continue using your locally saved draft and try again when connected.';
+
+  @override
+  String get aiAppCheckError =>
+      'This test device has not been approved by App Check yet. Register its debug token and try again.';
+
+  @override
+  String get aiQuotaError =>
+      'The AI request limit has been reached. Your local draft remains available.';
+
+  @override
+  String get aiServiceDisabledError =>
+      'Firebase AI Logic is not enabled for this project yet.';
+
+  @override
+  String get aiInvalidResponseError =>
+      'The AI service responded, but the connection test result was unexpected. Try again.';
+
+  @override
+  String get aiGenericError =>
+      'The AI check could not be completed. Continue using the local app and try again later.';
 }
