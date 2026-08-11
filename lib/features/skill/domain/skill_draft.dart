@@ -27,6 +27,7 @@ class SkillDraft {
     required this.learnerRole,
     required this.category,
     required this.explanation,
+    this.contextPhotoPath,
   });
 
   static const int minimumExplanationLength = 20;
@@ -38,15 +39,17 @@ class SkillDraft {
   final FamilyRole learnerRole;
   final SkillCategory category;
   final String explanation;
+  final String? contextPhotoPath;
 
   String toJsonString() {
-    return jsonEncode(<String, String>{
+    return jsonEncode(<String, Object?>{
       'teacherNickname': teacherNickname,
       'teacherRole': teacherRole.name,
       'learnerNickname': learnerNickname,
       'learnerRole': learnerRole.name,
       'category': category.name,
       'explanation': explanation,
+      'contextPhotoPath': contextPhotoPath,
     });
   }
 
@@ -68,6 +71,7 @@ class SkillDraft {
       final Object? learnerRoleValue = decoded['learnerRole'];
       final Object? categoryValue = decoded['category'];
       final Object? explanationValue = decoded['explanation'];
+      final Object? contextPhotoPathValue = decoded['contextPhotoPath'];
 
       if (teacherNicknameValue is! String ||
           teacherRoleValue is! String ||
@@ -78,6 +82,10 @@ class SkillDraft {
         return null;
       }
 
+      if (contextPhotoPathValue != null && contextPhotoPathValue is! String) {
+        return null;
+      }
+
       final String teacherNickname = teacherNicknameValue.trim();
       final String learnerNickname = learnerNicknameValue.trim();
       final String explanation = explanationValue.trim();
@@ -85,12 +93,20 @@ class SkillDraft {
       final FamilyRole? teacherRole = FamilyRole.fromStorageValue(
         teacherRoleValue,
       );
+
       final FamilyRole? learnerRole = FamilyRole.fromStorageValue(
         learnerRoleValue,
       );
+
       final SkillCategory? category = SkillCategory.fromStorageValue(
         categoryValue,
       );
+
+      final String? contextPhotoPath =
+          contextPhotoPathValue is String &&
+              contextPhotoPathValue.trim().isNotEmpty
+          ? contextPhotoPathValue.trim()
+          : null;
 
       if (teacherNickname.isEmpty ||
           learnerNickname.isEmpty ||
@@ -109,6 +125,7 @@ class SkillDraft {
         learnerRole: learnerRole,
         category: category,
         explanation: explanation,
+        contextPhotoPath: contextPhotoPath,
       );
     } on FormatException {
       return null;
@@ -123,7 +140,8 @@ class SkillDraft {
         other.learnerNickname == learnerNickname &&
         other.learnerRole == learnerRole &&
         other.category == category &&
-        other.explanation == explanation;
+        other.explanation == explanation &&
+        other.contextPhotoPath == contextPhotoPath;
   }
 
   @override
@@ -135,6 +153,7 @@ class SkillDraft {
       learnerRole,
       category,
       explanation,
+      contextPhotoPath,
     );
   }
 }

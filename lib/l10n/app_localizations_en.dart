@@ -139,44 +139,63 @@ class AppLocalizationsEn extends AppLocalizations {
   String get skillCategoryFamilyCare => 'Family Care';
 
   @override
-  String get explanationSectionTitle => 'Explain the skill';
+  String get contextPhotoSectionTitle => 'Context photo';
 
   @override
-  String get explanationHint =>
-      'Describe what you want to teach in your own words.';
+  String get contextPhotoTitle => 'Show the object or setting';
 
   @override
-  String get explanationHelper =>
-      'Write at least 20 characters. Voice input will be added next.';
+  String get contextPhotoBody =>
+      'Add one optional photo to help the learner understand the skill.';
 
   @override
-  String get saveDraftLabel => 'Save Draft';
+  String get addContextPhotoLabel => 'Add context photo';
 
   @override
-  String get savingDraftLabel => 'Saving...';
+  String get replaceContextPhotoLabel => 'Replace photo';
 
   @override
-  String get draftSaveError =>
-      'We could not save this draft. Please try again.';
+  String get removeContextPhotoLabel => 'Remove photo';
 
   @override
-  String get savedDraftTitle => 'Saved skill draft';
+  String get takePhotoLabel => 'Take a photo';
 
   @override
-  String draftLearnerSummary(String name, String role) {
-    return 'Learner: $name — $role';
-  }
+  String get chooseFromGalleryLabel => 'Choose from gallery';
 
   @override
-  String draftCategorySummary(String category) {
-    return 'Category: $category';
-  }
+  String get cancelLabel => 'Cancel';
 
   @override
-  String get draftStoredLocally => 'Saved on this phone and ready to continue.';
+  String get photoProcessingLabel => 'Preparing photo…';
 
   @override
-  String get continueDraftLabel => 'Continue Draft';
+  String get photoPrivacyNotice =>
+      'This photo stays on this phone and is not sent to AI in this MVP.';
+
+  @override
+  String get photoPermissionDenied =>
+      'Photo access was denied. Continue without a photo or change the permission in Android Settings.';
+
+  @override
+  String get photoSourceUnavailable =>
+      'The camera or photo source is unavailable. Continue without a photo.';
+
+  @override
+  String get photoInvalidFile =>
+      'The selected image could not be opened. Choose another image.';
+
+  @override
+  String get photoStorageError =>
+      'The photo could not be copied into private app storage. Continue without it or try again.';
+
+  @override
+  String get photoGenericError =>
+      'The photo could not be added. Try again or continue without it.';
+
+  @override
+  String get contextPhotoUnavailable =>
+      'The saved photo is no longer available on this phone.';
 
   @override
   String get voiceInputSectionTitle => 'Voice input';
@@ -226,4 +245,44 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get voicePrivacyNotice =>
       'Naseej does not save audio. Your device’s speech service may process speech online. Review and edit the text before saving.';
+
+  @override
+  String get explanationSectionTitle => 'Explain the skill';
+
+  @override
+  String get explanationHint =>
+      'Describe what you want to teach in your own words.';
+
+  @override
+  String get explanationHelper =>
+      'Write or dictate at least 20 characters. Review the text before saving.';
+
+  @override
+  String get saveDraftLabel => 'Save Draft';
+
+  @override
+  String get savingDraftLabel => 'Saving...';
+
+  @override
+  String get draftSaveError =>
+      'We could not save this draft. Please try again.';
+
+  @override
+  String get savedDraftTitle => 'Saved skill draft';
+
+  @override
+  String draftLearnerSummary(String name, String role) {
+    return 'Learner: $name — $role';
+  }
+
+  @override
+  String draftCategorySummary(String category) {
+    return 'Category: $category';
+  }
+
+  @override
+  String get draftStoredLocally => 'Saved on this phone and ready to continue.';
+
+  @override
+  String get continueDraftLabel => 'Continue Draft';
 }
