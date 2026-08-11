@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:naseej/core/photo/context_photo_service.dart';
+import 'package:naseej/core/photo/device_context_photo_service.dart';
 import 'package:naseej/core/speech/speech_controller.dart';
 import 'package:naseej/core/state/app_controller.dart';
 import 'package:naseej/core/theme/app_colors.dart';
@@ -11,16 +13,23 @@ import 'package:naseej/features/profile/presentation/family_role_ui.dart';
 import 'package:naseej/features/profile/presentation/widgets/role_choice_card.dart';
 import 'package:naseej/features/skill/domain/skill_draft.dart';
 import 'package:naseej/features/skill/presentation/skill_category_ui.dart';
+import 'package:naseej/features/skill/presentation/widgets/context_photo_card.dart';
 import 'package:naseej/features/skill/presentation/widgets/skill_category_choice_card.dart';
 import 'package:naseej/features/skill/presentation/widgets/speech_input_card.dart';
 import 'package:naseej/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class TeachSkillScreen extends StatefulWidget {
-  const TeachSkillScreen({required this.teacher, this.initialDraft, super.key});
+  const TeachSkillScreen({
+    required this.teacher,
+    this.initialDraft,
+    this.contextPhotoService,
+    super.key,
+  });
 
   final FamilyProfile teacher;
   final SkillDraft? initialDraft;
+  final ContextPhotoService? contextPhotoService;
 
   @override
   State<TeachSkillScreen> createState() => _TeachSkillScreenState();
@@ -29,16 +38,25 @@ class TeachSkillScreen extends StatefulWidget {
 class _TeachSkillScreenState extends State<TeachSkillScreen> {
   late final TextEditingController _learnerNicknameController;
   late final TextEditingController _explanationController;
+  late final ContextPhotoService _contextPhotoService;
 
   SpeechController? _speechController;
+
   String _speechBaseText = '';
+  String? _initialContextPhotoPath;
+  String? _contextPhotoPath;
 
   FamilyRole? _selectedLearnerRole;
   SkillCategory? _selectedCategory;
+  ContextPhotoFailure? _photoFailure;
+
   bool _isSaving = false;
+  bool _isPickingPhoto = false;
+  bool _draftWasSaved = false;
 
   bool get _canSave {
     final String learnerNickname = _learnerNicknameController.text.trim();
+
     final String explanation = _explanationController.text.trim();
 
     return learnerNickname.isNotEmpty &&
@@ -46,7 +64,8 @@ class _TeachSkillScreenState extends State<TeachSkillScreen> {
         _selectedCategory != null &&
         explanation.length >= SkillDraft.minimumExplanationLength &&
         explanation.length <= SkillDraft.maximumExplanationLength &&
-        !_isSaving;
+        !_isSaving &&
+        !_isPickingPhoto;
   }
 
   @override
@@ -54,6 +73,9 @@ class _TeachSkillScreenState extends State<TeachSkillScreen> {
     super.initState();
 
     final SkillDraft? initialDraft = widget.initialDraft;
+
+    _contextPhotoService =
+        widget.contextPhotoService ?? DeviceContextPhotoService();
 
     _learnerNicknameController = TextEditingController(
       text: initialDraft?.learnerNickname ?? '',
@@ -65,6 +87,16 @@ class _TeachSkillScreenState extends State<TeachSkillScreen> {
 
     _selectedLearnerRole = initialDraft?.learnerRole;
     _selectedCategory = initialDraft?.category;
+
+    _initialContextPhotoPath = initialDraft?.contextPhotoPath;
+
+    _contextPhotoPath = initialDraft?.contextPhotoPath;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        unawaited(_recoverLostContextPhoto());
+      }
+    });
   }
 
   @override
@@ -80,6 +112,14 @@ class _TeachSkillScreenState extends State<TeachSkillScreen> {
 
     if (speechController != null) {
       unawaited(speechController.cancelListening());
+    }
+
+    final String? selectedPhotoPath = _contextPhotoPath;
+
+    if (!_draftWasSaved &&
+        selectedPhotoPath != null &&
+        selectedPhotoPath != _initialContextPhotoPath) {
+      unawaited(_deletePhotoSilently(selectedPhotoPath));
     }
 
     _learnerNicknameController.dispose();
@@ -100,13 +140,12 @@ class _TeachSkillScreenState extends State<TeachSkillScreen> {
 
     await speechController.startListening(
       locale: Localizations.localeOf(context),
-      onWords: (String words, bool _) {
+      onWords: (String words, bool isFinal) {
         if (!mounted) {
           return;
         }
 
         final String recognizedWords = words.trim();
-
         final String mergedText;
 
         if (recognizedWords.isEmpty) {
@@ -130,6 +169,193 @@ class _TeachSkillScreenState extends State<TeachSkillScreen> {
         setState(() {});
       },
     );
+  }
+
+  Future<void> _showPhotoSourceSheet() async {
+    final SpeechController speechController = context.read<SpeechController>();
+
+    await speechController.stopListening();
+
+    if (!mounted) {
+      return;
+    }
+
+    final AppLocalizations localizations = AppLocalizations.of(context)!;
+
+    final ContextPhotoSource? source =
+        await showModalBottomSheet<ContextPhotoSource>(
+          context: context,
+          showDragHandle: true,
+          builder: (BuildContext sheetContext) {
+            return SafeArea(
+              child: Wrap(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                      AppSpacing.lg,
+                      AppSpacing.sm,
+                      AppSpacing.lg,
+                      AppSpacing.xs,
+                    ),
+                    child: Text(
+                      localizations.contextPhotoSectionTitle,
+                      style: Theme.of(sheetContext).textTheme.titleMedium,
+                    ),
+                  ),
+                  ListTile(
+                    key: const ValueKey<String>('take_photo_option'),
+                    leading: const Icon(Icons.photo_camera_outlined),
+                    title: Text(localizations.takePhotoLabel),
+                    onTap: () {
+                      Navigator.of(sheetContext).pop(ContextPhotoSource.camera);
+                    },
+                  ),
+                  ListTile(
+                    key: const ValueKey<String>('choose_gallery_option'),
+                    leading: const Icon(Icons.photo_library_outlined),
+                    title: Text(localizations.chooseFromGalleryLabel),
+                    onTap: () {
+                      Navigator.of(
+                        sheetContext,
+                      ).pop(ContextPhotoSource.gallery);
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.close_rounded),
+                    title: Text(localizations.cancelLabel),
+                    onTap: () {
+                      Navigator.of(sheetContext).pop();
+                    },
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+
+    if (source != null) {
+      await _pickContextPhoto(source);
+    }
+  }
+
+  Future<void> _pickContextPhoto(ContextPhotoSource source) async {
+    if (_isPickingPhoto) {
+      return;
+    }
+
+    setState(() {
+      _isPickingPhoto = true;
+      _photoFailure = null;
+    });
+
+    try {
+      final ContextPhotoResult result = await _contextPhotoService
+          .pickAndStorePhoto(source);
+
+      await _applyPhotoResult(result);
+    } catch (_) {
+      if (mounted) {
+        setState(() {
+          _photoFailure = ContextPhotoFailure.unknown;
+        });
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isPickingPhoto = false;
+        });
+      }
+    }
+  }
+
+  Future<void> _recoverLostContextPhoto() async {
+    try {
+      final ContextPhotoResult? result = await _contextPhotoService
+          .recoverLostPhoto();
+
+      if (!mounted || result == null) {
+        return;
+      }
+
+      await _applyPhotoResult(result);
+    } catch (_) {
+      if (mounted) {
+        setState(() {
+          _photoFailure = ContextPhotoFailure.unknown;
+        });
+      }
+    }
+  }
+
+  Future<void> _applyPhotoResult(ContextPhotoResult result) async {
+    if (result.cancelled) {
+      return;
+    }
+
+    final ContextPhotoFailure? failure = result.failure;
+
+    if (failure != null) {
+      if (mounted) {
+        setState(() {
+          _photoFailure = failure;
+        });
+      }
+
+      return;
+    }
+
+    final String? selectedPath = result.storedPath;
+
+    if (selectedPath == null) {
+      return;
+    }
+
+    final String? previousPath = _contextPhotoPath;
+
+    if (previousPath != null &&
+        previousPath != _initialContextPhotoPath &&
+        previousPath != selectedPath) {
+      await _deletePhotoSilently(previousPath);
+    }
+
+    if (!mounted) {
+      await _deletePhotoSilently(selectedPath);
+      return;
+    }
+
+    setState(() {
+      _contextPhotoPath = selectedPath;
+      _photoFailure = null;
+    });
+  }
+
+  Future<void> _removeContextPhoto() async {
+    if (_isPickingPhoto) {
+      return;
+    }
+
+    final String? currentPath = _contextPhotoPath;
+
+    if (currentPath != null && currentPath != _initialContextPhotoPath) {
+      await _deletePhotoSilently(currentPath);
+    }
+
+    if (!mounted) {
+      return;
+    }
+
+    setState(() {
+      _contextPhotoPath = null;
+      _photoFailure = null;
+    });
+  }
+
+  Future<void> _deletePhotoSilently(String? photoPath) async {
+    try {
+      await _contextPhotoService.deleteStoredPhoto(photoPath);
+    } catch (_) {
+      // Photo cleanup must not crash or block the form.
+    }
   }
 
   String? _speechErrorMessage(
@@ -161,6 +387,19 @@ class _TeachSkillScreenState extends State<TeachSkillScreen> {
     return localizations.speechGenericError;
   }
 
+  String? _photoErrorMessage(AppLocalizations localizations) {
+    return switch (_photoFailure) {
+      ContextPhotoFailure.permissionDenied =>
+        localizations.photoPermissionDenied,
+      ContextPhotoFailure.sourceUnavailable =>
+        localizations.photoSourceUnavailable,
+      ContextPhotoFailure.invalidFile => localizations.photoInvalidFile,
+      ContextPhotoFailure.storageFailure => localizations.photoStorageError,
+      ContextPhotoFailure.unknown => localizations.photoGenericError,
+      null => null,
+    };
+  }
+
   Future<void> _saveDraft() async {
     final AppLocalizations localizations = AppLocalizations.of(context)!;
 
@@ -169,9 +408,11 @@ class _TeachSkillScreenState extends State<TeachSkillScreen> {
     final AppController appController = context.read<AppController>();
 
     final FamilyRole? learnerRole = _selectedLearnerRole;
+
     final SkillCategory? category = _selectedCategory;
 
     final String learnerNickname = _learnerNicknameController.text.trim();
+
     final String explanation = _explanationController.text.trim();
 
     if (!_canSave || learnerRole == null || category == null) {
@@ -191,6 +432,8 @@ class _TeachSkillScreenState extends State<TeachSkillScreen> {
     });
 
     try {
+      final String? previousInitialPhotoPath = _initialContextPhotoPath;
+
       await appController.saveSkillDraft(
         SkillDraft(
           teacherNickname: widget.teacher.nickname,
@@ -199,8 +442,16 @@ class _TeachSkillScreenState extends State<TeachSkillScreen> {
           learnerRole: learnerRole,
           category: category,
           explanation: explanation,
+          contextPhotoPath: _contextPhotoPath,
         ),
       );
+
+      if (previousInitialPhotoPath != _contextPhotoPath) {
+        await _deletePhotoSilently(previousInitialPhotoPath);
+      }
+
+      _draftWasSaved = true;
+      _initialContextPhotoPath = _contextPhotoPath;
 
       if (!mounted) {
         return;
@@ -232,6 +483,8 @@ class _TeachSkillScreenState extends State<TeachSkillScreen> {
       localizations,
       speechController,
     );
+
+    final String? photoErrorMessage = _photoErrorMessage(localizations);
 
     final bool permanentlyUnavailable =
         speechController.initializationAttempted &&
@@ -383,6 +636,31 @@ class _TeachSkillScreenState extends State<TeachSkillScreen> {
                       });
                     },
                   );
+                },
+              ),
+              const SizedBox(height: AppSpacing.lg),
+              Text(
+                localizations.contextPhotoSectionTitle,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              ContextPhotoCard(
+                photoPath: _contextPhotoPath,
+                isBusy: _isPickingPhoto,
+                title: localizations.contextPhotoTitle,
+                body: localizations.contextPhotoBody,
+                addLabel: localizations.addContextPhotoLabel,
+                replaceLabel: localizations.replaceContextPhotoLabel,
+                removeLabel: localizations.removeContextPhotoLabel,
+                processingLabel: localizations.photoProcessingLabel,
+                privacyLabel: localizations.photoPrivacyNotice,
+                unavailableLabel: localizations.contextPhotoUnavailable,
+                errorMessage: photoErrorMessage,
+                onAddOrReplace: () {
+                  unawaited(_showPhotoSourceSheet());
+                },
+                onRemove: () {
+                  unawaited(_removeContextPhoto());
                 },
               ),
               const SizedBox(height: AppSpacing.lg),

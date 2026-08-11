@@ -135,42 +135,62 @@ class AppLocalizationsAr extends AppLocalizations {
   String get skillCategoryFamilyCare => 'الرعاية العائلية';
 
   @override
-  String get explanationSectionTitle => 'اشرح المهارة';
+  String get contextPhotoSectionTitle => 'صورة توضيحية';
 
   @override
-  String get explanationHint => 'اكتب ما تريد تعليمه بكلماتك.';
+  String get contextPhotoTitle => 'أظهر الغرض أو المكان';
 
   @override
-  String get explanationHelper =>
-      'اكتب 20 حرفًا على الأقل. ستُضاف ميزة الإدخال الصوتي لاحقًا.';
+  String get contextPhotoBody =>
+      'أضف صورة اختيارية تساعد المتعلّم على فهم المهارة.';
 
   @override
-  String get saveDraftLabel => 'حفظ المسودة';
+  String get addContextPhotoLabel => 'أضف صورة توضيحية';
 
   @override
-  String get savingDraftLabel => 'جارٍ الحفظ...';
+  String get replaceContextPhotoLabel => 'استبدال الصورة';
 
   @override
-  String get draftSaveError => 'تعذر حفظ المسودة. حاول مرة أخرى.';
+  String get removeContextPhotoLabel => 'إزالة الصورة';
 
   @override
-  String get savedDraftTitle => 'مسودة مهارة محفوظة';
+  String get takePhotoLabel => 'التقاط صورة';
 
   @override
-  String draftLearnerSummary(String name, String role) {
-    return 'المتعلّم: $name — $role';
-  }
+  String get chooseFromGalleryLabel => 'اختيار من المعرض';
 
   @override
-  String draftCategorySummary(String category) {
-    return 'الفئة: $category';
-  }
+  String get cancelLabel => 'إلغاء';
 
   @override
-  String get draftStoredLocally => 'محفوظة على هذا الهاتف وجاهزة للمتابعة.';
+  String get photoProcessingLabel => 'جارٍ تجهيز الصورة…';
 
   @override
-  String get continueDraftLabel => 'متابعة المسودة';
+  String get photoPrivacyNotice =>
+      'تبقى هذه الصورة على هذا الهاتف ولا تُرسل إلى الذكاء الاصطناعي في النسخة الأولية.';
+
+  @override
+  String get photoPermissionDenied =>
+      'تم رفض الوصول إلى الصور. تابع دون صورة أو غيّر الإذن من إعدادات Android.';
+
+  @override
+  String get photoSourceUnavailable =>
+      'الكاميرا أو مصدر الصور غير متاح. تابع دون صورة.';
+
+  @override
+  String get photoInvalidFile => 'تعذر فتح الصورة المحددة. اختر صورة أخرى.';
+
+  @override
+  String get photoStorageError =>
+      'تعذر نسخ الصورة إلى التخزين الخاص بالتطبيق. تابع دونها أو حاول مرة أخرى.';
+
+  @override
+  String get photoGenericError =>
+      'تعذر إضافة الصورة. حاول مرة أخرى أو تابع دونها.';
+
+  @override
+  String get contextPhotoUnavailable =>
+      'لم تعد الصورة المحفوظة متاحة على هذا الهاتف.';
 
   @override
   String get voiceInputSectionTitle => 'الإدخال الصوتي';
@@ -220,4 +240,42 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get voicePrivacyNotice =>
       'لا يحفظ نسيج التسجيل الصوتي. قد تعالج خدمة التعرّف في جهازك الكلام عبر الإنترنت. راجع النص وعدّله قبل الحفظ.';
+
+  @override
+  String get explanationSectionTitle => 'اشرح المهارة';
+
+  @override
+  String get explanationHint => 'اكتب ما تريد تعليمه بكلماتك.';
+
+  @override
+  String get explanationHelper =>
+      'اكتب أو أمْلِ 20 حرفًا على الأقل، ثم راجع النص قبل الحفظ.';
+
+  @override
+  String get saveDraftLabel => 'حفظ المسودة';
+
+  @override
+  String get savingDraftLabel => 'جارٍ الحفظ...';
+
+  @override
+  String get draftSaveError => 'تعذر حفظ المسودة. حاول مرة أخرى.';
+
+  @override
+  String get savedDraftTitle => 'مسودة مهارة محفوظة';
+
+  @override
+  String draftLearnerSummary(String name, String role) {
+    return 'المتعلّم: $name — $role';
+  }
+
+  @override
+  String draftCategorySummary(String category) {
+    return 'الفئة: $category';
+  }
+
+  @override
+  String get draftStoredLocally => 'محفوظة على هذا الهاتف وجاهزة للمتابعة.';
+
+  @override
+  String get continueDraftLabel => 'متابعة المسودة';
 }

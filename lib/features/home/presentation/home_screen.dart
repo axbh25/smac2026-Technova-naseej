@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:naseej/core/state/app_controller.dart';
 import 'package:naseej/core/theme/app_colors.dart';
@@ -37,6 +39,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AppController controller = context.watch<AppController>();
+
     final AppLocalizations localizations = AppLocalizations.of(context)!;
 
     final FamilyProfile? profile = controller.profile;
@@ -91,6 +94,8 @@ class HomeScreen extends StatelessWidget {
                   skillCategoryLabel(localizations, draft.category),
                 ),
                 explanation: draft.explanation,
+                contextPhotoPath: draft.contextPhotoPath,
+                photoUnavailableLabel: localizations.contextPhotoUnavailable,
                 storedLocallyLabel: localizations.draftStoredLocally,
               ),
             const SizedBox(height: AppSpacing.lg),
@@ -254,6 +259,8 @@ class _SkillDraftCard extends StatelessWidget {
     required this.learnerSummary,
     required this.categorySummary,
     required this.explanation,
+    required this.contextPhotoPath,
+    required this.photoUnavailableLabel,
     required this.storedLocallyLabel,
   });
 
@@ -261,6 +268,8 @@ class _SkillDraftCard extends StatelessWidget {
   final String learnerSummary;
   final String categorySummary;
   final String explanation;
+  final String? contextPhotoPath;
+  final String photoUnavailableLabel;
   final String storedLocallyLabel;
 
   @override
@@ -292,6 +301,13 @@ class _SkillDraftCard extends StatelessWidget {
               ),
             ],
           ),
+          if (contextPhotoPath != null) ...<Widget>[
+            const SizedBox(height: AppSpacing.md),
+            _DraftPhotoPreview(
+              photoPath: contextPhotoPath!,
+              unavailableLabel: photoUnavailableLabel,
+            ),
+          ],
           const SizedBox(height: AppSpacing.md),
           Text(learnerSummary, style: Theme.of(context).textTheme.bodyMedium),
           const SizedBox(height: AppSpacing.xs),
@@ -327,6 +343,77 @@ class _SkillDraftCard extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DraftPhotoPreview extends StatelessWidget {
+  const _DraftPhotoPreview({
+    required this.photoPath,
+    required this.unavailableLabel,
+  });
+
+  final String photoPath;
+  final String unavailableLabel;
+
+  @override
+  Widget build(BuildContext context) {
+    final File photoFile = File(photoPath);
+    final bool exists = photoFile.existsSync();
+
+    return ClipRRect(
+      key: const ValueKey<String>('home_context_photo'),
+      borderRadius: BorderRadius.circular(16),
+      child: SizedBox(
+        width: double.infinity,
+        height: 160,
+        child: exists
+            ? Image.file(
+                photoFile,
+                fit: BoxFit.cover,
+                cacheWidth: 1200,
+                errorBuilder:
+                    (
+                      BuildContext context,
+                      Object error,
+                      StackTrace? stackTrace,
+                    ) {
+                      return _UnavailableDraftPhoto(label: unavailableLabel);
+                    },
+              )
+            : _UnavailableDraftPhoto(label: unavailableLabel),
+      ),
+    );
+  }
+}
+
+class _UnavailableDraftPhoto extends StatelessWidget {
+  const _UnavailableDraftPhoto({required this.label});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: AppColors.surface,
+      alignment: Alignment.center,
+      padding: const EdgeInsets.all(AppSpacing.md),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          const Icon(
+            Icons.broken_image_outlined,
+            color: AppColors.textSecondary,
+            size: 40,
+          ),
+          const SizedBox(height: AppSpacing.xs),
+          Text(
+            label,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.bodySmall,
           ),
         ],
       ),

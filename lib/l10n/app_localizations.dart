@@ -344,71 +344,107 @@ abstract class AppLocalizations {
   /// **'Family Care'**
   String get skillCategoryFamilyCare;
 
-  /// No description provided for @explanationSectionTitle.
+  /// No description provided for @contextPhotoSectionTitle.
   ///
   /// In en, this message translates to:
-  /// **'Explain the skill'**
-  String get explanationSectionTitle;
+  /// **'Context photo'**
+  String get contextPhotoSectionTitle;
 
-  /// No description provided for @explanationHint.
+  /// No description provided for @contextPhotoTitle.
   ///
   /// In en, this message translates to:
-  /// **'Describe what you want to teach in your own words.'**
-  String get explanationHint;
+  /// **'Show the object or setting'**
+  String get contextPhotoTitle;
 
-  /// No description provided for @explanationHelper.
+  /// No description provided for @contextPhotoBody.
   ///
   /// In en, this message translates to:
-  /// **'Write at least 20 characters. Voice input will be added next.'**
-  String get explanationHelper;
+  /// **'Add one optional photo to help the learner understand the skill.'**
+  String get contextPhotoBody;
 
-  /// No description provided for @saveDraftLabel.
+  /// No description provided for @addContextPhotoLabel.
   ///
   /// In en, this message translates to:
-  /// **'Save Draft'**
-  String get saveDraftLabel;
+  /// **'Add context photo'**
+  String get addContextPhotoLabel;
 
-  /// No description provided for @savingDraftLabel.
+  /// No description provided for @replaceContextPhotoLabel.
   ///
   /// In en, this message translates to:
-  /// **'Saving...'**
-  String get savingDraftLabel;
+  /// **'Replace photo'**
+  String get replaceContextPhotoLabel;
 
-  /// No description provided for @draftSaveError.
+  /// No description provided for @removeContextPhotoLabel.
   ///
   /// In en, this message translates to:
-  /// **'We could not save this draft. Please try again.'**
-  String get draftSaveError;
+  /// **'Remove photo'**
+  String get removeContextPhotoLabel;
 
-  /// No description provided for @savedDraftTitle.
+  /// No description provided for @takePhotoLabel.
   ///
   /// In en, this message translates to:
-  /// **'Saved skill draft'**
-  String get savedDraftTitle;
+  /// **'Take a photo'**
+  String get takePhotoLabel;
 
-  /// No description provided for @draftLearnerSummary.
+  /// No description provided for @chooseFromGalleryLabel.
   ///
   /// In en, this message translates to:
-  /// **'Learner: {name} — {role}'**
-  String draftLearnerSummary(String name, String role);
+  /// **'Choose from gallery'**
+  String get chooseFromGalleryLabel;
 
-  /// No description provided for @draftCategorySummary.
+  /// No description provided for @cancelLabel.
   ///
   /// In en, this message translates to:
-  /// **'Category: {category}'**
-  String draftCategorySummary(String category);
+  /// **'Cancel'**
+  String get cancelLabel;
 
-  /// No description provided for @draftStoredLocally.
+  /// No description provided for @photoProcessingLabel.
   ///
   /// In en, this message translates to:
-  /// **'Saved on this phone and ready to continue.'**
-  String get draftStoredLocally;
+  /// **'Preparing photo…'**
+  String get photoProcessingLabel;
 
-  /// No description provided for @continueDraftLabel.
+  /// No description provided for @photoPrivacyNotice.
   ///
   /// In en, this message translates to:
-  /// **'Continue Draft'**
-  String get continueDraftLabel;
+  /// **'This photo stays on this phone and is not sent to AI in this MVP.'**
+  String get photoPrivacyNotice;
+
+  /// No description provided for @photoPermissionDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo access was denied. Continue without a photo or change the permission in Android Settings.'**
+  String get photoPermissionDenied;
+
+  /// No description provided for @photoSourceUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'The camera or photo source is unavailable. Continue without a photo.'**
+  String get photoSourceUnavailable;
+
+  /// No description provided for @photoInvalidFile.
+  ///
+  /// In en, this message translates to:
+  /// **'The selected image could not be opened. Choose another image.'**
+  String get photoInvalidFile;
+
+  /// No description provided for @photoStorageError.
+  ///
+  /// In en, this message translates to:
+  /// **'The photo could not be copied into private app storage. Continue without it or try again.'**
+  String get photoStorageError;
+
+  /// No description provided for @photoGenericError.
+  ///
+  /// In en, this message translates to:
+  /// **'The photo could not be added. Try again or continue without it.'**
+  String get photoGenericError;
+
+  /// No description provided for @contextPhotoUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'The saved photo is no longer available on this phone.'**
+  String get contextPhotoUnavailable;
 
   /// No description provided for @voiceInputSectionTitle.
   ///
@@ -493,6 +529,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Naseej does not save audio. Your device’s speech service may process speech online. Review and edit the text before saving.'**
   String get voicePrivacyNotice;
+
+  /// No description provided for @explanationSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Explain the skill'**
+  String get explanationSectionTitle;
+
+  /// No description provided for @explanationHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe what you want to teach in your own words.'**
+  String get explanationHint;
+
+  /// No description provided for @explanationHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Write or dictate at least 20 characters. Review the text before saving.'**
+  String get explanationHelper;
+
+  /// No description provided for @saveDraftLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Draft'**
+  String get saveDraftLabel;
+
+  /// No description provided for @savingDraftLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving...'**
+  String get savingDraftLabel;
+
+  /// No description provided for @draftSaveError.
+  ///
+  /// In en, this message translates to:
+  /// **'We could not save this draft. Please try again.'**
+  String get draftSaveError;
+
+  /// No description provided for @savedDraftTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved skill draft'**
+  String get savedDraftTitle;
+
+  /// No description provided for @draftLearnerSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Learner: {name} — {role}'**
+  String draftLearnerSummary(String name, String role);
+
+  /// No description provided for @draftCategorySummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Category: {category}'**
+  String draftCategorySummary(String category);
+
+  /// No description provided for @draftStoredLocally.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved on this phone and ready to continue.'**
+  String get draftStoredLocally;
+
+  /// No description provided for @continueDraftLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue Draft'**
+  String get continueDraftLabel;
 }
 
 class _AppLocalizationsDelegate
