@@ -2,42 +2,73 @@
 
 ## Day 7 Connectivity Check
 
-The Day 7 AI request sends only:
+The Day 7 readiness request sent only:
 
 `Return exactly NASEEJ_READY.`
 
-## Day 7 Data Not Sent
+## Day 8 Skill Card Request
 
-- Teacher nickname
-- Teacher role
-- Learner nickname
-- Learner role
+The Day 8 generation request sends:
+
+- Reviewed teacher explanation
+- Teacher family role
+- Learner family role
 - Skill category
-- Draft explanation
-- Speech transcript
+- Selected output language
+
+## Data Not Added to the Request
+
+- Stored teacher nickname
+- Stored learner nickname
 - Context photo
-- Photo path
+- Context-photo path
 - Location
 - Contacts
 - Email
 - Password
 
+## Important Limitation
+
+A name or other personal detail typed manually inside the reviewed explanation
+is part of that explanation and will be sent unless the user removes it before
+generation.
+
 ## Local-Only Data
 
-The following remains on the phone during Day 7:
-
 - Profile
+- Stored nicknames
 - Selected language
 - Skill draft
-- Speech-recognized text
+- Speech-recognized text before generation
 - Context photo
+- Saved SkillCard JSON
 
-## Future Change Control
+## Review and Save
 
-Before a later feature sends reviewed draft text to AI:
+AI output is not automatically saved.
 
-1. The exact prompt must be documented.
-2. The user-facing consent wording must be approved.
-3. Structured-output validation must be implemented.
-4. Offline fallback must remain available.
-5. Context photos must remain excluded from the MVP AI request.
+The teacher reviews:
+
+1. Title
+2. Three steps
+3. Safety note
+4. Teach-back question
+5. Reciprocal skill suggestion
+
+The card is saved only after the teacher taps `Save 3-Step Card`.
+
+## Offline Guide
+
+When cloud generation fails, or when the user chooses it manually, Naseej
+creates a deterministic local Offline Guide.
+
+The Offline Guide:
+
+- Does not call Firebase AI
+- Is labeled as `Offline Guide`
+- Is not described as AI-generated
+- Can be reviewed and saved locally
+
+## Context Photo
+
+The context photo is not sent to Firebase AI Logic in the MVP.
