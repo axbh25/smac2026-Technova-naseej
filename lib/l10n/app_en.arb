@@ -115,7 +115,7 @@
   "aiCheckingTitle": "Checking AI connection…",
   "aiCheckingBody": "Naseej is sending one fixed test phrase only.",
   "aiReadyTitle": "AI connection is ready",
-  "aiReadyBody": "Firebase AI Logic responded successfully. Lesson generation will be added in the next build.",
+  "aiReadyBody": "Firebase AI Logic responded successfully.",
   "aiUnavailableTitle": "AI is unavailable right now",
   "aiCheckConnectionLabel": "Check AI connection",
   "aiCheckAgainLabel": "Check again",
@@ -134,6 +134,56 @@
   "aiAppCheckError": "This test device has not been approved by App Check yet. Register its debug token and try again.",
   "aiQuotaError": "The AI request limit has been reached. Your local draft remains available.",
   "aiServiceDisabledError": "Firebase AI Logic is not enabled for this project yet.",
-  "aiInvalidResponseError": "The AI service responded, but the connection test result was unexpected. Try again.",
-  "aiGenericError": "The AI check could not be completed. Continue using the local app and try again later."
+  "aiInvalidResponseError": "The AI service responded, but the connection-test result was unexpected.",
+  "aiGenericError": "The AI check could not be completed. Continue using the local app and try again later.",
+  "buildSkillCardLabel": "Build 3-Step Card",
+  "reviewSkillCardLabel": "Review 3-Step Card",
+  "savedSkillCardSummaryTitle": "3-Step Card Ready",
+  "savedSkillCardSummaryBody": "A reviewed three-step card is saved on this phone.",
+  "skillCardScreenTitle": "3-Step Skill Card",
+  "aiDataBoundaryTitle": "Before generating",
+  "aiDataSentTitle": "What will be sent",
+  "aiDataSentBody": "Your reviewed explanation, teacher and learner roles, skill category, and selected output language.",
+  "aiDataNotSentTitle": "What will stay on this phone",
+  "aiDataNotSentBody": "Stored nicknames and the context photo. A name typed inside your explanation is part of the reviewed text and will be sent.",
+  "skillCardChoiceTitle": "Build the family lesson",
+  "skillCardChoiceBody": "Generate a structured card with AI or continue immediately with a local Offline Guide.",
+  "generateWithAiLabel": "Generate with AI",
+  "useOfflineGuideLabel": "Use Offline Guide",
+  "skillCardGeneratingTitle": "Building your three-step card…",
+  "skillCardGeneratingBody": "Naseej is structuring the reviewed explanation. The preview will not be saved automatically.",
+  "skillCardAiOrigin": "AI-generated draft",
+  "skillCardOfflineOrigin": "Offline Guide",
+  "skillCardModelLabel": "Model: {model}",
+  "@skillCardModelLabel": {
+    "placeholders": {
+      "model": {
+        "type": "String"
+      }
+    }
+  },
+  "skillCardStepLabel": "Step {number}",
+  "@skillCardStepLabel": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "safetyNoteTitle": "Safety note",
+  "teachBackQuestionTitle": "Teach-back question",
+  "reciprocalSuggestionTitle": "Teach in return",
+  "saveSkillCardLabel": "Save 3-Step Card",
+  "savingSkillCardLabel": "Saving card…",
+  "backToHomeLabel": "Back to Home",
+  "regenerateWithAiLabel": "Generate again with AI",
+  "skillCardSaveError": "The card could not be saved. Return to the draft and try again.",
+  "skillCardFirebaseError": "Firebase is unavailable, so Naseej created a local Offline Guide.",
+  "skillCardOfflineError": "The AI service could not be reached, so Naseej created a local Offline Guide.",
+  "skillCardAppCheckError": "App Check rejected the cloud request, so Naseej created a local Offline Guide.",
+  "skillCardQuotaError": "The AI request limit was reached, so Naseej created a local Offline Guide.",
+  "skillCardServiceError": "Firebase AI Logic is unavailable, so Naseej created a local Offline Guide.",
+  "skillCardInvalidResponseError": "The AI response did not pass validation, so Naseej created a local Offline Guide.",
+  "skillCardClarificationError": "The explanation could not be structured safely. Review the draft; a local Offline Guide is shown for now.",
+  "skillCardGenericError": "Cloud generation could not be completed, so Naseej created a local Offline Guide."
 }

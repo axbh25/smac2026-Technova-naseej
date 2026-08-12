@@ -8,7 +8,9 @@ import 'package:naseej/core/widgets/language_toggle_button.dart';
 import 'package:naseej/features/home/presentation/widgets/ai_readiness_card.dart';
 import 'package:naseej/features/profile/domain/family_profile.dart';
 import 'package:naseej/features/profile/presentation/family_role_ui.dart';
+import 'package:naseej/features/skill/domain/skill_card.dart';
 import 'package:naseej/features/skill/domain/skill_draft.dart';
+import 'package:naseej/features/skill/presentation/skill_card_review_screen.dart';
 import 'package:naseej/features/skill/presentation/skill_category_ui.dart';
 import 'package:naseej/features/skill/presentation/teach_skill_screen.dart';
 import 'package:naseej/l10n/app_localizations.dart';
@@ -37,6 +39,23 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+  Future<void> _openSkillCard(
+    BuildContext context, {
+    required SkillDraft draft,
+    required SkillCard? existingCard,
+  }) async {
+    await Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (BuildContext context) {
+          return SkillCardReviewScreen(
+            draft: draft,
+            existingCard: existingCard,
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final AppController controller = context.watch<AppController>();
@@ -46,6 +65,8 @@ class HomeScreen extends StatelessWidget {
     final FamilyProfile? profile = controller.profile;
 
     final SkillDraft? draft = controller.skillDraft;
+
+    final SkillCard? skillCard = controller.skillCard;
 
     if (profile == null) {
       return const SizedBox.shrink();
@@ -104,30 +125,74 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: AppSpacing.lg),
               const AiReadinessCard(),
             ],
+            if (skillCard != null) ...<Widget>[
+              const SizedBox(height: AppSpacing.lg),
+              _SavedSkillCardSummary(
+                card: skillCard,
+                title: localizations.savedSkillCardSummaryTitle,
+                body: localizations.savedSkillCardSummaryBody,
+                aiOrigin: localizations.skillCardAiOrigin,
+                offlineOrigin: localizations.skillCardOfflineOrigin,
+              ),
+            ],
             const SizedBox(height: AppSpacing.lg),
-            SizedBox(
-              height: 56,
-              child: FilledButton.icon(
-                key: const ValueKey<String>('teach_skill_button'),
-                onPressed: () async {
-                  await _openSkillDraft(
-                    context,
-                    teacher: profile,
-                    initialDraft: draft,
-                  );
-                },
-                icon: Icon(
-                  draft == null
-                      ? Icons.record_voice_over_rounded
-                      : Icons.edit_note_rounded,
+            if (draft == null)
+              SizedBox(
+                height: 56,
+                child: FilledButton.icon(
+                  key: const ValueKey<String>('teach_skill_button'),
+                  onPressed: () async {
+                    await _openSkillDraft(
+                      context,
+                      teacher: profile,
+                      initialDraft: null,
+                    );
+                  },
+                  icon: const Icon(Icons.record_voice_over_rounded),
+                  label: Text(localizations.teachSkillLabel),
                 ),
-                label: Text(
-                  draft == null
-                      ? localizations.teachSkillLabel
-                      : localizations.continueDraftLabel,
+              )
+            else ...<Widget>[
+              SizedBox(
+                height: 56,
+                child: FilledButton.icon(
+                  key: const ValueKey<String>('skill_card_action_button'),
+                  onPressed: () async {
+                    await _openSkillCard(
+                      context,
+                      draft: draft,
+                      existingCard: skillCard,
+                    );
+                  },
+                  icon: Icon(
+                    skillCard == null
+                        ? Icons.auto_awesome_rounded
+                        : Icons.view_agenda_outlined,
+                  ),
+                  label: Text(
+                    skillCard == null
+                        ? localizations.buildSkillCardLabel
+                        : localizations.reviewSkillCardLabel,
+                  ),
                 ),
               ),
-            ),
+              const SizedBox(height: AppSpacing.sm),
+              SizedBox(
+                height: 56,
+                child: OutlinedButton.icon(
+                  key: const ValueKey<String>('teach_skill_button'),
+                  onPressed: () async {
+                    await _openSkillDraft(
+                      context,
+                      teacher: profile,
+                      initialDraft: draft,
+                    );
+                  },
+                  icon: const Icon(Icons.edit_note_rounded),
+                  label: Text(localizations.continueDraftLabel),
+                ),
+              ),
+            ],
             const SizedBox(height: AppSpacing.sm),
             SizedBox(
               height: 56,
@@ -388,17 +453,17 @@ class _DraftPhotoPreview extends StatelessWidget {
                       Object error,
                       StackTrace? stackTrace,
                     ) {
-                      return _UnavailableDraftPhoto(label: unavailableLabel);
+                      return _UnavailablePhoto(label: unavailableLabel);
                     },
               )
-            : _UnavailableDraftPhoto(label: unavailableLabel),
+            : _UnavailablePhoto(label: unavailableLabel),
       ),
     );
   }
 }
 
-class _UnavailableDraftPhoto extends StatelessWidget {
-  const _UnavailableDraftPhoto({required this.label});
+class _UnavailablePhoto extends StatelessWidget {
+  const _UnavailablePhoto({required this.label});
 
   final String label;
 
@@ -422,6 +487,73 @@ class _UnavailableDraftPhoto extends StatelessWidget {
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodySmall,
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SavedSkillCardSummary extends StatelessWidget {
+  const _SavedSkillCardSummary({
+    required this.card,
+    required this.title,
+    required this.body,
+    required this.aiOrigin,
+    required this.offlineOrigin,
+  });
+
+  final SkillCard card;
+  final String title;
+  final String body;
+  final String aiOrigin;
+  final String offlineOrigin;
+
+  @override
+  Widget build(BuildContext context) {
+    final bool isAi = card.origin == SkillCardOrigin.ai;
+
+    return Container(
+      key: const ValueKey<String>('saved_skill_card_summary'),
+      width: double.infinity,
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        border: Border.all(
+          color: isAi ? AppColors.success : AppColors.accent,
+          width: 2,
+        ),
+        borderRadius: BorderRadius.circular(24),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Icon(
+                isAi ? Icons.auto_awesome_rounded : Icons.offline_bolt_outlined,
+                color: isAi ? AppColors.success : AppColors.accent,
+              ),
+              const SizedBox(width: AppSpacing.xs),
+              Expanded(
+                child: Text(
+                  title,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          Text(card.title, style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: AppSpacing.xs),
+          Text(
+            isAi ? aiOrigin : offlineOrigin,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: isAi ? AppColors.success : AppColors.accent,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          Text(body, style: Theme.of(context).textTheme.bodyMedium),
         ],
       ),
     );

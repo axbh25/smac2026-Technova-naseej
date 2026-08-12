@@ -6,8 +6,12 @@ class SharedPreferencesAppStorage implements AppStorage {
     : _preferences = preferences ?? SharedPreferencesAsync();
 
   static const String _localeCodeKey = 'naseej.locale_code';
+
   static const String _profileJsonKey = 'naseej.active_profile_json';
+
   static const String _skillDraftJsonKey = 'naseej.skill_draft_json';
+
+  static const String _skillCardJsonKey = 'naseej.skill_card_json';
 
   final SharedPreferencesAsync _preferences;
 
@@ -49,5 +53,20 @@ class SharedPreferencesAppStorage implements AppStorage {
   @override
   Future<void> clearSkillDraft() {
     return _preferences.remove(_skillDraftJsonKey);
+  }
+
+  @override
+  Future<String?> readSkillCardJson() {
+    return _preferences.getString(_skillCardJsonKey);
+  }
+
+  @override
+  Future<void> writeSkillCardJson(String skillCardJson) {
+    return _preferences.setString(_skillCardJsonKey, skillCardJson);
+  }
+
+  @override
+  Future<void> clearSkillCard() {
+    return _preferences.remove(_skillCardJsonKey);
   }
 }

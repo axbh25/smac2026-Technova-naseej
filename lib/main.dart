@@ -1,3 +1,4 @@
+import 'package:firebase_ai/firebase_ai.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -6,7 +7,12 @@ import 'package:naseej/app.dart';
 import 'package:naseej/core/ai/ai_readiness_controller.dart';
 import 'package:naseej/core/ai/ai_readiness_service.dart';
 import 'package:naseej/core/ai/firebase_ai_readiness_service.dart';
+import 'package:naseej/core/ai/firebase_skill_card_generation_service.dart';
+import 'package:naseej/core/ai/offline_skill_card_factory.dart';
+import 'package:naseej/core/ai/skill_card_generation_controller.dart';
+import 'package:naseej/core/ai/skill_card_generation_service.dart';
 import 'package:naseej/core/ai/unavailable_ai_readiness_service.dart';
+import 'package:naseej/core/ai/unavailable_skill_card_generation_service.dart';
 import 'package:naseej/core/speech/device_speech_engine.dart';
 import 'package:naseej/core/speech/speech_controller.dart';
 import 'package:naseej/core/state/app_controller.dart';
@@ -24,7 +30,7 @@ Future<void> main() async {
 
   await appController.initialize();
 
-  final AiReadinessService aiReadinessService = await _initializeFirebaseAi();
+  final _AiServices aiServices = await _initializeFirebaseAi();
 
   runApp(
     MultiProvider(
@@ -37,7 +43,15 @@ Future<void> main() async {
         ),
         ChangeNotifierProvider<AiReadinessController>(
           create: (_) {
-            return AiReadinessController(aiReadinessService);
+            return AiReadinessController(aiServices.readinessService);
+          },
+        ),
+        ChangeNotifierProvider<SkillCardGenerationController>(
+          create: (_) {
+            return SkillCardGenerationController(
+              aiServices.generationService,
+              const OfflineSkillCardFactory(),
+            );
           },
         ),
       ],
@@ -46,7 +60,7 @@ Future<void> main() async {
   );
 }
 
-Future<AiReadinessService> _initializeFirebaseAi() async {
+Future<_AiServices> _initializeFirebaseAi() async {
   try {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
@@ -58,10 +72,33 @@ Future<AiReadinessService> _initializeFirebaseAi() async {
           : const AndroidPlayIntegrityProvider(),
     );
 
-    return FirebaseAiReadinessService();
+    final FirebaseAI firebaseAI = FirebaseAI.googleAI();
+
+    return _AiServices(
+      readinessService: FirebaseAiReadinessService(firebaseAI: firebaseAI),
+      generationService: FirebaseSkillCardGenerationService(
+        firebaseAI: firebaseAI,
+      ),
+    );
   } catch (_) {
-    return const UnavailableAiReadinessService(
-      AiReadinessFailure.firebaseNotConfigured,
+    return const _AiServices(
+      readinessService: UnavailableAiReadinessService(
+        AiReadinessFailure.firebaseNotConfigured,
+      ),
+      generationService: UnavailableSkillCardGenerationService(
+        SkillCardGenerationFailure.firebaseNotConfigured,
+      ),
     );
   }
+}
+
+class _AiServices {
+  const _AiServices({
+    required this.readinessService,
+    required this.generationService,
+  });
+
+  final AiReadinessService readinessService;
+
+  final SkillCardGenerationService generationService;
 }
