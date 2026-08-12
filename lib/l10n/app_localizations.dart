@@ -629,7 +629,7 @@ abstract class AppLocalizations {
   /// No description provided for @aiReadyBody.
   ///
   /// In en, this message translates to:
-  /// **'Firebase AI Logic responded successfully. Lesson generation will be added in the next build.'**
+  /// **'Firebase AI Logic responded successfully.'**
   String get aiReadyBody;
 
   /// No description provided for @aiUnavailableTitle.
@@ -701,7 +701,7 @@ abstract class AppLocalizations {
   /// No description provided for @aiInvalidResponseError.
   ///
   /// In en, this message translates to:
-  /// **'The AI service responded, but the connection test result was unexpected. Try again.'**
+  /// **'The AI service responded, but the connection-test result was unexpected.'**
   String get aiInvalidResponseError;
 
   /// No description provided for @aiGenericError.
@@ -709,6 +709,222 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The AI check could not be completed. Continue using the local app and try again later.'**
   String get aiGenericError;
+
+  /// No description provided for @buildSkillCardLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Build 3-Step Card'**
+  String get buildSkillCardLabel;
+
+  /// No description provided for @reviewSkillCardLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Review 3-Step Card'**
+  String get reviewSkillCardLabel;
+
+  /// No description provided for @savedSkillCardSummaryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'3-Step Card Ready'**
+  String get savedSkillCardSummaryTitle;
+
+  /// No description provided for @savedSkillCardSummaryBody.
+  ///
+  /// In en, this message translates to:
+  /// **'A reviewed three-step card is saved on this phone.'**
+  String get savedSkillCardSummaryBody;
+
+  /// No description provided for @skillCardScreenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'3-Step Skill Card'**
+  String get skillCardScreenTitle;
+
+  /// No description provided for @aiDataBoundaryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Before generating'**
+  String get aiDataBoundaryTitle;
+
+  /// No description provided for @aiDataSentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What will be sent'**
+  String get aiDataSentTitle;
+
+  /// No description provided for @aiDataSentBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your reviewed explanation, teacher and learner roles, skill category, and selected output language.'**
+  String get aiDataSentBody;
+
+  /// No description provided for @aiDataNotSentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What will stay on this phone'**
+  String get aiDataNotSentTitle;
+
+  /// No description provided for @aiDataNotSentBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Stored nicknames and the context photo. A name typed inside your explanation is part of the reviewed text and will be sent.'**
+  String get aiDataNotSentBody;
+
+  /// No description provided for @skillCardChoiceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Build the family lesson'**
+  String get skillCardChoiceTitle;
+
+  /// No description provided for @skillCardChoiceBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate a structured card with AI or continue immediately with a local Offline Guide.'**
+  String get skillCardChoiceBody;
+
+  /// No description provided for @generateWithAiLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate with AI'**
+  String get generateWithAiLabel;
+
+  /// No description provided for @useOfflineGuideLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Use Offline Guide'**
+  String get useOfflineGuideLabel;
+
+  /// No description provided for @skillCardGeneratingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Building your three-step card…'**
+  String get skillCardGeneratingTitle;
+
+  /// No description provided for @skillCardGeneratingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Naseej is structuring the reviewed explanation. The preview will not be saved automatically.'**
+  String get skillCardGeneratingBody;
+
+  /// No description provided for @skillCardAiOrigin.
+  ///
+  /// In en, this message translates to:
+  /// **'AI-generated draft'**
+  String get skillCardAiOrigin;
+
+  /// No description provided for @skillCardOfflineOrigin.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline Guide'**
+  String get skillCardOfflineOrigin;
+
+  /// No description provided for @skillCardModelLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Model: {model}'**
+  String skillCardModelLabel(String model);
+
+  /// No description provided for @skillCardStepLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Step {number}'**
+  String skillCardStepLabel(int number);
+
+  /// No description provided for @safetyNoteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Safety note'**
+  String get safetyNoteTitle;
+
+  /// No description provided for @teachBackQuestionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Teach-back question'**
+  String get teachBackQuestionTitle;
+
+  /// No description provided for @reciprocalSuggestionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Teach in return'**
+  String get reciprocalSuggestionTitle;
+
+  /// No description provided for @saveSkillCardLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Save 3-Step Card'**
+  String get saveSkillCardLabel;
+
+  /// No description provided for @savingSkillCardLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving card…'**
+  String get savingSkillCardLabel;
+
+  /// No description provided for @backToHomeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to Home'**
+  String get backToHomeLabel;
+
+  /// No description provided for @regenerateWithAiLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate again with AI'**
+  String get regenerateWithAiLabel;
+
+  /// No description provided for @skillCardSaveError.
+  ///
+  /// In en, this message translates to:
+  /// **'The card could not be saved. Return to the draft and try again.'**
+  String get skillCardSaveError;
+
+  /// No description provided for @skillCardFirebaseError.
+  ///
+  /// In en, this message translates to:
+  /// **'Firebase is unavailable, so Naseej created a local Offline Guide.'**
+  String get skillCardFirebaseError;
+
+  /// No description provided for @skillCardOfflineError.
+  ///
+  /// In en, this message translates to:
+  /// **'The AI service could not be reached, so Naseej created a local Offline Guide.'**
+  String get skillCardOfflineError;
+
+  /// No description provided for @skillCardAppCheckError.
+  ///
+  /// In en, this message translates to:
+  /// **'App Check rejected the cloud request, so Naseej created a local Offline Guide.'**
+  String get skillCardAppCheckError;
+
+  /// No description provided for @skillCardQuotaError.
+  ///
+  /// In en, this message translates to:
+  /// **'The AI request limit was reached, so Naseej created a local Offline Guide.'**
+  String get skillCardQuotaError;
+
+  /// No description provided for @skillCardServiceError.
+  ///
+  /// In en, this message translates to:
+  /// **'Firebase AI Logic is unavailable, so Naseej created a local Offline Guide.'**
+  String get skillCardServiceError;
+
+  /// No description provided for @skillCardInvalidResponseError.
+  ///
+  /// In en, this message translates to:
+  /// **'The AI response did not pass validation, so Naseej created a local Offline Guide.'**
+  String get skillCardInvalidResponseError;
+
+  /// No description provided for @skillCardClarificationError.
+  ///
+  /// In en, this message translates to:
+  /// **'The explanation could not be structured safely. Review the draft; a local Offline Guide is shown for now.'**
+  String get skillCardClarificationError;
+
+  /// No description provided for @skillCardGenericError.
+  ///
+  /// In en, this message translates to:
+  /// **'Cloud generation could not be completed, so Naseej created a local Offline Guide.'**
+  String get skillCardGenericError;
 }
 
 class _AppLocalizationsDelegate

@@ -303,8 +303,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get aiReadyTitle => 'AI connection is ready';
 
   @override
-  String get aiReadyBody =>
-      'Firebase AI Logic responded successfully. Lesson generation will be added in the next build.';
+  String get aiReadyBody => 'Firebase AI Logic responded successfully.';
 
   @override
   String get aiUnavailableTitle => 'AI is unavailable right now';
@@ -349,9 +348,135 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aiInvalidResponseError =>
-      'The AI service responded, but the connection test result was unexpected. Try again.';
+      'The AI service responded, but the connection-test result was unexpected.';
 
   @override
   String get aiGenericError =>
       'The AI check could not be completed. Continue using the local app and try again later.';
+
+  @override
+  String get buildSkillCardLabel => 'Build 3-Step Card';
+
+  @override
+  String get reviewSkillCardLabel => 'Review 3-Step Card';
+
+  @override
+  String get savedSkillCardSummaryTitle => '3-Step Card Ready';
+
+  @override
+  String get savedSkillCardSummaryBody =>
+      'A reviewed three-step card is saved on this phone.';
+
+  @override
+  String get skillCardScreenTitle => '3-Step Skill Card';
+
+  @override
+  String get aiDataBoundaryTitle => 'Before generating';
+
+  @override
+  String get aiDataSentTitle => 'What will be sent';
+
+  @override
+  String get aiDataSentBody =>
+      'Your reviewed explanation, teacher and learner roles, skill category, and selected output language.';
+
+  @override
+  String get aiDataNotSentTitle => 'What will stay on this phone';
+
+  @override
+  String get aiDataNotSentBody =>
+      'Stored nicknames and the context photo. A name typed inside your explanation is part of the reviewed text and will be sent.';
+
+  @override
+  String get skillCardChoiceTitle => 'Build the family lesson';
+
+  @override
+  String get skillCardChoiceBody =>
+      'Generate a structured card with AI or continue immediately with a local Offline Guide.';
+
+  @override
+  String get generateWithAiLabel => 'Generate with AI';
+
+  @override
+  String get useOfflineGuideLabel => 'Use Offline Guide';
+
+  @override
+  String get skillCardGeneratingTitle => 'Building your three-step card…';
+
+  @override
+  String get skillCardGeneratingBody =>
+      'Naseej is structuring the reviewed explanation. The preview will not be saved automatically.';
+
+  @override
+  String get skillCardAiOrigin => 'AI-generated draft';
+
+  @override
+  String get skillCardOfflineOrigin => 'Offline Guide';
+
+  @override
+  String skillCardModelLabel(String model) {
+    return 'Model: $model';
+  }
+
+  @override
+  String skillCardStepLabel(int number) {
+    return 'Step $number';
+  }
+
+  @override
+  String get safetyNoteTitle => 'Safety note';
+
+  @override
+  String get teachBackQuestionTitle => 'Teach-back question';
+
+  @override
+  String get reciprocalSuggestionTitle => 'Teach in return';
+
+  @override
+  String get saveSkillCardLabel => 'Save 3-Step Card';
+
+  @override
+  String get savingSkillCardLabel => 'Saving card…';
+
+  @override
+  String get backToHomeLabel => 'Back to Home';
+
+  @override
+  String get regenerateWithAiLabel => 'Generate again with AI';
+
+  @override
+  String get skillCardSaveError =>
+      'The card could not be saved. Return to the draft and try again.';
+
+  @override
+  String get skillCardFirebaseError =>
+      'Firebase is unavailable, so Naseej created a local Offline Guide.';
+
+  @override
+  String get skillCardOfflineError =>
+      'The AI service could not be reached, so Naseej created a local Offline Guide.';
+
+  @override
+  String get skillCardAppCheckError =>
+      'App Check rejected the cloud request, so Naseej created a local Offline Guide.';
+
+  @override
+  String get skillCardQuotaError =>
+      'The AI request limit was reached, so Naseej created a local Offline Guide.';
+
+  @override
+  String get skillCardServiceError =>
+      'Firebase AI Logic is unavailable, so Naseej created a local Offline Guide.';
+
+  @override
+  String get skillCardInvalidResponseError =>
+      'The AI response did not pass validation, so Naseej created a local Offline Guide.';
+
+  @override
+  String get skillCardClarificationError =>
+      'The explanation could not be structured safely. Review the draft; a local Offline Guide is shown for now.';
+
+  @override
+  String get skillCardGenericError =>
+      'Cloud generation could not be completed, so Naseej created a local Offline Guide.';
 }

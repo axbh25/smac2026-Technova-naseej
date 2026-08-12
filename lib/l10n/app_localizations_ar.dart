@@ -296,8 +296,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get aiReadyTitle => 'اتصال الذكاء الاصطناعي جاهز';
 
   @override
-  String get aiReadyBody =>
-      'استجابت خدمة Firebase AI Logic بنجاح. ستُضاف ميزة إنشاء الدرس في الإصدار القادم.';
+  String get aiReadyBody => 'استجابت خدمة Firebase AI Logic بنجاح.';
 
   @override
   String get aiUnavailableTitle => 'الذكاء الاصطناعي غير متاح الآن';
@@ -342,9 +341,135 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get aiInvalidResponseError =>
-      'استجابت خدمة الذكاء الاصطناعي، لكن نتيجة اختبار الاتصال كانت غير متوقعة. حاول مرة أخرى.';
+      'استجابت خدمة الذكاء الاصطناعي، لكن نتيجة اختبار الاتصال كانت غير متوقعة.';
 
   @override
   String get aiGenericError =>
       'تعذر إكمال التحقق من الذكاء الاصطناعي. تابع باستخدام التطبيق المحلي وحاول لاحقًا.';
+
+  @override
+  String get buildSkillCardLabel => 'إنشاء بطاقة من ثلاث خطوات';
+
+  @override
+  String get reviewSkillCardLabel => 'مراجعة البطاقة';
+
+  @override
+  String get savedSkillCardSummaryTitle => 'بطاقة من ثلاث خطوات جاهزة';
+
+  @override
+  String get savedSkillCardSummaryBody =>
+      'تم حفظ بطاقة تمت مراجعتها على هذا الهاتف.';
+
+  @override
+  String get skillCardScreenTitle => 'بطاقة المهارة';
+
+  @override
+  String get aiDataBoundaryTitle => 'قبل الإنشاء';
+
+  @override
+  String get aiDataSentTitle => 'ما الذي سيُرسل';
+
+  @override
+  String get aiDataSentBody =>
+      'الشرح الذي راجعته، ودور المعلّم، ودور المتعلّم، وفئة المهارة، ولغة الناتج.';
+
+  @override
+  String get aiDataNotSentTitle => 'ما الذي سيبقى على هذا الهاتف';
+
+  @override
+  String get aiDataNotSentBody =>
+      'الأسماء المحفوظة والصورة التوضيحية. إذا كتبت اسمًا داخل الشرح، فسيكون جزءًا من النص الذي سيُرسل.';
+
+  @override
+  String get skillCardChoiceTitle => 'أنشئ الدرس العائلي';
+
+  @override
+  String get skillCardChoiceBody =>
+      'أنشئ بطاقة منظمة بالذكاء الاصطناعي أو استخدم دليلًا محليًا دون اتصال.';
+
+  @override
+  String get generateWithAiLabel => 'الإنشاء بالذكاء الاصطناعي';
+
+  @override
+  String get useOfflineGuideLabel => 'استخدام دليل دون اتصال';
+
+  @override
+  String get skillCardGeneratingTitle => 'جارٍ إنشاء البطاقة من ثلاث خطوات…';
+
+  @override
+  String get skillCardGeneratingBody =>
+      'ينظم نسيج الشرح الذي راجعته. لن تُحفظ المعاينة تلقائيًا.';
+
+  @override
+  String get skillCardAiOrigin => 'مسودة منشأة بالذكاء الاصطناعي';
+
+  @override
+  String get skillCardOfflineOrigin => 'دليل دون اتصال';
+
+  @override
+  String skillCardModelLabel(String model) {
+    return 'النموذج: $model';
+  }
+
+  @override
+  String skillCardStepLabel(int number) {
+    return 'الخطوة $number';
+  }
+
+  @override
+  String get safetyNoteTitle => 'ملاحظة سلامة';
+
+  @override
+  String get teachBackQuestionTitle => 'سؤال إعادة الشرح';
+
+  @override
+  String get reciprocalSuggestionTitle => 'علّم في المقابل';
+
+  @override
+  String get saveSkillCardLabel => 'حفظ البطاقة';
+
+  @override
+  String get savingSkillCardLabel => 'جارٍ حفظ البطاقة…';
+
+  @override
+  String get backToHomeLabel => 'العودة إلى الرئيسية';
+
+  @override
+  String get regenerateWithAiLabel => 'إعادة الإنشاء بالذكاء الاصطناعي';
+
+  @override
+  String get skillCardSaveError =>
+      'تعذر حفظ البطاقة. ارجع إلى المسودة وحاول مرة أخرى.';
+
+  @override
+  String get skillCardFirebaseError =>
+      'Firebase غير متاح، لذلك أنشأ نسيج دليلًا محليًا دون اتصال.';
+
+  @override
+  String get skillCardOfflineError =>
+      'تعذر الوصول إلى خدمة الذكاء الاصطناعي، لذلك أنشأ نسيج دليلًا محليًا دون اتصال.';
+
+  @override
+  String get skillCardAppCheckError =>
+      'رفض App Check الطلب السحابي، لذلك أنشأ نسيج دليلًا محليًا دون اتصال.';
+
+  @override
+  String get skillCardQuotaError =>
+      'تم بلوغ حد طلبات الذكاء الاصطناعي، لذلك أنشأ نسيج دليلًا محليًا دون اتصال.';
+
+  @override
+  String get skillCardServiceError =>
+      'خدمة Firebase AI Logic غير متاحة، لذلك أنشأ نسيج دليلًا محليًا دون اتصال.';
+
+  @override
+  String get skillCardInvalidResponseError =>
+      'لم تجتز استجابة الذكاء الاصطناعي التحقق، لذلك أنشأ نسيج دليلًا محليًا دون اتصال.';
+
+  @override
+  String get skillCardClarificationError =>
+      'تعذر تنظيم الشرح بأمان. راجع المسودة؛ ويظهر الآن دليل محلي مؤقت.';
+
+  @override
+  String get skillCardGenericError =>
+      'تعذر إكمال الإنشاء السحابي، لذلك أنشأ نسيج دليلًا محليًا دون اتصال.';
 }

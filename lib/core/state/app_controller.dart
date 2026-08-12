@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:naseej/core/storage/app_storage.dart';
 import 'package:naseej/features/profile/domain/family_profile.dart';
+import 'package:naseej/features/skill/domain/skill_card.dart';
 import 'package:naseej/features/skill/domain/skill_draft.dart';
 
 class AppController extends ChangeNotifier {
@@ -11,6 +12,7 @@ class AppController extends ChangeNotifier {
   Locale _locale = const Locale('en');
   FamilyProfile? _profile;
   SkillDraft? _skillDraft;
+  SkillCard? _skillCard;
 
   Locale get locale => _locale;
 
@@ -18,15 +20,23 @@ class AppController extends ChangeNotifier {
 
   SkillDraft? get skillDraft => _skillDraft;
 
+  SkillCard? get skillCard => _skillCard;
+
   bool get hasProfile => _profile != null;
 
   bool get hasSkillDraft => _skillDraft != null;
 
+  bool get hasSkillCard => _skillCard != null;
+
   Future<void> initialize() async {
     try {
       final String? storedLocaleCode = await _storage.readLocaleCode();
+
       final String? storedProfileJson = await _storage.readProfileJson();
+
       final String? storedSkillDraftJson = await _storage.readSkillDraftJson();
+
+      final String? storedSkillCardJson = await _storage.readSkillCardJson();
 
       if (storedLocaleCode == 'ar' || storedLocaleCode == 'en') {
         _locale = Locale(storedLocaleCode!);
@@ -35,8 +45,13 @@ class AppController extends ChangeNotifier {
       final FamilyProfile? restoredProfile = FamilyProfile.fromJsonString(
         storedProfileJson,
       );
+
       final SkillDraft? restoredDraft = SkillDraft.fromJsonString(
         storedSkillDraftJson,
+      );
+
+      final SkillCard? restoredCard = SkillCard.fromJsonString(
+        storedSkillCardJson,
       );
 
       _profile = restoredProfile;
@@ -49,10 +64,19 @@ class AppController extends ChangeNotifier {
       } else {
         _skillDraft = null;
       }
+
+      if (_skillDraft != null &&
+          restoredCard != null &&
+          restoredCard.matchesDraft(_skillDraft!)) {
+        _skillCard = restoredCard;
+      } else {
+        _skillCard = null;
+      }
     } catch (_) {
       _locale = const Locale('en');
       _profile = null;
       _skillDraft = null;
+      _skillCard = null;
     }
   }
 
@@ -77,32 +101,65 @@ class AppController extends ChangeNotifier {
     await _storage.writeProfileJson(profile.toJsonString());
 
     await _storage.clearSkillDraft();
+    await _storage.clearSkillCard();
 
     _profile = profile;
     _skillDraft = null;
+    _skillCard = null;
+
     notifyListeners();
   }
 
   Future<void> clearProfile() async {
     await _storage.clearProfile();
     await _storage.clearSkillDraft();
+    await _storage.clearSkillCard();
 
     _profile = null;
     _skillDraft = null;
+    _skillCard = null;
+
     notifyListeners();
   }
 
   Future<void> saveSkillDraft(SkillDraft draft) async {
     await _storage.writeSkillDraftJson(draft.toJsonString());
 
+    await _storage.clearSkillCard();
+
     _skillDraft = draft;
+    _skillCard = null;
+
     notifyListeners();
   }
 
   Future<void> clearSkillDraft() async {
     await _storage.clearSkillDraft();
+    await _storage.clearSkillCard();
 
     _skillDraft = null;
+    _skillCard = null;
+
+    notifyListeners();
+  }
+
+  Future<void> saveSkillCard(SkillCard card) async {
+    final SkillDraft? currentDraft = _skillDraft;
+
+    if (currentDraft == null || !card.matchesDraft(currentDraft)) {
+      throw StateError('The skill card does not match the current draft.');
+    }
+
+    await _storage.writeSkillCardJson(card.toJsonString());
+
+    _skillCard = card;
+    notifyListeners();
+  }
+
+  Future<void> clearSkillCard() async {
+    await _storage.clearSkillCard();
+
+    _skillCard = null;
     notifyListeners();
   }
 }
