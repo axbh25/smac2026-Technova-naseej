@@ -4,39 +4,34 @@ Naseej is a bilingual English–Arabic mobile application being developed for
 SMAC 2026.
 
 The product helps family members from different generations teach one another
-practical, cultural, and digital skills. A family member explains a skill
-using voice or text, may add one private context photo, and will later use AI
-to restructure the approved explanation into a short three-step learning
-card.
+practical, cultural, and digital skills. A family member explains a skill,
+may add one private context photo, and can transform the reviewed explanation
+into a three-step learning card.
 
 ## Current Development Status
 
-Day 7 secure AI foundation:
+Day 8 structured skill card:
 
 - Android-only Flutter project runs on Pixel 7 Pro API 36
 - English and Arabic localization is generated from ARB files
-- A local profile and selected language persist after restart
-- One bilingual Teach-a-Skill draft persists locally
+- Profile, language, draft, context photo, and card persist locally
 - Short speech transcription remains editable
-- One optional context photo remains in private local app storage
-- Firebase Core is configured for Android
-- Firebase AI Logic is integrated
-- Firebase App Check is activated
-- Debug builds use the App Check debug provider
-- Release builds are configured for Play Integrity
-- A real `gemini-2.5-flash-lite` readiness check is available
-- The readiness check has Idle, Checking, Ready, and Unavailable states
-- The readiness check sends one fixed test phrase only
-- No profile, draft, transcript, or photo is sent during Day 7
-- Firebase or network failure does not block local app functionality
-- Automated AI-controller, UI, fallback, RTL, and existing feature tests are included
-- Day 2 through Day 7 visual evidence is stored under `docs/testing/`
-- Production lesson-card generation, structured AI output, teach-back, and notifications are not yet implemented
-
-## Current Developer
-
-- GitHub: axbh25
-- Role: product design, Flutter development, testing, documentation, and demo
+- Context photos remain in private local app storage
+- Firebase AI Logic and Firebase App Check are configured
+- AI generation requires explicit user action
+- The AI request includes reviewed explanation, roles, category, and language
+- Stored nicknames and context photos are excluded from the request
+- Gemini structured output is constrained by a response schema
+- Runtime validation requires exactly three steps
+- Cards contain a safety note, teach-back question, and reciprocal suggestion
+- AI output is reviewed before it is saved
+- Cloud failure creates a clearly labeled Offline Guide
+- Offline Guides do not call Firebase AI
+- Editing the source draft invalidates the old card
+- Saved cards survive restart
+- Automated model, generation, persistence, fallback, RTL, and existing-feature tests are included
+- Day 2 through Day 8 evidence is stored under `docs/testing/`
+- Learner completion, teach-back response, text-to-speech, and notifications are not yet implemented
 
 ## Team Technova
 
@@ -60,39 +55,44 @@ merged feature.
 
 - Flutter and Dart
 - Android
-- Provider for shared application state
-- SharedPreferencesAsync for small non-critical local preferences
-- Local JSON serialization for the current skill draft
-- `speech_to_text` for short user-initiated device speech recognition
-- A testable speech-engine abstraction
-- `image_picker` for camera and gallery image selection
-- `path_provider` for private application file locations
-- A testable context-photo service abstraction
+- Provider
+- SharedPreferencesAsync
+- Local JSON serialization
+- `speech_to_text`
+- `image_picker`
+- `path_provider`
 - Firebase Core
 - Firebase AI Logic
 - Firebase App Check
-- A testable AI readiness-service abstraction
+- Structured Gemini response schemas
+- Runtime card validation
+- Deterministic Offline Guide
 - Figma
 - Git and GitHub
 
-## Day 7 AI Data Boundary
+## Day 8 AI Data Boundary
 
-The current AI request sends only:
+The production card request sends:
 
-```text
-Return exactly NASEEJ_READY.
+- Reviewed explanation
+- Teacher role
+- Learner role
+- Skill category
+- Output language
 
-Production AI generation and notifications will be added gradually only when
-the relevant feature is implemented and tested.
+It does not add:
 
-## Android Reference Device
+- Stored teacher nickname
+- Stored learner nickname
+- Context photo
+- Photo path
+- Location
+- Contacts
 
-- Hardware profile: Pixel 7 Pro
-- Android system image: API 36
-- Physical profile: 1440 × 3120 at 560 dpi
-- Approximate Flutter logical size: 412 × 892
-- Orientation: Portrait
-## Run the Current Project
+A name typed inside the reviewed explanation is part of that text and will be
+sent unless the user removes it.
+
+See `docs/ai-usage/ai-data-boundary.md`.
 
 ```bash
 flutter pub get
