@@ -46,6 +46,10 @@ class SkillCard {
   final String sourceDraftFingerprint;
   final String? modelName;
 
+  String get contentFingerprint {
+    return fingerprintForCard(this);
+  }
+
   bool matchesDraft(SkillDraft draft) {
     return sourceDraftFingerprint == fingerprintForDraft(draft);
   }
@@ -162,6 +166,26 @@ class SkillCard {
       'explanation': draft.explanation.trim(),
     });
 
+    return _fingerprint(canonicalSource);
+  }
+
+  static String fingerprintForCard(SkillCard card) {
+    final String canonicalSource = jsonEncode(<String, Object?>{
+      'title': card.title.trim(),
+      'steps': card.steps.map((String step) => step.trim()).toList(),
+      'safetyNote': card.safetyNote.trim(),
+      'teachBackQuestion': card.teachBackQuestion.trim(),
+      'reciprocalSkillSuggestion': card.reciprocalSkillSuggestion.trim(),
+      'outputLanguageCode': card.outputLanguageCode,
+      'origin': card.origin.name,
+      'sourceDraftFingerprint': card.sourceDraftFingerprint,
+      'modelName': card.modelName,
+    });
+
+    return _fingerprint(canonicalSource);
+  }
+
+  static String _fingerprint(String canonicalSource) {
     int hash = 0x811C9DC5;
 
     for (final int byte in utf8.encode(canonicalSource)) {

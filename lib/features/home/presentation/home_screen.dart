@@ -6,6 +6,8 @@ import 'package:naseej/core/theme/app_colors.dart';
 import 'package:naseej/core/theme/app_spacing.dart';
 import 'package:naseej/core/widgets/language_toggle_button.dart';
 import 'package:naseej/features/home/presentation/widgets/ai_readiness_card.dart';
+import 'package:naseej/features/learning/domain/learning_progress.dart';
+import 'package:naseej/features/learning/presentation/learn_skill_screen.dart';
 import 'package:naseej/features/profile/domain/family_profile.dart';
 import 'package:naseej/features/profile/presentation/family_role_ui.dart';
 import 'package:naseej/features/skill/domain/skill_card.dart';
@@ -18,12 +20,6 @@ import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
-  void _showComingSoon(BuildContext context, AppLocalizations localizations) {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(SnackBar(content: Text(localizations.featureComingSoon)));
-  }
 
   Future<void> _openSkillDraft(
     BuildContext context, {
@@ -56,6 +52,50 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+  Future<void> _openLearning(
+    BuildContext context, {
+    required SkillDraft draft,
+    required SkillCard card,
+  }) async {
+    await Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (BuildContext context) {
+          return LearnSkillScreen(draft: draft, card: card);
+        },
+      ),
+    );
+  }
+
+  String _learningActionLabel(
+    AppLocalizations localizations,
+    LearningProgress? progress,
+  ) {
+    if (progress == null) {
+      return localizations.startLearningLabel;
+    }
+
+    if (progress.isCompleted) {
+      return localizations.reviewCompletedLessonLabel;
+    }
+
+    return localizations.continueLearningLabel;
+  }
+
+  String _learningProgressBody(
+    AppLocalizations localizations,
+    LearningProgress? progress,
+  ) {
+    if (progress == null) {
+      return localizations.learningNotStartedBody;
+    }
+
+    if (progress.isCompleted) {
+      return localizations.learningCompletedBody;
+    }
+
+    return localizations.learningInProgressBody;
+  }
+
   @override
   Widget build(BuildContext context) {
     final AppController controller = context.watch<AppController>();
@@ -67,6 +107,8 @@ class HomeScreen extends StatelessWidget {
     final SkillDraft? draft = controller.skillDraft;
 
     final SkillCard? skillCard = controller.skillCard;
+
+    final LearningProgress? learningProgress = controller.learningProgress;
 
     if (profile == null) {
       return const SizedBox.shrink();
@@ -134,6 +176,17 @@ class HomeScreen extends StatelessWidget {
                 aiOrigin: localizations.skillCardAiOrigin,
                 offlineOrigin: localizations.skillCardOfflineOrigin,
               ),
+              const SizedBox(height: AppSpacing.lg),
+              _LearningProgressSummary(
+                title: localizations.learningProgressSummaryTitle,
+                body: _learningProgressBody(localizations, learningProgress),
+                countLabel: localizations.learningProgressCount(
+                  learningProgress?.completedCount ?? 0,
+                  LearningProgress.stepCount,
+                ),
+                progress: learningProgress?.progressFraction ?? 0,
+                isCompleted: learningProgress?.isCompleted ?? false,
+              ),
             ],
             const SizedBox(height: AppSpacing.lg),
             if (draft == null)
@@ -152,7 +205,7 @@ class HomeScreen extends StatelessWidget {
                   label: Text(localizations.teachSkillLabel),
                 ),
               )
-            else ...<Widget>[
+            else if (skillCard == null) ...<Widget>[
               SizedBox(
                 height: 56,
                 child: FilledButton.icon(
@@ -161,19 +214,11 @@ class HomeScreen extends StatelessWidget {
                     await _openSkillCard(
                       context,
                       draft: draft,
-                      existingCard: skillCard,
+                      existingCard: null,
                     );
                   },
-                  icon: Icon(
-                    skillCard == null
-                        ? Icons.auto_awesome_rounded
-                        : Icons.view_agenda_outlined,
-                  ),
-                  label: Text(
-                    skillCard == null
-                        ? localizations.buildSkillCardLabel
-                        : localizations.reviewSkillCardLabel,
-                  ),
+                  icon: const Icon(Icons.auto_awesome_rounded),
+                  label: Text(localizations.buildSkillCardLabel),
                 ),
               ),
               const SizedBox(height: AppSpacing.sm),
@@ -192,26 +237,70 @@ class HomeScreen extends StatelessWidget {
                   label: Text(localizations.continueDraftLabel),
                 ),
               ),
-            ],
-            const SizedBox(height: AppSpacing.sm),
-            SizedBox(
-              height: 56,
-              child: OutlinedButton.icon(
-                key: const ValueKey<String>('learn_skill_button'),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: AppColors.primary,
-                  side: const BorderSide(color: AppColors.primary),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
+              const SizedBox(height: AppSpacing.sm),
+              SizedBox(
+                height: 56,
+                child: OutlinedButton.icon(
+                  key: const ValueKey<String>('learn_skill_button'),
+                  onPressed: null,
+                  icon: const Icon(Icons.school_rounded),
+                  label: Text(localizations.learnSkillLabel),
+                ),
+              ),
+              const SizedBox(height: AppSpacing.xs),
+              Text(
+                localizations.learningRequiresCardBody,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ] else ...<Widget>[
+              SizedBox(
+                height: 56,
+                child: FilledButton.icon(
+                  key: const ValueKey<String>('learn_skill_button'),
+                  onPressed: () async {
+                    await _openLearning(context, draft: draft, card: skillCard);
+                  },
+                  icon: Icon(
+                    learningProgress?.isCompleted == true
+                        ? Icons.verified_rounded
+                        : Icons.school_rounded,
+                  ),
+                  label: Text(
+                    _learningActionLabel(localizations, learningProgress),
                   ),
                 ),
-                onPressed: () {
-                  _showComingSoon(context, localizations);
-                },
-                icon: const Icon(Icons.school_rounded),
-                label: Text(localizations.learnSkillLabel),
               ),
-            ),
+              const SizedBox(height: AppSpacing.sm),
+              SizedBox(
+                height: 56,
+                child: OutlinedButton.icon(
+                  key: const ValueKey<String>('skill_card_action_button'),
+                  onPressed: () async {
+                    await _openSkillCard(
+                      context,
+                      draft: draft,
+                      existingCard: skillCard,
+                    );
+                  },
+                  icon: const Icon(Icons.view_agenda_outlined),
+                  label: Text(localizations.reviewSkillCardLabel),
+                ),
+              ),
+              const SizedBox(height: AppSpacing.xs),
+              TextButton.icon(
+                key: const ValueKey<String>('teach_skill_button'),
+                onPressed: () async {
+                  await _openSkillDraft(
+                    context,
+                    teacher: profile,
+                    initialDraft: draft,
+                  );
+                },
+                icon: const Icon(Icons.edit_note_rounded),
+                label: Text(localizations.continueDraftLabel),
+              ),
+            ],
           ],
         ),
       ),
@@ -550,6 +639,77 @@ class _SavedSkillCardSummary extends StatelessWidget {
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: isAi ? AppColors.success : AppColors.accent,
               fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          Text(body, style: Theme.of(context).textTheme.bodyMedium),
+        ],
+      ),
+    );
+  }
+}
+
+class _LearningProgressSummary extends StatelessWidget {
+  const _LearningProgressSummary({
+    required this.title,
+    required this.body,
+    required this.countLabel,
+    required this.progress,
+    required this.isCompleted,
+  });
+
+  final String title;
+  final String body;
+  final String countLabel;
+  final double progress;
+  final bool isCompleted;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      key: const ValueKey<String>('learning_progress_summary'),
+      width: double.infinity,
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      decoration: BoxDecoration(
+        color: isCompleted ? AppColors.surfaceSoft : AppColors.surface,
+        border: Border.all(
+          color: isCompleted ? AppColors.success : AppColors.border,
+          width: isCompleted ? 2 : 1,
+        ),
+        borderRadius: BorderRadius.circular(24),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Icon(
+                isCompleted ? Icons.verified_rounded : Icons.school_outlined,
+                color: isCompleted ? AppColors.success : AppColors.primary,
+              ),
+              const SizedBox(width: AppSpacing.xs),
+              Expanded(
+                child: Text(
+                  title,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          Text(
+            countLabel,
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(height: AppSpacing.xs),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(999),
+            child: LinearProgressIndicator(
+              value: progress,
+              minHeight: 10,
+              backgroundColor: AppColors.disabled,
             ),
           ),
           const SizedBox(height: AppSpacing.sm),

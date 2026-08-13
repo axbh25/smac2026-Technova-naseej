@@ -6,12 +6,14 @@ class FakeAppStorage implements AppStorage {
     this.profileJson,
     this.skillDraftJson,
     this.skillCardJson,
+    this.learningProgressJson,
   });
 
   String? localeCode;
   String? profileJson;
   String? skillDraftJson;
   String? skillCardJson;
+  String? learningProgressJson;
 
   @override
   Future<String?> readLocaleCode() async {
@@ -66,5 +68,20 @@ class FakeAppStorage implements AppStorage {
   @override
   Future<void> clearSkillCard() async {
     skillCardJson = null;
+  }
+
+  @override
+  Future<String?> readLearningProgressJson() async {
+    return learningProgressJson;
+  }
+
+  @override
+  Future<void> writeLearningProgressJson(String learningProgressJson) async {
+    this.learningProgressJson = learningProgressJson;
+  }
+
+  @override
+  Future<void> clearLearningProgress() async {
+    learningProgressJson = null;
   }
 }

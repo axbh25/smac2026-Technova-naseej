@@ -20,4 +20,10 @@ abstract interface class AppStorage {
   Future<void> writeSkillCardJson(String skillCardJson);
 
   Future<void> clearSkillCard();
+
+  Future<String?> readLearningProgressJson();
+
+  Future<void> writeLearningProgressJson(String learningProgressJson);
+
+  Future<void> clearLearningProgress();
 }

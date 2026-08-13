@@ -925,6 +925,168 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cloud generation could not be completed, so Naseej created a local Offline Guide.'**
   String get skillCardGenericError;
+
+  /// No description provided for @startLearningLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Learning'**
+  String get startLearningLabel;
+
+  /// No description provided for @continueLearningLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue Learning'**
+  String get continueLearningLabel;
+
+  /// No description provided for @reviewCompletedLessonLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Review Completed Lesson'**
+  String get reviewCompletedLessonLabel;
+
+  /// No description provided for @learningRequiresCardBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Build and save a 3-Step Card before starting learner practice.'**
+  String get learningRequiresCardBody;
+
+  /// No description provided for @learningProgressSummaryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Learner progress'**
+  String get learningProgressSummaryTitle;
+
+  /// No description provided for @learningNotStartedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The learner is ready to begin the three steps.'**
+  String get learningNotStartedBody;
+
+  /// No description provided for @learningInProgressBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The learner’s progress is saved locally and can continue later.'**
+  String get learningInProgressBody;
+
+  /// No description provided for @learningCompletedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The learner completed all three steps and the teach-back response.'**
+  String get learningCompletedBody;
+
+  /// No description provided for @learnSkillScreenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Learn a Skill'**
+  String get learnSkillScreenTitle;
+
+  /// No description provided for @learnerLessonTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}\'s lesson'**
+  String learnerLessonTitle(String name);
+
+  /// No description provided for @learningProgressCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{completed} of {total} steps completed'**
+  String learningProgressCount(int completed, int total);
+
+  /// No description provided for @learningOfflineNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'Practice and progress work without internet.'**
+  String get learningOfflineNotice;
+
+  /// No description provided for @practiceStepsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Practise the three steps'**
+  String get practiceStepsTitle;
+
+  /// No description provided for @teachBackResponseLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Explain what you learned'**
+  String get teachBackResponseLabel;
+
+  /// No description provided for @teachBackResponseHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Write the lesson back in your own words.'**
+  String get teachBackResponseHint;
+
+  /// No description provided for @teachBackResponseHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Write at least {minimum} characters. This response stays on this phone.'**
+  String teachBackResponseHelper(int minimum);
+
+  /// No description provided for @learningSavingLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving progress…'**
+  String get learningSavingLabel;
+
+  /// No description provided for @learningSavedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress saved on this phone.'**
+  String get learningSavedLabel;
+
+  /// No description provided for @learningSaveError.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress could not be saved. Make another change to try again.'**
+  String get learningSaveError;
+
+  /// No description provided for @learningChangesPendingLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes are waiting to save.'**
+  String get learningChangesPendingLabel;
+
+  /// No description provided for @learningLocalSaveReadyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress will be saved on this phone.'**
+  String get learningLocalSaveReadyLabel;
+
+  /// No description provided for @completeAllStepsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete all 3 steps'**
+  String get completeAllStepsLabel;
+
+  /// No description provided for @writeTeachBackLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Write your teach-back response'**
+  String get writeTeachBackLabel;
+
+  /// No description provided for @completeFamilyLessonLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete Family Lesson'**
+  String get completeFamilyLessonLabel;
+
+  /// No description provided for @lessonCompletedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Lesson Completed'**
+  String get lessonCompletedLabel;
+
+  /// No description provided for @lessonCompletedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Family lesson completed'**
+  String get lessonCompletedTitle;
+
+  /// No description provided for @lessonCompletedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You practised all three steps and explained what you learned.'**
+  String get lessonCompletedBody;
 }
 
 class _AppLocalizationsDelegate

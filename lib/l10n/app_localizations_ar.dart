@@ -472,4 +472,97 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get skillCardGenericError =>
       'تعذر إكمال الإنشاء السحابي، لذلك أنشأ نسيج دليلًا محليًا دون اتصال.';
+
+  @override
+  String get startLearningLabel => 'ابدأ التعلّم';
+
+  @override
+  String get continueLearningLabel => 'متابعة التعلّم';
+
+  @override
+  String get reviewCompletedLessonLabel => 'مراجعة الدرس المكتمل';
+
+  @override
+  String get learningRequiresCardBody =>
+      'أنشئ بطاقة من ثلاث خطوات واحفظها قبل بدء تدريب المتعلّم.';
+
+  @override
+  String get learningProgressSummaryTitle => 'تقدّم المتعلّم';
+
+  @override
+  String get learningNotStartedBody => 'المتعلّم جاهز لبدء الخطوات الثلاث.';
+
+  @override
+  String get learningInProgressBody =>
+      'يُحفظ تقدّم المتعلّم محليًا ويمكنه المتابعة لاحقًا.';
+
+  @override
+  String get learningCompletedBody =>
+      'أكمل المتعلّم الخطوات الثلاث وإجابة إعادة الشرح.';
+
+  @override
+  String get learnSkillScreenTitle => 'تعلّم مهارة';
+
+  @override
+  String learnerLessonTitle(String name) {
+    return 'درس $name';
+  }
+
+  @override
+  String learningProgressCount(int completed, int total) {
+    return 'اكتملت $completed من $total خطوات';
+  }
+
+  @override
+  String get learningOfflineNotice =>
+      'يعمل التدريب وحفظ التقدّم دون اتصال بالإنترنت.';
+
+  @override
+  String get practiceStepsTitle => 'تدرّب على الخطوات الثلاث';
+
+  @override
+  String get teachBackResponseLabel => 'اشرح ما تعلّمته';
+
+  @override
+  String get teachBackResponseHint => 'اكتب الدرس بكلماتك.';
+
+  @override
+  String teachBackResponseHelper(int minimum) {
+    return 'اكتب $minimum أحرف على الأقل. تبقى هذه الإجابة على هذا الهاتف.';
+  }
+
+  @override
+  String get learningSavingLabel => 'جارٍ حفظ التقدّم…';
+
+  @override
+  String get learningSavedLabel => 'تم حفظ التقدّم على هذا الهاتف.';
+
+  @override
+  String get learningSaveError =>
+      'تعذر حفظ التقدّم. أجرِ تغييرًا آخر للمحاولة مجددًا.';
+
+  @override
+  String get learningChangesPendingLabel => 'توجد تغييرات في انتظار الحفظ.';
+
+  @override
+  String get learningLocalSaveReadyLabel => 'سيُحفظ التقدّم على هذا الهاتف.';
+
+  @override
+  String get completeAllStepsLabel => 'أكمل الخطوات الثلاث';
+
+  @override
+  String get writeTeachBackLabel => 'اكتب إجابة إعادة الشرح';
+
+  @override
+  String get completeFamilyLessonLabel => 'إكمال الدرس العائلي';
+
+  @override
+  String get lessonCompletedLabel => 'اكتمل الدرس';
+
+  @override
+  String get lessonCompletedTitle => 'اكتمل الدرس العائلي';
+
+  @override
+  String get lessonCompletedBody =>
+      'تدرّبت على الخطوات الثلاث وشرحت ما تعلّمته.';
 }

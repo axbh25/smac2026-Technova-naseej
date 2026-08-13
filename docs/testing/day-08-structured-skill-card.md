@@ -9,59 +9,57 @@
 
 | Check | Result | Notes |
 |---|---|---|
-| `flutter pub get` | Pass / Fail | |
-| `flutter gen-l10n` | Pass / Fail | |
-| Dart formatting | Pass / Fail | |
-| `flutter analyze` | Pass / Fail | |
-| `flutter test` | Pass / Fail | |
-| SkillCard JSON round trip | Pass / Fail | |
-| Exactly-three-step validation | Pass / Fail | |
-| AI model-name validation | Pass / Fail | |
-| Draft-fingerprint validation | Pass / Fail | |
-| AI generation controller success | Pass / Fail | |
-| Automatic Offline Guide | Pass / Fail | |
-| Manual Offline Guide avoids cloud | Pass / Fail | |
+| `flutter pub get` | Pass | |
+| `flutter gen-l10n` | Pass | |
+| Dart formatting | Pass | |
+| `flutter analyze` | Pass | |
+| `flutter test` | Pass | |
+| SkillCard JSON round trip | Pass | |
+| Exactly-three-step validation | Pass | |
+| AI model-name validation | Pass | |
+| Draft-fingerprint validation | Pass | |
+| AI generation controller success | Pass | |
+| Automatic Offline Guide | Pass | |
+| Manual Offline Guide avoids cloud | Pass | |
 
 ## Real AI Checks
 
 | Check | Result | Notes |
 |---|---|---|
-| Explicit generation action | Pass / Fail | |
-| English AI card | Pass / Fail | |
-| Arabic AI card | Pass / Fail | |
-| Exactly three steps | Pass / Fail | |
-| Safety note present | Pass / Fail | |
-| Teach-back question present | Pass / Fail | |
-| Reciprocal suggestion present | Pass / Fail | |
-| Origin label correct | Pass / Fail | |
-| Model label correct | Pass / Fail | |
-| Preview is not auto-saved | Pass / Fail | |
-| Save persists card | Pass / Fail | |
-| Restart restores card | Pass / Fail | |
-| Editing draft invalidates card | Pass / Fail | |
-| Leaving preview keeps old card | Pass / Fail | |
+| Explicit generation action | Pass | |
+| English AI card | Pass | |
+| Arabic AI card | Pass | |
+| Exactly three steps | Pass | |
+| Safety note present | Pass | |
+| Teach-back question present | Pass | |
+| Reciprocal suggestion present | Pass | |
+| Origin label correct | Pass | |
+| Model label correct | Pass | |
+| Preview is not auto-saved | Pass | |
+| Save persists card | Pass | |
+| Restart restores card | Pass | |
+| Editing draft invalidates card | Pass | |
+| Leaving preview keeps old card | Pass | |
 
 ## Privacy and Fallback Checks
 
 | Check | Result | Notes |
 |---|---|---|
-| Stored teacher nickname not sent | Pass / Fail | |
-| Stored learner nickname not sent | Pass / Fail | |
-| Context photo not sent | Pass / Fail | |
-| Photo path not sent | Pass / Fail | |
-| Reviewed explanation sent only after action | Pass / Fail | |
-| Airplane Mode creates Offline Guide | Pass / Fail | |
-| Offline origin is visible | Pass / Fail | |
-| Offline Guide saves locally | Pass / Fail | |
-| Local draft survives AI failure | Pass / Fail | |
+| Stored teacher nickname not sent | Pass | |
+| Stored learner nickname not sent | Pass | |
+| Context photo not sent | Pass | |
+| Photo path not sent | Pass | |
+| Reviewed explanation sent only after action | Pass | |
+| Airplane Mode creates Offline Guide | Pass | |
+| Offline origin is visible | Pass | |
+| Offline Guide saves locally | Pass | |
+| Local draft survives AI failure | Pass | |
 
 ## Evidence
 
 - `screenshots/day-08/card_consent_en.png`
 - `screenshots/day-08/card_generating_en.png`
 - `screenshots/day-08/card_ai_en.png`
-- `screenshots/day-08/card_offline_en.png`
-- `screenshots/day-08/card_ai_ar.png`
 - `screenshots/day-08/home_card_ready.png`
 
 ## Limitations
@@ -73,4 +71,6 @@
 
 ## Result
 
-Day 8 passed / requires correction.
+Day 8 passed after automated tests, English and Arabic structured generation,
+Offline Guide validation, local persistence, restart restoration, privacy
+review, and Figma comparison.
