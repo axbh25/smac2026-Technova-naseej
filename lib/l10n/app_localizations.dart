@@ -1087,6 +1087,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You practised all three steps and explained what you learned.'**
   String get lessonCompletedBody;
+
+  /// No description provided for @listenToStepsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Listen to each step'**
+  String get listenToStepsTitle;
+
+  /// No description provided for @listenToStepsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Use one Listen button at a time. You can stop playback before choosing another step.'**
+  String get listenToStepsBody;
+
+  /// No description provided for @ttsDeviceNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'Naseej uses a text-to-speech voice installed on this device and does not save an audio file.'**
+  String get ttsDeviceNotice;
+
+  /// No description provided for @ttsPreparingLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Preparing speech…'**
+  String get ttsPreparingLabel;
+
+  /// No description provided for @ttsSpeakingLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'A lesson step is being read aloud.'**
+  String get ttsSpeakingLabel;
+
+  /// No description provided for @ttsUnavailableTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Spoken playback is unavailable'**
+  String get ttsUnavailableTitle;
+
+  /// No description provided for @ttsLanguageUnavailableBody.
+  ///
+  /// In en, this message translates to:
+  /// **'A voice for the card language is not installed on this device. Continue reading the lesson or install the voice in Android Settings.'**
+  String get ttsLanguageUnavailableBody;
+
+  /// No description provided for @ttsPlaybackErrorBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The device could not read this step. You can continue reading, checking steps, and writing your response.'**
+  String get ttsPlaybackErrorBody;
+
+  /// No description provided for @listenLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Listen'**
+  String get listenLabel;
+
+  /// No description provided for @stopSpeakingLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get stopSpeakingLabel;
+
+  /// No description provided for @replayLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Replay'**
+  String get replayLabel;
 }
 
 class _AppLocalizationsDelegate

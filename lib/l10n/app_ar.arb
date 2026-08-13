@@ -164,5 +164,16 @@
   "completeFamilyLessonLabel": "إكمال الدرس العائلي",
   "lessonCompletedLabel": "اكتمل الدرس",
   "lessonCompletedTitle": "اكتمل الدرس العائلي",
-  "lessonCompletedBody": "تدرّبت على الخطوات الثلاث وشرحت ما تعلّمته."
+  "lessonCompletedBody": "تدرّبت على الخطوات الثلاث وشرحت ما تعلّمته.",
+  "listenToStepsTitle": "استمع إلى كل خطوة",
+  "listenToStepsBody": "استخدم زر استمع لخطوة واحدة في كل مرة. يمكنك إيقاف القراءة قبل اختيار خطوة أخرى.",
+  "ttsDeviceNotice": "يستخدم نسيج صوت تحويل النص إلى كلام المثبّت على هذا الجهاز، ولا يحفظ ملفًا صوتيًا.",
+  "ttsPreparingLabel": "جارٍ تجهيز الصوت…",
+  "ttsSpeakingLabel": "تُقرأ إحدى خطوات الدرس بصوت عالٍ.",
+  "ttsUnavailableTitle": "القراءة الصوتية غير متاحة",
+  "ttsLanguageUnavailableBody": "لا يوجد صوت مثبّت للغة البطاقة على هذا الجهاز. تابع بقراءة الدرس أو ثبّت الصوت من إعدادات Android.",
+  "ttsPlaybackErrorBody": "تعذر على الجهاز قراءة هذه الخطوة. يمكنك متابعة القراءة وتحديد الخطوات وكتابة إجابتك.",
+  "listenLabel": "استمع",
+  "stopSpeakingLabel": "إيقاف",
+  "replayLabel": "إعادة الاستماع"
 }

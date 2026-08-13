@@ -575,4 +575,41 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get lessonCompletedBody =>
       'You practised all three steps and explained what you learned.';
+
+  @override
+  String get listenToStepsTitle => 'Listen to each step';
+
+  @override
+  String get listenToStepsBody =>
+      'Use one Listen button at a time. You can stop playback before choosing another step.';
+
+  @override
+  String get ttsDeviceNotice =>
+      'Naseej uses a text-to-speech voice installed on this device and does not save an audio file.';
+
+  @override
+  String get ttsPreparingLabel => 'Preparing speech…';
+
+  @override
+  String get ttsSpeakingLabel => 'A lesson step is being read aloud.';
+
+  @override
+  String get ttsUnavailableTitle => 'Spoken playback is unavailable';
+
+  @override
+  String get ttsLanguageUnavailableBody =>
+      'A voice for the card language is not installed on this device. Continue reading the lesson or install the voice in Android Settings.';
+
+  @override
+  String get ttsPlaybackErrorBody =>
+      'The device could not read this step. You can continue reading, checking steps, and writing your response.';
+
+  @override
+  String get listenLabel => 'Listen';
+
+  @override
+  String get stopSpeakingLabel => 'Stop';
+
+  @override
+  String get replayLabel => 'Replay';
 }
