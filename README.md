@@ -3,53 +3,57 @@
 Naseej is a bilingual English–Arabic mobile application being developed for
 SMAC 2026.
 
-The product helps family members from different generations teach one another
+Naseej helps family members from different generations teach one another
 practical, cultural, and digital skills. A family member explains a skill,
-may add one private context photo, and can transform the reviewed explanation
-into a three-step learning card.
+may add one private context photo, and can use AI to transform the reviewed
+explanation into a safe three-step learning card. The learner then practises
+the steps and explains what they learned.
 
 ## Current Development Status
 
-Day 8 structured skill card:
+Day 9 learner practice:
 
 - Android-only Flutter project runs on Pixel 7 Pro API 36
-- English and Arabic localization is generated from ARB files
-- Profile, language, draft, context photo, and card persist locally
-- Short speech transcription remains editable
+- English and Arabic interfaces support RTL
+- Profile, language, draft, photo, card, and progress persist locally
+- Teacher explanations support typed or short speech input
 - Context photos remain in private local app storage
-- Firebase AI Logic and Firebase App Check are configured
-- AI generation requires explicit user action
-- The AI request includes reviewed explanation, roles, category, and language
-- Stored nicknames and context photos are excluded from the request
-- Gemini structured output is constrained by a response schema
-- Runtime validation requires exactly three steps
-- Cards contain a safety note, teach-back question, and reciprocal suggestion
-- AI output is reviewed before it is saved
-- Cloud failure creates a clearly labeled Offline Guide
-- Offline Guides do not call Firebase AI
-- Editing the source draft invalidates the old card
-- Saved cards survive restart
-- Automated model, generation, persistence, fallback, RTL, and existing-feature tests are included
-- Day 2 through Day 8 evidence is stored under `docs/testing/`
-- Learner completion, teach-back response, text-to-speech, and notifications are not yet implemented
+- Firebase AI Logic produces structured three-step cards
+- Firebase App Check protects Firebase AI requests
+- Structured output is validated before display or storage
+- Cloud failure creates a labeled Offline Guide
+- AI output requires teacher review before saving
+- Learners can practise exactly three saved steps
+- Every checkbox change is saved locally
+- Learners answer a teach-back question in their own words
+- Completion requires all steps and a valid teach-back response
+- Progress and completion survive Android restarts
+- Progress is invalidated when the source draft or card changes
+- Day 9 learning works fully in Airplane Mode
+- No Day 9 progress or teach-back data is sent to AI
+- Automated model, storage, invalidation, completion, and RTL tests are included
+- Visual evidence is stored under `docs/testing/`
 
 ## Team Technova
 
-- Abdullah Haider — Flutter development, architecture, testing, and documentation
-- Shoug Almaashari — Figma, documentation, bilingual review, and testing
+- Abdullah Haider — Flutter development, architecture, testing, documentation, and demo
+- Shoug Almaashari — historical Figma, documentation, bilingual review, and testing contributions
 
-Both participants use their own GitHub accounts and must understand every
-merged feature.
+Team membership must match the officially registered competition team.
+No person is credited for work they did not perform.
 
-## Planned MVP
+## Current MVP Flow
 
-1. Voice or typed skill explanation
-2. Optional private context photo
-3. AI-assisted three-step learning card
-4. Learner completion and teach-back
-5. Reciprocal skill suggestion
-6. English and Arabic interface with RTL support
-7. Local storage and transparent offline fallback
+1. Create a local family profile
+2. Create a Teach-a-Skill draft
+3. Type or dictate the explanation
+4. Optionally add one private context photo
+5. Generate or use an Offline Guide
+6. Review and save the three-step card
+7. Practise each step
+8. Answer the teach-back question
+9. Complete the family lesson
+10. See the reciprocal skill suggestion
 
 ## Technology
 
@@ -67,12 +71,13 @@ merged feature.
 - Structured Gemini response schemas
 - Runtime card validation
 - Deterministic Offline Guide
+- Local learner progress
 - Figma
 - Git and GitHub
 
-## Day 8 AI Data Boundary
+## AI Data Boundary
 
-The production card request sends:
+The card-generation request sends:
 
 - Reviewed explanation
 - Teacher role
@@ -82,17 +87,30 @@ The production card request sends:
 
 It does not add:
 
-- Stored teacher nickname
-- Stored learner nickname
+- Stored nicknames
 - Context photo
 - Photo path
 - Location
 - Contacts
+- Learner progress
+- Teach-back response
 
-A name typed inside the reviewed explanation is part of that text and will be
-sent unless the user removes it.
+A personal detail typed inside the reviewed explanation is part of that text
+and will be sent unless the user removes it.
+
+Day 9 learner practice makes no Firebase AI request.
 
 See `docs/ai-usage/ai-data-boundary.md`.
+
+## Run the Project
+
+```bash
+flutter pub get
+flutter gen-l10n
+flutter analyze
+flutter test
+flutter run
+
 
 ```bash
 flutter pub get
