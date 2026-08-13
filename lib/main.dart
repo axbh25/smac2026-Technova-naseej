@@ -17,6 +17,8 @@ import 'package:naseej/core/speech/device_speech_engine.dart';
 import 'package:naseej/core/speech/speech_controller.dart';
 import 'package:naseej/core/state/app_controller.dart';
 import 'package:naseej/core/storage/shared_preferences_app_storage.dart';
+import 'package:naseej/core/tts/device_text_to_speech_engine.dart';
+import 'package:naseej/core/tts/text_to_speech_controller.dart';
 import 'package:naseej/firebase_options.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
@@ -39,6 +41,11 @@ Future<void> main() async {
         ChangeNotifierProvider<SpeechController>(
           create: (_) {
             return SpeechController(DeviceSpeechEngine());
+          },
+        ),
+        ChangeNotifierProvider<TextToSpeechController>(
+          create: (_) {
+            return TextToSpeechController(DeviceTextToSpeechEngine());
           },
         ),
         ChangeNotifierProvider<AiReadinessController>(
@@ -99,6 +106,5 @@ class _AiServices {
   });
 
   final AiReadinessService readinessService;
-
   final SkillCardGenerationService generationService;
 }

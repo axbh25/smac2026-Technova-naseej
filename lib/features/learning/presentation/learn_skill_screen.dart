@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:naseej/core/state/app_controller.dart';
 import 'package:naseej/core/theme/app_colors.dart';
 import 'package:naseej/core/theme/app_spacing.dart';
+import 'package:naseej/core/tts/text_to_speech_controller.dart';
 import 'package:naseej/core/widgets/language_toggle_button.dart';
 import 'package:naseej/features/learning/domain/learning_progress.dart';
 import 'package:naseej/features/skill/domain/skill_card.dart';
@@ -30,6 +31,7 @@ class _LearnSkillScreenState extends State<LearnSkillScreen> {
   );
 
   Timer? _saveTimer;
+  TextToSpeechController? _textToSpeechController;
 
   bool _initialized = false;
   bool _listenerAdded = false;
@@ -76,6 +78,8 @@ class _LearnSkillScreenState extends State<LearnSkillScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
+    _textToSpeechController ??= context.read<TextToSpeechController>();
+
     if (_initialized) {
       return;
     }
@@ -92,15 +96,12 @@ class _LearnSkillScreenState extends State<LearnSkillScreen> {
       }
 
       _teachBackController.text = existingProgress.teachBackResponse;
-
       _completedAtIso8601 = existingProgress.completedAtIso8601;
-
       _hasPersistedProgress = true;
     }
 
     if (!_listenerAdded) {
       _listenerAdded = true;
-
       _teachBackController.addListener(_handleTeachBackChanged);
     }
   }
@@ -114,6 +115,12 @@ class _LearnSkillScreenState extends State<LearnSkillScreen> {
     }
 
     _teachBackController.dispose();
+
+    final TextToSpeechController? controller = _textToSpeechController;
+
+    if (controller != null) {
+      unawaited(controller.stop());
+    }
 
     super.dispose();
   }
@@ -173,7 +180,6 @@ class _LearnSkillScreenState extends State<LearnSkillScreen> {
 
     if (markCompleted && _completedAtIso8601 == null) {
       _completedAtIso8601 = DateTime.now().toUtc().toIso8601String();
-
       _revision += 1;
     }
 
@@ -237,7 +243,18 @@ class _LearnSkillScreenState extends State<LearnSkillScreen> {
 
     FocusManager.instance.primaryFocus?.unfocus();
 
+    await _textToSpeechController?.stop();
     await _persistProgress(markCompleted: true);
+  }
+
+  Future<void> _returnHome() async {
+    await _textToSpeechController?.stop();
+
+    if (!mounted) {
+      return;
+    }
+
+    Navigator.of(context).pop();
   }
 
   String _saveStatus(AppLocalizations localizations) {
@@ -306,9 +323,113 @@ class _LearnSkillScreenState extends State<LearnSkillScreen> {
     return localizations.completeFamilyLessonLabel;
   }
 
+  String _speechStatusTitle(
+    AppLocalizations localizations,
+    TextToSpeechController controller,
+  ) {
+    if (controller.status == TextToSpeechStatus.unavailable ||
+        controller.status == TextToSpeechStatus.failure) {
+      return localizations.ttsUnavailableTitle;
+    }
+
+    return localizations.listenToStepsTitle;
+  }
+
+  String _speechStatusBody(
+    AppLocalizations localizations,
+    TextToSpeechController controller,
+  ) {
+    switch (controller.status) {
+      case TextToSpeechStatus.idle:
+        return localizations.listenToStepsBody;
+      case TextToSpeechStatus.preparing:
+        return localizations.ttsPreparingLabel;
+      case TextToSpeechStatus.speaking:
+        return localizations.ttsSpeakingLabel;
+      case TextToSpeechStatus.unavailable:
+        return localizations.ttsLanguageUnavailableBody;
+      case TextToSpeechStatus.failure:
+        return localizations.ttsPlaybackErrorBody;
+    }
+  }
+
+  IconData _speechStatusIcon(TextToSpeechController controller) {
+    switch (controller.status) {
+      case TextToSpeechStatus.idle:
+        return Icons.volume_up_outlined;
+      case TextToSpeechStatus.preparing:
+        return Icons.hourglass_top_rounded;
+      case TextToSpeechStatus.speaking:
+        return Icons.graphic_eq_rounded;
+      case TextToSpeechStatus.unavailable:
+        return Icons.volume_off_outlined;
+      case TextToSpeechStatus.failure:
+        return Icons.error_outline_rounded;
+    }
+  }
+
+  Color _speechStatusColor(TextToSpeechController controller) {
+    if (controller.status == TextToSpeechStatus.unavailable ||
+        controller.status == TextToSpeechStatus.failure) {
+      return AppColors.error;
+    }
+
+    if (controller.status == TextToSpeechStatus.speaking) {
+      return AppColors.success;
+    }
+
+    return AppColors.primary;
+  }
+
+  String _speechButtonLabel({
+    required AppLocalizations localizations,
+    required TextToSpeechController controller,
+    required String itemId,
+  }) {
+    if (controller.isActive(itemId)) {
+      if (controller.status == TextToSpeechStatus.preparing) {
+        return localizations.ttsPreparingLabel;
+      }
+
+      if (controller.status == TextToSpeechStatus.speaking) {
+        return localizations.stopSpeakingLabel;
+      }
+    }
+
+    if (controller.lastCompletedItemId == itemId) {
+      return localizations.replayLabel;
+    }
+
+    return localizations.listenLabel;
+  }
+
+  IconData _speechButtonIcon({
+    required TextToSpeechController controller,
+    required String itemId,
+  }) {
+    if (controller.isActive(itemId)) {
+      if (controller.status == TextToSpeechStatus.preparing) {
+        return Icons.hourglass_top_rounded;
+      }
+
+      if (controller.status == TextToSpeechStatus.speaking) {
+        return Icons.stop_circle_outlined;
+      }
+    }
+
+    if (controller.lastCompletedItemId == itemId) {
+      return Icons.replay_rounded;
+    }
+
+    return Icons.volume_up_outlined;
+  }
+
   @override
   Widget build(BuildContext context) {
     final AppLocalizations localizations = AppLocalizations.of(context)!;
+
+    final TextToSpeechController speechController = context
+        .watch<TextToSpeechController>();
 
     final double progress = _completedCount / LearningProgress.stepCount;
 
@@ -346,6 +467,14 @@ class _LearnSkillScreenState extends State<LearnSkillScreen> {
               saveStatusColor: _saveStatusColor(),
               localNotice: localizations.learningOfflineNotice,
             ),
+            const SizedBox(height: AppSpacing.lg),
+            _SpeechSupportCard(
+              title: _speechStatusTitle(localizations, speechController),
+              body: _speechStatusBody(localizations, speechController),
+              notice: localizations.ttsDeviceNotice,
+              icon: _speechStatusIcon(speechController),
+              statusColor: _speechStatusColor(speechController),
+            ),
             if (_isCompleted) ...<Widget>[
               const SizedBox(height: AppSpacing.lg),
               _CompletionBanner(
@@ -371,14 +500,47 @@ class _LearnSkillScreenState extends State<LearnSkillScreen> {
               index < widget.card.steps.length;
               index += 1
             ) ...<Widget>[
-              _LearningStepCard(
-                index: index,
-                label: localizations.skillCardStepLabel(index + 1),
-                text: widget.card.steps[index],
-                isCompleted: _completedSteps[index],
-                isEnabled: !_isSaving,
-                onChanged: (bool value) {
-                  _handleStepChanged(index, value);
+              Builder(
+                builder: (BuildContext context) {
+                  final String speechItemId = 'learning_step_$index';
+
+                  final bool isSpeechActive = speechController.isActive(
+                    speechItemId,
+                  );
+
+                  final bool speechButtonEnabled =
+                      !speechController.isBusy || isSpeechActive;
+
+                  return _LearningStepCard(
+                    index: index,
+                    label: localizations.skillCardStepLabel(index + 1),
+                    text: widget.card.steps[index],
+                    isCompleted: _completedSteps[index],
+                    isEnabled: !_isSaving,
+                    onChanged: (bool value) {
+                      _handleStepChanged(index, value);
+                    },
+                    speechButtonLabel: _speechButtonLabel(
+                      localizations: localizations,
+                      controller: speechController,
+                      itemId: speechItemId,
+                    ),
+                    speechButtonIcon: _speechButtonIcon(
+                      controller: speechController,
+                      itemId: speechItemId,
+                    ),
+                    onSpeechPressed: speechButtonEnabled
+                        ? () {
+                            unawaited(
+                              speechController.toggle(
+                                itemId: speechItemId,
+                                text: widget.card.steps[index],
+                                languageCode: widget.card.outputLanguageCode,
+                              ),
+                            );
+                          }
+                        : null,
+                  );
                 },
               ),
               if (index < widget.card.steps.length - 1)
@@ -411,13 +573,9 @@ class _LearnSkillScreenState extends State<LearnSkillScreen> {
                 onPressed: _isSaving
                     ? null
                     : _isCompleted
-                    ? () {
-                        Navigator.of(context).pop();
-                      }
+                    ? _returnHome
                     : _readyToComplete
-                    ? () async {
-                        await _completeLesson();
-                      }
+                    ? _completeLesson
                     : null,
                 icon: Icon(
                   _isCompleted ? Icons.home_outlined : Icons.verified_outlined,
@@ -541,6 +699,76 @@ class _LessonHeaderCard extends StatelessWidget {
   }
 }
 
+class _SpeechSupportCard extends StatelessWidget {
+  const _SpeechSupportCard({
+    required this.title,
+    required this.body,
+    required this.notice,
+    required this.icon,
+    required this.statusColor,
+  });
+
+  final String title;
+  final String body;
+  final String notice;
+  final IconData icon;
+  final Color statusColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      key: const ValueKey<String>('speech_support_card'),
+      width: double.infinity,
+      padding: const EdgeInsets.all(AppSpacing.md),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        border: Border.all(color: statusColor),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Icon(icon, color: statusColor),
+              const SizedBox(width: AppSpacing.sm),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(title, style: Theme.of(context).textTheme.titleMedium),
+                    const SizedBox(height: AppSpacing.xxs),
+                    Text(body, style: Theme.of(context).textTheme.bodyMedium),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const Icon(
+                Icons.smartphone_outlined,
+                color: AppColors.textSecondary,
+                size: 18,
+              ),
+              const SizedBox(width: AppSpacing.xs),
+              Expanded(
+                child: Text(
+                  notice,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _LearningStepCard extends StatelessWidget {
   const _LearningStepCard({
     required this.index,
@@ -549,6 +777,9 @@ class _LearningStepCard extends StatelessWidget {
     required this.isCompleted,
     required this.isEnabled,
     required this.onChanged,
+    required this.speechButtonLabel,
+    required this.speechButtonIcon,
+    required this.onSpeechPressed,
   });
 
   final int index;
@@ -557,6 +788,9 @@ class _LearningStepCard extends StatelessWidget {
   final bool isCompleted;
   final bool isEnabled;
   final ValueChanged<bool> onChanged;
+  final String speechButtonLabel;
+  final IconData speechButtonIcon;
+  final VoidCallback? onSpeechPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -576,7 +810,7 @@ class _LearningStepCard extends StatelessWidget {
               : null,
           child: Container(
             width: double.infinity,
-            constraints: const BoxConstraints(minHeight: 104),
+            constraints: const BoxConstraints(minHeight: 152),
             padding: const EdgeInsets.all(AppSpacing.md),
             decoration: BoxDecoration(
               border: Border.all(
@@ -612,6 +846,16 @@ class _LearningStepCard extends StatelessWidget {
                       ),
                       const SizedBox(height: AppSpacing.xxs),
                       Text(text, style: Theme.of(context).textTheme.bodyMedium),
+                      const SizedBox(height: AppSpacing.sm),
+                      SizedBox(
+                        height: 48,
+                        child: OutlinedButton.icon(
+                          key: ValueKey<String>('learning_step_speak_$index'),
+                          onPressed: onSpeechPressed,
+                          icon: Icon(speechButtonIcon),
+                          label: Text(speechButtonLabel),
+                        ),
+                      ),
                     ],
                   ),
                 ),

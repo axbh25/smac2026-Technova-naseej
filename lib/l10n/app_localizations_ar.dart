@@ -565,4 +565,41 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get lessonCompletedBody =>
       'تدرّبت على الخطوات الثلاث وشرحت ما تعلّمته.';
+
+  @override
+  String get listenToStepsTitle => 'استمع إلى كل خطوة';
+
+  @override
+  String get listenToStepsBody =>
+      'استخدم زر استمع لخطوة واحدة في كل مرة. يمكنك إيقاف القراءة قبل اختيار خطوة أخرى.';
+
+  @override
+  String get ttsDeviceNotice =>
+      'يستخدم نسيج صوت تحويل النص إلى كلام المثبّت على هذا الجهاز، ولا يحفظ ملفًا صوتيًا.';
+
+  @override
+  String get ttsPreparingLabel => 'جارٍ تجهيز الصوت…';
+
+  @override
+  String get ttsSpeakingLabel => 'تُقرأ إحدى خطوات الدرس بصوت عالٍ.';
+
+  @override
+  String get ttsUnavailableTitle => 'القراءة الصوتية غير متاحة';
+
+  @override
+  String get ttsLanguageUnavailableBody =>
+      'لا يوجد صوت مثبّت للغة البطاقة على هذا الجهاز. تابع بقراءة الدرس أو ثبّت الصوت من إعدادات Android.';
+
+  @override
+  String get ttsPlaybackErrorBody =>
+      'تعذر على الجهاز قراءة هذه الخطوة. يمكنك متابعة القراءة وتحديد الخطوات وكتابة إجابتك.';
+
+  @override
+  String get listenLabel => 'استمع';
+
+  @override
+  String get stopSpeakingLabel => 'إيقاف';
+
+  @override
+  String get replayLabel => 'إعادة الاستماع';
 }
