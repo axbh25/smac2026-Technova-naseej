@@ -479,4 +479,100 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get skillCardGenericError =>
       'Cloud generation could not be completed, so Naseej created a local Offline Guide.';
+
+  @override
+  String get startLearningLabel => 'Start Learning';
+
+  @override
+  String get continueLearningLabel => 'Continue Learning';
+
+  @override
+  String get reviewCompletedLessonLabel => 'Review Completed Lesson';
+
+  @override
+  String get learningRequiresCardBody =>
+      'Build and save a 3-Step Card before starting learner practice.';
+
+  @override
+  String get learningProgressSummaryTitle => 'Learner progress';
+
+  @override
+  String get learningNotStartedBody =>
+      'The learner is ready to begin the three steps.';
+
+  @override
+  String get learningInProgressBody =>
+      'The learner’s progress is saved locally and can continue later.';
+
+  @override
+  String get learningCompletedBody =>
+      'The learner completed all three steps and the teach-back response.';
+
+  @override
+  String get learnSkillScreenTitle => 'Learn a Skill';
+
+  @override
+  String learnerLessonTitle(String name) {
+    return '$name\'s lesson';
+  }
+
+  @override
+  String learningProgressCount(int completed, int total) {
+    return '$completed of $total steps completed';
+  }
+
+  @override
+  String get learningOfflineNotice =>
+      'Practice and progress work without internet.';
+
+  @override
+  String get practiceStepsTitle => 'Practise the three steps';
+
+  @override
+  String get teachBackResponseLabel => 'Explain what you learned';
+
+  @override
+  String get teachBackResponseHint =>
+      'Write the lesson back in your own words.';
+
+  @override
+  String teachBackResponseHelper(int minimum) {
+    return 'Write at least $minimum characters. This response stays on this phone.';
+  }
+
+  @override
+  String get learningSavingLabel => 'Saving progress…';
+
+  @override
+  String get learningSavedLabel => 'Progress saved on this phone.';
+
+  @override
+  String get learningSaveError =>
+      'Progress could not be saved. Make another change to try again.';
+
+  @override
+  String get learningChangesPendingLabel => 'Changes are waiting to save.';
+
+  @override
+  String get learningLocalSaveReadyLabel =>
+      'Progress will be saved on this phone.';
+
+  @override
+  String get completeAllStepsLabel => 'Complete all 3 steps';
+
+  @override
+  String get writeTeachBackLabel => 'Write your teach-back response';
+
+  @override
+  String get completeFamilyLessonLabel => 'Complete Family Lesson';
+
+  @override
+  String get lessonCompletedLabel => 'Lesson Completed';
+
+  @override
+  String get lessonCompletedTitle => 'Family lesson completed';
+
+  @override
+  String get lessonCompletedBody =>
+      'You practised all three steps and explained what you learned.';
 }

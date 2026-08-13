@@ -185,5 +185,56 @@
   "skillCardServiceError": "Firebase AI Logic is unavailable, so Naseej created a local Offline Guide.",
   "skillCardInvalidResponseError": "The AI response did not pass validation, so Naseej created a local Offline Guide.",
   "skillCardClarificationError": "The explanation could not be structured safely. Review the draft; a local Offline Guide is shown for now.",
-  "skillCardGenericError": "Cloud generation could not be completed, so Naseej created a local Offline Guide."
+  "skillCardGenericError": "Cloud generation could not be completed, so Naseej created a local Offline Guide.",
+  "startLearningLabel": "Start Learning",
+  "continueLearningLabel": "Continue Learning",
+  "reviewCompletedLessonLabel": "Review Completed Lesson",
+  "learningRequiresCardBody": "Build and save a 3-Step Card before starting learner practice.",
+  "learningProgressSummaryTitle": "Learner progress",
+  "learningNotStartedBody": "The learner is ready to begin the three steps.",
+  "learningInProgressBody": "The learner’s progress is saved locally and can continue later.",
+  "learningCompletedBody": "The learner completed all three steps and the teach-back response.",
+  "learnSkillScreenTitle": "Learn a Skill",
+  "learnerLessonTitle": "{name}'s lesson",
+  "@learnerLessonTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "learningProgressCount": "{completed} of {total} steps completed",
+  "@learningProgressCount": {
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "learningOfflineNotice": "Practice and progress work without internet.",
+  "practiceStepsTitle": "Practise the three steps",
+  "teachBackResponseLabel": "Explain what you learned",
+  "teachBackResponseHint": "Write the lesson back in your own words.",
+  "teachBackResponseHelper": "Write at least {minimum} characters. This response stays on this phone.",
+  "@teachBackResponseHelper": {
+    "placeholders": {
+      "minimum": {
+        "type": "int"
+      }
+    }
+  },
+  "learningSavingLabel": "Saving progress…",
+  "learningSavedLabel": "Progress saved on this phone.",
+  "learningSaveError": "Progress could not be saved. Make another change to try again.",
+  "learningChangesPendingLabel": "Changes are waiting to save.",
+  "learningLocalSaveReadyLabel": "Progress will be saved on this phone.",
+  "completeAllStepsLabel": "Complete all 3 steps",
+  "writeTeachBackLabel": "Write your teach-back response",
+  "completeFamilyLessonLabel": "Complete Family Lesson",
+  "lessonCompletedLabel": "Lesson Completed",
+  "lessonCompletedTitle": "Family lesson completed",
+  "lessonCompletedBody": "You practised all three steps and explained what you learned."
 }
