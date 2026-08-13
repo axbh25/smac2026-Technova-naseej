@@ -31,4 +31,4 @@ Every meaningful AI interaction used in the project is recorded here.
 9. Do not call a local template a live AI result.
 10. Do not use AI to fabricate GitHub history or a second contributor.
 
-
+| 2026-08-15 | Abdullah Haider | ChatGPT | `prompts/2026-08-15-day-09-plan.md` | Audit Day 8 and plan local learner practice and teach-back | Repository audit, LearningProgress model, exact-card fingerprint, local persistence, bilingual learner UI, invalidation rules, and test templates | Abdullah reviewed every proposed file, adapted the UI to approved Figma frames, ran formatting and tests, verified Airplane Mode and restart restoration, and understood the progress lifecycle; AI did not generate the complete application | Replace with final Day 9 commit hashes |
