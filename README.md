@@ -6,12 +6,12 @@ SMAC 2026.
 Naseej helps family members from different generations teach one another
 practical, cultural, and digital skills. A family member explains a skill,
 may add one private context photo, and can use AI to transform the reviewed
-explanation into a safe three-step learning card. The learner then practises
-the steps and explains what they learned.
+explanation into a safe three-step learning card. The learner can practise the
+steps, hear individual steps aloud, and explain what they learned.
 
 ## Current Development Status
 
-Day 9 learner practice:
+Day 10 accessible spoken playback:
 
 - Android-only Flutter project runs on Pixel 7 Pro API 36
 - English and Arabic interfaces support RTL
@@ -23,24 +23,26 @@ Day 9 learner practice:
 - Structured output is validated before display or storage
 - Cloud failure creates a labeled Offline Guide
 - AI output requires teacher review before saving
-- Learners can practise exactly three saved steps
-- Every checkbox change is saved locally
-- Learners answer a teach-back question in their own words
-- Completion requires all steps and a valid teach-back response
-- Progress and completion survive Android restarts
-- Progress is invalidated when the source draft or card changes
-- Day 9 learning works fully in Airplane Mode
-- No Day 9 progress or teach-back data is sent to AI
-- Automated model, storage, invalidation, completion, and RTL tests are included
-- Visual evidence is stored under `docs/testing/`
+- Learners practise exactly three saved steps
+- Learner progress and teach-back remain local
+- Learners can hear one approved step at a time
+- Listen, Stop, and Replay actions are visibly labeled
+- The saved card language selects the speech language
+- Only one step can play at a time
+- Leaving the learner screen stops playback
+- Speech failure does not block reading, progress, or teach-back
+- No audio file is recorded or stored
+- Day 10 adds no Firebase AI request
+- Automated TTS controller, cancellation, fallback, widget, and RTL tests are included
+- Visual and device evidence is stored under `docs/testing/`
 
 ## Team Technova
 
 - Abdullah Haider — Flutter development, architecture, testing, documentation, and demo
 - Shoug Almaashari — historical Figma, documentation, bilingual review, and testing contributions
 
-Team membership must match the officially registered competition team.
-No person is credited for work they did not perform.
+Team membership and contribution records must match the officially registered
+competition team. No person is credited for work they did not perform.
 
 ## Current MVP Flow
 
@@ -48,12 +50,13 @@ No person is credited for work they did not perform.
 2. Create a Teach-a-Skill draft
 3. Type or dictate the explanation
 4. Optionally add one private context photo
-5. Generate or use an Offline Guide
+5. Generate a card or use an Offline Guide
 6. Review and save the three-step card
 7. Practise each step
-8. Answer the teach-back question
-9. Complete the family lesson
-10. See the reciprocal skill suggestion
+8. Optionally hear a step aloud
+9. Answer the teach-back question
+10. Complete the family lesson
+11. See the reciprocal skill suggestion
 
 ## Technology
 
@@ -63,6 +66,7 @@ No person is credited for work they did not perform.
 - SharedPreferencesAsync
 - Local JSON serialization
 - `speech_to_text`
+- `flutter_tts`
 - `image_picker`
 - `path_provider`
 - Firebase Core
@@ -72,6 +76,7 @@ No person is credited for work they did not perform.
 - Runtime card validation
 - Deterministic Offline Guide
 - Local learner progress
+- Device text-to-speech
 - Figma
 - Git and GitHub
 
@@ -94,15 +99,33 @@ It does not add:
 - Contacts
 - Learner progress
 - Teach-back response
+- Playback state
 
 A personal detail typed inside the reviewed explanation is part of that text
 and will be sent unless the user removes it.
 
-Day 9 learner practice makes no Firebase AI request.
+Learner practice and spoken playback add no Firebase AI request.
+
+## Spoken Playback Boundary
+
+- Playback uses the device's installed Android TTS service
+- Naseej does not record audio
+- Naseej does not store audio files
+- Naseej does not upload audio
+- Device voice availability varies by language and installed engine
+- The lesson remains usable when speech is unavailable
 
 See `docs/ai-usage/ai-data-boundary.md`.
 
 ## Run the Project
+
+```bash
+flutter pub get
+flutter gen-l10n
+flutter analyze
+flutter test
+flutter run
+
 
 ```bash
 flutter pub get
