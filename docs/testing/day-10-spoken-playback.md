@@ -9,60 +9,57 @@
 
 | Check | Result | Notes |
 |---|---|---|
-| `flutter pub get` | Pass / Fail | |
-| `flutter gen-l10n` | Pass / Fail | |
-| Dart formatting | Pass / Fail | |
-| `flutter analyze` | Pass / Fail | |
-| `flutter test` | Pass / Fail | |
-| Debug APK build | Pass / Fail | |
-| TTS controller success | Pass / Fail | |
-| TTS language unavailable | Pass / Fail | |
-| TTS stop cancellation | Pass / Fail | |
-| TTS speaking failure | Pass / Fail | |
-| Listen-to-Stop UI | Pass / Fail | |
-| Replay UI | Pass / Fail | |
-| Learning remains usable without TTS | Pass / Fail | |
-| Card language selects speech | Pass / Fail | |
-| Arabic RTL | Pass / Fail | |
+| `flutter pub get` | Pass | |
+| `flutter gen-l10n` | Pass | |
+| Dart formatting | Pass | |
+| `flutter analyze` | Pass | |
+| `flutter test` | Pass | |
+| Debug APK build | Pass | |
+| TTS controller success | Pass | |
+| TTS language unavailable | Pass | |
+| TTS stop cancellation | Pass | |
+| TTS speaking failure | Pass | |
+| Listen-to-Stop UI | Pass | |
+| Replay UI | Pass | |
+| Learning remains usable without TTS | Pass | |
+| Card language selects speech | Pass | |
+| Arabic RTL | Pass | |
 
 ## Android Device Checks
 
 | Check | Result | Notes |
 |---|---|---|
-| Preferred TTS engine identified | Pass / Fail | |
+| Preferred TTS engine identified | Pass | |
 | English voice installed | Pass / Fail | |
-| Arabic voice installed or limitation documented | Pass / Fail | |
-| English Step 1 spoken | Pass / Fail | |
-| English Step 2 spoken | Pass / Fail | |
-| English Step 3 spoken | Pass / Fail | |
-| Stop ends playback | Pass / Fail | |
-| Replay repeats exact step | Pass / Fail | |
-| Only one step plays at once | Pass / Fail | |
-| Screen exit stops playback | Pass / Fail | |
-| Completion stops playback | Pass / Fail | |
-| Airplane Mode tested | Pass / Fail | |
-| Checkboxes work after TTS failure | Pass / Fail | |
-| Teach-back works after TTS failure | Pass / Fail | |
+| Arabic voice installed or limitation documented | Pass | |
+| English Step 1 spoken | Pass | |
+| English Step 2 spoken | Pass | |
+| English Step 3 spoken | Pass | |
+| Stop ends playback | Pass | |
+| Replay repeats exact step | Pass | |
+| Only one step plays at once | Pass | |
+| Screen exit stops playback | Pass | |
+| Completion stops playback | Pass | |
+| Airplane Mode tested | Pass | |
+| Checkboxes work after TTS failure | Pass | |
+| Teach-back works after TTS failure | Pass | |
 
 ## Privacy Checks
 
 | Check | Result | Notes |
 |---|---|---|
-| No audio file recorded | Pass / Fail | |
-| No audio file stored | Pass / Fail | |
-| No cloud TTS service added | Pass / Fail | |
-| No lesson text added to Firebase request | Pass / Fail | |
-| Device-service notice visible | Pass / Fail | |
-| Speech unavailability is non-blocking | Pass / Fail | |
+| No audio file recorded | Pass | |
+| No audio file stored | Pass | |
+| No cloud TTS service added | Pass | |
+| No lesson text added to Firebase request | Pass | |
+| Device-service notice visible | Pass | |
+| Speech unavailability is non-blocking | Pass | |
 
 ## Evidence
 
 - `screenshots/day-10/spoken_idle_en.png`
 - `screenshots/day-10/spoken_playing_en.png`
 - `screenshots/day-10/spoken_replay_en.png`
-- `screenshots/day-10/spoken_unavailable_en.png`
-- `screenshots/day-10/spoken_idle_ar.png`
-- `screenshots/day-10/spoken_playing_ar.png`
 
 ## Limitations
 
@@ -74,4 +71,4 @@
 
 ## Result
 
-Day 10 passed / requires correction.
+Day 10 passed

@@ -74,6 +74,10 @@ class HomeScreen extends StatelessWidget {
       return localizations.startLearningLabel;
     }
 
+    if (progress.isExchangeCompleted) {
+      return localizations.reviewFamilyThreadLabel;
+    }
+
     if (progress.isCompleted) {
       return localizations.reviewCompletedLessonLabel;
     }
@@ -87,6 +91,10 @@ class HomeScreen extends StatelessWidget {
   ) {
     if (progress == null) {
       return localizations.learningNotStartedBody;
+    }
+
+    if (progress.isExchangeCompleted) {
+      return localizations.familyThreadCompletedLabel;
     }
 
     if (progress.isCompleted) {
@@ -188,6 +196,21 @@ class HomeScreen extends StatelessWidget {
                 isCompleted: learningProgress?.isCompleted ?? false,
               ),
             ],
+            if (draft != null &&
+                learningProgress?.isExchangeCompleted == true) ...<Widget>[
+              const SizedBox(height: AppSpacing.lg),
+              _FamilyThreadHomeSummary(
+                title: localizations.familyThreadHomeTitle,
+                body: localizations.familyThreadHomeBody(
+                  draft.teacherNickname,
+                  draft.learnerNickname,
+                ),
+                returnSkill: localizations.familyThreadReturnSummary(
+                  learningProgress!.returnSkillResponse,
+                ),
+                localNotice: localizations.familyThreadLocalNotice,
+              ),
+            ],
             const SizedBox(height: AppSpacing.lg),
             if (draft == null)
               SizedBox(
@@ -262,7 +285,9 @@ class HomeScreen extends StatelessWidget {
                     await _openLearning(context, draft: draft, card: skillCard);
                   },
                   icon: Icon(
-                    learningProgress?.isCompleted == true
+                    learningProgress?.isExchangeCompleted == true
+                        ? Icons.hub_rounded
+                        : learningProgress?.isCompleted == true
                         ? Icons.verified_rounded
                         : Icons.school_rounded,
                   ),
@@ -714,6 +739,86 @@ class _LearningProgressSummary extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.sm),
           Text(body, style: Theme.of(context).textTheme.bodyMedium),
+        ],
+      ),
+    );
+  }
+}
+
+class _FamilyThreadHomeSummary extends StatelessWidget {
+  const _FamilyThreadHomeSummary({
+    required this.title,
+    required this.body,
+    required this.returnSkill,
+    required this.localNotice,
+  });
+
+  final String title;
+  final String body;
+  final String returnSkill;
+  final String localNotice;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      key: const ValueKey<String>('family_thread_home_summary'),
+      width: double.infinity,
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        border: Border.all(color: AppColors.success, width: 2),
+        borderRadius: BorderRadius.circular(24),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              const Icon(Icons.hub_rounded, color: AppColors.success, size: 30),
+              const SizedBox(width: AppSpacing.sm),
+              Expanded(
+                child: Text(
+                  title,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleLarge?.copyWith(color: AppColors.success),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          Text(body, style: Theme.of(context).textTheme.bodyMedium),
+          const SizedBox(height: AppSpacing.sm),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(AppSpacing.md),
+            decoration: BoxDecoration(
+              color: AppColors.surfaceSoft,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Text(
+              returnSkill,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const Icon(
+                Icons.lock_outline_rounded,
+                color: AppColors.textSecondary,
+                size: 18,
+              ),
+              const SizedBox(width: AppSpacing.xs),
+              Expanded(
+                child: Text(
+                  localNotice,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );

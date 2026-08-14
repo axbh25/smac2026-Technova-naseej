@@ -25,6 +25,8 @@ class LearnSkillScreen extends StatefulWidget {
 class _LearnSkillScreenState extends State<LearnSkillScreen> {
   late final TextEditingController _teachBackController;
 
+  late final TextEditingController _returnSkillController;
+
   final List<bool> _completedSteps = List<bool>.filled(
     LearningProgress.stepCount,
     false,
@@ -34,7 +36,7 @@ class _LearnSkillScreenState extends State<LearnSkillScreen> {
   TextToSpeechController? _textToSpeechController;
 
   bool _initialized = false;
-  bool _listenerAdded = false;
+  bool _listenersAdded = false;
   bool _isSaving = false;
   bool _saveFailed = false;
   bool _hasPersistedProgress = false;
@@ -43,6 +45,7 @@ class _LearnSkillScreenState extends State<LearnSkillScreen> {
   int _lastSavedRevision = 0;
 
   String? _completedAtIso8601;
+  String? _exchangeCompletedAtIso8601;
 
   int get _completedCount {
     return _completedSteps.where((bool value) => value).length;
@@ -59,12 +62,27 @@ class _LearnSkillScreenState extends State<LearnSkillScreen> {
         length <= LearningProgress.maximumTeachBackLength;
   }
 
-  bool get _readyToComplete {
+  bool get _hasValidReturnSkill {
+    final int length = _returnSkillController.text.trim().length;
+
+    return length >= LearningProgress.minimumReturnSkillLength &&
+        length <= LearningProgress.maximumReturnSkillLength;
+  }
+
+  bool get _readyToCompleteLesson {
     return _allStepsCompleted && _hasValidTeachBack;
   }
 
-  bool get _isCompleted {
-    return _readyToComplete && _completedAtIso8601 != null;
+  bool get _isLessonCompleted {
+    return _readyToCompleteLesson && _completedAtIso8601 != null;
+  }
+
+  bool get _readyToCompleteExchange {
+    return _isLessonCompleted && _hasValidReturnSkill;
+  }
+
+  bool get _isExchangeCompleted {
+    return _readyToCompleteExchange && _exchangeCompletedAtIso8601 != null;
   }
 
   @override
@@ -72,6 +90,8 @@ class _LearnSkillScreenState extends State<LearnSkillScreen> {
     super.initState();
 
     _teachBackController = TextEditingController();
+
+    _returnSkillController = TextEditingController();
   }
 
   @override
@@ -96,13 +116,22 @@ class _LearnSkillScreenState extends State<LearnSkillScreen> {
       }
 
       _teachBackController.text = existingProgress.teachBackResponse;
+
+      _returnSkillController.text = existingProgress.returnSkillResponse;
+
       _completedAtIso8601 = existingProgress.completedAtIso8601;
+
+      _exchangeCompletedAtIso8601 = existingProgress.exchangeCompletedAtIso8601;
+
       _hasPersistedProgress = true;
     }
 
-    if (!_listenerAdded) {
-      _listenerAdded = true;
+    if (!_listenersAdded) {
+      _listenersAdded = true;
+
       _teachBackController.addListener(_handleTeachBackChanged);
+
+      _returnSkillController.addListener(_handleReturnSkillChanged);
     }
   }
 
@@ -110,11 +139,14 @@ class _LearnSkillScreenState extends State<LearnSkillScreen> {
   void dispose() {
     _saveTimer?.cancel();
 
-    if (_listenerAdded) {
+    if (_listenersAdded) {
       _teachBackController.removeListener(_handleTeachBackChanged);
+
+      _returnSkillController.removeListener(_handleReturnSkillChanged);
     }
 
     _teachBackController.dispose();
+    _returnSkillController.dispose();
 
     final TextToSpeechController? controller = _textToSpeechController;
 
@@ -132,6 +164,21 @@ class _LearnSkillScreenState extends State<LearnSkillScreen> {
 
     setState(() {
       _completedAtIso8601 = null;
+      _exchangeCompletedAtIso8601 = null;
+      _revision += 1;
+      _saveFailed = false;
+    });
+
+    _scheduleAutoSave();
+  }
+
+  void _handleReturnSkillChanged() {
+    if (!_initialized) {
+      return;
+    }
+
+    setState(() {
+      _exchangeCompletedAtIso8601 = null;
       _revision += 1;
       _saveFailed = false;
     });
@@ -147,6 +194,7 @@ class _LearnSkillScreenState extends State<LearnSkillScreen> {
     setState(() {
       _completedSteps[index] = value;
       _completedAtIso8601 = null;
+      _exchangeCompletedAtIso8601 = null;
       _revision += 1;
       _saveFailed = false;
     });
@@ -168,23 +216,42 @@ class _LearnSkillScreenState extends State<LearnSkillScreen> {
     });
   }
 
-  Future<void> _persistProgress({bool markCompleted = false}) async {
+  Future<void> _persistProgress({
+    bool markLessonCompleted = false,
+    bool markExchangeCompleted = false,
+  }) async {
     if (_isSaving) {
       _scheduleAutoSave();
       return;
     }
 
-    if (markCompleted && !_readyToComplete) {
+    if (markLessonCompleted && !_readyToCompleteLesson) {
       return;
     }
 
-    if (markCompleted && _completedAtIso8601 == null) {
+    if (markExchangeCompleted && !_readyToCompleteExchange) {
+      return;
+    }
+
+    if (markLessonCompleted && _completedAtIso8601 == null) {
       _completedAtIso8601 = DateTime.now().toUtc().toIso8601String();
+
       _revision += 1;
     }
 
-    if (!_readyToComplete) {
+    if (!_readyToCompleteLesson) {
       _completedAtIso8601 = null;
+      _exchangeCompletedAtIso8601 = null;
+    }
+
+    if (_completedAtIso8601 == null || !_hasValidReturnSkill) {
+      _exchangeCompletedAtIso8601 = null;
+    }
+
+    if (markExchangeCompleted && _exchangeCompletedAtIso8601 == null) {
+      _exchangeCompletedAtIso8601 = DateTime.now().toUtc().toIso8601String();
+
+      _revision += 1;
     }
 
     final List<int> completedIndexes = <int>[];
@@ -200,6 +267,8 @@ class _LearnSkillScreenState extends State<LearnSkillScreen> {
       completedStepIndexes: completedIndexes,
       teachBackResponse: _teachBackController.text.trim(),
       completedAtIso8601: _completedAtIso8601,
+      returnSkillResponse: _returnSkillController.text.trim(),
+      exchangeCompletedAtIso8601: _exchangeCompletedAtIso8601,
     );
 
     final int revisionToSave = _revision;
@@ -244,10 +313,36 @@ class _LearnSkillScreenState extends State<LearnSkillScreen> {
     FocusManager.instance.primaryFocus?.unfocus();
 
     await _textToSpeechController?.stop();
-    await _persistProgress(markCompleted: true);
+
+    await _persistProgress(markLessonCompleted: true);
+  }
+
+  Future<void> _completeFamilyThread() async {
+    _saveTimer?.cancel();
+
+    FocusManager.instance.primaryFocus?.unfocus();
+
+    await _textToSpeechController?.stop();
+
+    await _persistProgress(markExchangeCompleted: true);
+  }
+
+  void _useReciprocalSuggestion() {
+    final String suggestion = widget.card.reciprocalSkillSuggestion;
+
+    _returnSkillController.value = TextEditingValue(
+      text: suggestion,
+      selection: TextSelection.collapsed(offset: suggestion.length),
+    );
   }
 
   Future<void> _returnHome() async {
+    _saveTimer?.cancel();
+
+    if (!_isSaving && _revision != _lastSavedRevision) {
+      await _persistProgress();
+    }
+
     await _textToSpeechController?.stop();
 
     if (!mounted) {
@@ -308,7 +403,7 @@ class _LearnSkillScreenState extends State<LearnSkillScreen> {
   }
 
   String _primaryButtonLabel(AppLocalizations localizations) {
-    if (_isCompleted) {
+    if (_isLessonCompleted) {
       return localizations.backToHomeLabel;
     }
 
@@ -321,6 +416,18 @@ class _LearnSkillScreenState extends State<LearnSkillScreen> {
     }
 
     return localizations.completeFamilyLessonLabel;
+  }
+
+  String _familyThreadButtonLabel(AppLocalizations localizations) {
+    if (_isSaving) {
+      return localizations.familyThreadSavingLabel;
+    }
+
+    if (_isExchangeCompleted) {
+      return localizations.familyThreadCompletedLabel;
+    }
+
+    return localizations.completeFamilyThreadLabel;
   }
 
   String _speechStatusTitle(
@@ -342,12 +449,16 @@ class _LearnSkillScreenState extends State<LearnSkillScreen> {
     switch (controller.status) {
       case TextToSpeechStatus.idle:
         return localizations.listenToStepsBody;
+
       case TextToSpeechStatus.preparing:
         return localizations.ttsPreparingLabel;
+
       case TextToSpeechStatus.speaking:
         return localizations.ttsSpeakingLabel;
+
       case TextToSpeechStatus.unavailable:
         return localizations.ttsLanguageUnavailableBody;
+
       case TextToSpeechStatus.failure:
         return localizations.ttsPlaybackErrorBody;
     }
@@ -357,12 +468,16 @@ class _LearnSkillScreenState extends State<LearnSkillScreen> {
     switch (controller.status) {
       case TextToSpeechStatus.idle:
         return Icons.volume_up_outlined;
+
       case TextToSpeechStatus.preparing:
         return Icons.hourglass_top_rounded;
+
       case TextToSpeechStatus.speaking:
         return Icons.graphic_eq_rounded;
+
       case TextToSpeechStatus.unavailable:
         return Icons.volume_off_outlined;
+
       case TextToSpeechStatus.failure:
         return Icons.error_outline_rounded;
     }
@@ -475,11 +590,58 @@ class _LearnSkillScreenState extends State<LearnSkillScreen> {
               icon: _speechStatusIcon(speechController),
               statusColor: _speechStatusColor(speechController),
             ),
-            if (_isCompleted) ...<Widget>[
+            if (_isLessonCompleted) ...<Widget>[
               const SizedBox(height: AppSpacing.lg),
               _CompletionBanner(
                 title: localizations.lessonCompletedTitle,
                 body: localizations.lessonCompletedBody,
+              ),
+              const SizedBox(height: AppSpacing.lg),
+              if (_isExchangeCompleted) ...<Widget>[
+                _FamilyThreadCompletionBanner(
+                  title: localizations.familyThreadCompletedTitle,
+                  body: localizations.familyThreadCompletedBody(
+                    widget.draft.teacherNickname,
+                    widget.draft.learnerNickname,
+                  ),
+                  notice: localizations.familyThreadLocalNotice,
+                ),
+                const SizedBox(height: AppSpacing.lg),
+              ],
+              _FamilyThreadCard(
+                title: localizations.familyThreadTitle,
+                body: localizations.familyThreadBody(
+                  widget.draft.learnerNickname,
+                  widget.draft.teacherNickname,
+                ),
+                connectionLabel: localizations.familyThreadConnectionLabel(
+                  widget.draft.teacherNickname,
+                  widget.draft.learnerNickname,
+                ),
+                taughtTitle: localizations.familyThreadTaughtTitle,
+                taughtBody: widget.card.title,
+                learnedTitle: localizations.familyThreadLearnedTitle(
+                  widget.draft.learnerNickname,
+                ),
+                learnedBody: _teachBackController.text.trim(),
+                suggestionTitle: localizations.familyThreadSuggestionTitle,
+                suggestionBody: widget.card.reciprocalSkillSuggestion,
+                returnSkillLabel: localizations.familyThreadReturnSkillLabel(
+                  widget.draft.learnerNickname,
+                ),
+                returnSkillHint: localizations.familyThreadReturnSkillHint,
+                returnSkillHelper: localizations.familyThreadReturnSkillHelper(
+                  LearningProgress.minimumReturnSkillLength,
+                ),
+                localNotice: localizations.familyThreadLocalNotice,
+                useSuggestionLabel: localizations.useNaseejSuggestionLabel,
+                completeLabel: _familyThreadButtonLabel(localizations),
+                controller: _returnSkillController,
+                isSaving: _isSaving,
+                isCompleted: _isExchangeCompleted,
+                canComplete: _readyToCompleteExchange,
+                onUseSuggestion: _useReciprocalSuggestion,
+                onComplete: _completeFamilyThread,
               ),
             ],
             const SizedBox(height: AppSpacing.lg),
@@ -557,13 +719,15 @@ class _LearnSkillScreenState extends State<LearnSkillScreen> {
               ),
               controller: _teachBackController,
             ),
-            const SizedBox(height: AppSpacing.lg),
-            _InformationCard(
-              icon: Icons.swap_horiz_rounded,
-              title: localizations.reciprocalSuggestionTitle,
-              body: widget.card.reciprocalSkillSuggestion,
-              keyValue: 'learning_reciprocal_card',
-            ),
+            if (!_isLessonCompleted) ...<Widget>[
+              const SizedBox(height: AppSpacing.lg),
+              _InformationCard(
+                icon: Icons.swap_horiz_rounded,
+                title: localizations.reciprocalSuggestionTitle,
+                body: widget.card.reciprocalSkillSuggestion,
+                keyValue: 'learning_reciprocal_card',
+              ),
+            ],
             const SizedBox(height: AppSpacing.lg),
             SizedBox(
               width: double.infinity,
@@ -572,13 +736,15 @@ class _LearnSkillScreenState extends State<LearnSkillScreen> {
                 key: const ValueKey<String>('learning_primary_button'),
                 onPressed: _isSaving
                     ? null
-                    : _isCompleted
+                    : _isLessonCompleted
                     ? _returnHome
-                    : _readyToComplete
+                    : _readyToCompleteLesson
                     ? _completeLesson
                     : null,
                 icon: Icon(
-                  _isCompleted ? Icons.home_outlined : Icons.verified_outlined,
+                  _isLessonCompleted
+                      ? Icons.home_outlined
+                      : Icons.verified_outlined,
                 ),
                 label: Text(_primaryButtonLabel(localizations)),
               ),
@@ -947,6 +1113,290 @@ class _TeachBackCard extends StatelessWidget {
   }
 }
 
+class _FamilyThreadCard extends StatelessWidget {
+  const _FamilyThreadCard({
+    required this.title,
+    required this.body,
+    required this.connectionLabel,
+    required this.taughtTitle,
+    required this.taughtBody,
+    required this.learnedTitle,
+    required this.learnedBody,
+    required this.suggestionTitle,
+    required this.suggestionBody,
+    required this.returnSkillLabel,
+    required this.returnSkillHint,
+    required this.returnSkillHelper,
+    required this.localNotice,
+    required this.useSuggestionLabel,
+    required this.completeLabel,
+    required this.controller,
+    required this.isSaving,
+    required this.isCompleted,
+    required this.canComplete,
+    required this.onUseSuggestion,
+    required this.onComplete,
+  });
+
+  final String title;
+  final String body;
+  final String connectionLabel;
+  final String taughtTitle;
+  final String taughtBody;
+  final String learnedTitle;
+  final String learnedBody;
+  final String suggestionTitle;
+  final String suggestionBody;
+  final String returnSkillLabel;
+  final String returnSkillHint;
+  final String returnSkillHelper;
+  final String localNotice;
+  final String useSuggestionLabel;
+  final String completeLabel;
+  final TextEditingController controller;
+  final bool isSaving;
+  final bool isCompleted;
+  final bool canComplete;
+  final VoidCallback onUseSuggestion;
+  final Future<void> Function() onComplete;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      key: const ValueKey<String>('family_thread_card'),
+      width: double.infinity,
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        border: Border.all(
+          color: isCompleted ? AppColors.success : AppColors.primary,
+          width: 2,
+        ),
+        borderRadius: BorderRadius.circular(24),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          const Center(child: _FamilyThreadVisual()),
+          const SizedBox(height: AppSpacing.md),
+          Text(title, style: Theme.of(context).textTheme.titleLarge),
+          const SizedBox(height: AppSpacing.xs),
+          Text(
+            body,
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(color: AppColors.textSecondary),
+          ),
+          const SizedBox(height: AppSpacing.md),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(AppSpacing.sm),
+            decoration: BoxDecoration(
+              color: AppColors.surfaceSoft,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Text(
+              connectionLabel,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.md),
+          _ThreadSummaryItem(
+            icon: Icons.menu_book_outlined,
+            title: taughtTitle,
+            body: taughtBody,
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          _ThreadSummaryItem(
+            icon: Icons.record_voice_over_outlined,
+            title: learnedTitle,
+            body: learnedBody,
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          _ThreadSummaryItem(
+            icon: Icons.swap_horiz_rounded,
+            title: suggestionTitle,
+            body: suggestionBody,
+          ),
+          const SizedBox(height: AppSpacing.md),
+          SizedBox(
+            width: double.infinity,
+            height: 48,
+            child: OutlinedButton.icon(
+              key: const ValueKey<String>('use_return_suggestion_button'),
+              onPressed: isSaving ? null : onUseSuggestion,
+              icon: const Icon(Icons.auto_awesome_outlined),
+              label: Text(useSuggestionLabel),
+            ),
+          ),
+          const SizedBox(height: AppSpacing.md),
+          Text(
+            returnSkillLabel,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          const SizedBox(height: AppSpacing.xs),
+          TextField(
+            key: const ValueKey<String>('return_skill_response_field'),
+            controller: controller,
+            enabled: !isSaving,
+            minLines: 2,
+            maxLines: 4,
+            maxLength: LearningProgress.maximumReturnSkillLength,
+            textCapitalization: TextCapitalization.sentences,
+            decoration: InputDecoration(
+              hintText: returnSkillHint,
+              helperText: returnSkillHelper,
+              alignLabelWithHint: true,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const Icon(
+                Icons.lock_outline_rounded,
+                color: AppColors.textSecondary,
+                size: 18,
+              ),
+              const SizedBox(width: AppSpacing.xs),
+              Expanded(
+                child: Text(
+                  localNotice,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.md),
+          SizedBox(
+            width: double.infinity,
+            height: 56,
+            child: FilledButton.icon(
+              key: const ValueKey<String>('complete_family_thread_button'),
+              onPressed: isSaving || isCompleted || !canComplete
+                  ? null
+                  : () async {
+                      await onComplete();
+                    },
+              icon: Icon(
+                isCompleted ? Icons.verified_rounded : Icons.hub_outlined,
+              ),
+              label: Text(completeLabel),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _FamilyThreadVisual extends StatelessWidget {
+  const _FamilyThreadVisual();
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 144,
+      height: 76,
+      child: Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          PositionedDirectional(
+            start: 20,
+            child: Container(
+              width: 64,
+              height: 64,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.surfaceSoft,
+                border: Border.all(color: AppColors.primary, width: 3),
+              ),
+              child: const Icon(
+                Icons.person_outline_rounded,
+                color: AppColors.primary,
+                size: 30,
+              ),
+            ),
+          ),
+          PositionedDirectional(
+            end: 20,
+            child: Container(
+              width: 64,
+              height: 64,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.surface,
+                border: Border.all(color: AppColors.accent, width: 3),
+              ),
+              child: const Icon(
+                Icons.person_rounded,
+                color: AppColors.accent,
+                size: 30,
+              ),
+            ),
+          ),
+          Container(
+            width: 36,
+            height: 36,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: AppColors.background,
+            ),
+            child: const Icon(
+              Icons.swap_horiz_rounded,
+              color: AppColors.textPrimary,
+              size: 24,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ThreadSummaryItem extends StatelessWidget {
+  const _ThreadSummaryItem({
+    required this.icon,
+    required this.title,
+    required this.body,
+  });
+
+  final IconData icon;
+  final String title;
+  final String body;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      constraints: const BoxConstraints(minHeight: 88),
+      padding: const EdgeInsets.all(AppSpacing.md),
+      decoration: BoxDecoration(
+        color: AppColors.surfaceSoft,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Icon(icon, color: AppColors.primary),
+          const SizedBox(width: AppSpacing.sm),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(title, style: Theme.of(context).textTheme.titleMedium),
+                const SizedBox(height: AppSpacing.xxs),
+                Text(body, style: Theme.of(context).textTheme.bodyMedium),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _InformationCard extends StatelessWidget {
   const _InformationCard({
     required this.icon,
@@ -1028,6 +1478,70 @@ class _CompletionBanner extends StatelessWidget {
             body,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyMedium,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _FamilyThreadCompletionBanner extends StatelessWidget {
+  const _FamilyThreadCompletionBanner({
+    required this.title,
+    required this.body,
+    required this.notice,
+  });
+
+  final String title;
+  final String body;
+  final String notice;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      key: const ValueKey<String>('family_thread_complete_banner'),
+      width: double.infinity,
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        border: Border.all(color: AppColors.success, width: 2),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        children: <Widget>[
+          const _FamilyThreadVisual(),
+          const SizedBox(height: AppSpacing.sm),
+          Text(
+            title,
+            textAlign: TextAlign.center,
+            style: Theme.of(
+              context,
+            ).textTheme.titleLarge?.copyWith(color: AppColors.success),
+          ),
+          const SizedBox(height: AppSpacing.xs),
+          Text(
+            body,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              const Icon(
+                Icons.lock_outline_rounded,
+                color: AppColors.textSecondary,
+                size: 18,
+              ),
+              const SizedBox(width: AppSpacing.xs),
+              Flexible(
+                child: Text(
+                  notice,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ),
+            ],
           ),
         ],
       ),

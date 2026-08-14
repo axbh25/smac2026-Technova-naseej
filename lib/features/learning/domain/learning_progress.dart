@@ -8,17 +8,26 @@ class LearningProgress {
     required List<int> completedStepIndexes,
     required this.teachBackResponse,
     this.completedAtIso8601,
+    this.returnSkillResponse = '',
+    this.exchangeCompletedAtIso8601,
   }) : completedStepIndexes = List<int>.unmodifiable(completedStepIndexes);
 
   static const int stepCount = 3;
+
   static const int minimumTeachBackLength = 10;
   static const int maximumTeachBackLength = 400;
+
+  static const int minimumReturnSkillLength = 3;
+  static const int maximumReturnSkillLength = 220;
+
   static const int maximumFingerprintLength = 100;
 
   final String skillCardFingerprint;
   final List<int> completedStepIndexes;
   final String teachBackResponse;
   final String? completedAtIso8601;
+  final String returnSkillResponse;
+  final String? exchangeCompletedAtIso8601;
 
   int get completedCount {
     return completedStepIndexes.length;
@@ -38,8 +47,21 @@ class LearningProgress {
     return length >= minimumTeachBackLength && length <= maximumTeachBackLength;
   }
 
+  bool get hasValidReturnSkill {
+    final int length = returnSkillResponse.trim().length;
+
+    return length >= minimumReturnSkillLength &&
+        length <= maximumReturnSkillLength;
+  }
+
   bool get isCompleted {
     return allStepsCompleted && hasValidTeachBack && completedAtIso8601 != null;
+  }
+
+  bool get isExchangeCompleted {
+    return isCompleted &&
+        hasValidReturnSkill &&
+        exchangeCompletedAtIso8601 != null;
   }
 
   bool isStepCompleted(int index) {
@@ -64,6 +86,8 @@ class LearningProgress {
       'completedStepIndexes': completedStepIndexes,
       'teachBackResponse': teachBackResponse,
       'completedAtIso8601': completedAtIso8601,
+      'returnSkillResponse': returnSkillResponse,
+      'exchangeCompletedAtIso8601': exchangeCompletedAtIso8601,
     });
   }
 
@@ -83,22 +107,36 @@ class LearningProgress {
 
       final Object? completedIndexesValue = decoded['completedStepIndexes'];
 
-      final Object? responseValue = decoded['teachBackResponse'];
+      final Object? teachBackValue = decoded['teachBackResponse'];
 
       final Object? completedAtValue = decoded['completedAtIso8601'];
 
+      final Object? returnSkillValue = decoded['returnSkillResponse'];
+
+      final Object? exchangeCompletedAtValue =
+          decoded['exchangeCompletedAtIso8601'];
+
       if (fingerprintValue is! String ||
           completedIndexesValue is! List<dynamic> ||
-          responseValue is! String) {
+          teachBackValue is! String) {
+        return null;
+      }
+
+      if (returnSkillValue != null && returnSkillValue is! String) {
         return null;
       }
 
       final String fingerprint = fingerprintValue.trim();
-      final String response = responseValue.trim();
+      final String teachBackResponse = teachBackValue.trim();
+
+      final String returnSkillResponse = returnSkillValue is String
+          ? returnSkillValue.trim()
+          : '';
 
       if (fingerprint.isEmpty ||
           fingerprint.length > maximumFingerprintLength ||
-          response.length > maximumTeachBackLength) {
+          teachBackResponse.length > maximumTeachBackLength ||
+          returnSkillResponse.length > maximumReturnSkillLength) {
         return null;
       }
 
@@ -134,20 +172,52 @@ class LearningProgress {
         completedAtIso8601 = parsedDate.toUtc().toIso8601String();
       }
 
+      String? exchangeCompletedAtIso8601;
+
+      if (exchangeCompletedAtValue != null) {
+        if (exchangeCompletedAtValue is! String) {
+          return null;
+        }
+
+        final DateTime? parsedDate = DateTime.tryParse(
+          exchangeCompletedAtValue,
+        );
+
+        if (parsedDate == null) {
+          return null;
+        }
+
+        exchangeCompletedAtIso8601 = parsedDate.toUtc().toIso8601String();
+      }
+
       final bool allStepsCompleted = sortedIndexes.length == stepCount;
 
-      final bool validTeachBack = response.length >= minimumTeachBackLength;
+      final bool validTeachBack =
+          teachBackResponse.length >= minimumTeachBackLength;
+
+      final bool validReturnSkill =
+          returnSkillResponse.length >= minimumReturnSkillLength;
 
       if (completedAtIso8601 != null &&
           (!allStepsCompleted || !validTeachBack)) {
         return null;
       }
 
+      if (exchangeCompletedAtIso8601 != null &&
+          (completedAtIso8601 == null ||
+              !allStepsCompleted ||
+              !validTeachBack ||
+              !validReturnSkill)) {
+        return null;
+      }
+
       return LearningProgress(
         skillCardFingerprint: fingerprint,
         completedStepIndexes: sortedIndexes,
-        teachBackResponse: response,
+        teachBackResponse: teachBackResponse,
         completedAtIso8601: completedAtIso8601,
+        returnSkillResponse: returnSkillResponse,
+        exchangeCompletedAtIso8601: exchangeCompletedAtIso8601,
       );
     } on FormatException {
       return null;
@@ -160,7 +230,9 @@ class LearningProgress {
         other.skillCardFingerprint == skillCardFingerprint &&
         _listEquals(other.completedStepIndexes, completedStepIndexes) &&
         other.teachBackResponse == teachBackResponse &&
-        other.completedAtIso8601 == completedAtIso8601;
+        other.completedAtIso8601 == completedAtIso8601 &&
+        other.returnSkillResponse == returnSkillResponse &&
+        other.exchangeCompletedAtIso8601 == exchangeCompletedAtIso8601;
   }
 
   @override
@@ -170,6 +242,8 @@ class LearningProgress {
       Object.hashAll(completedStepIndexes),
       teachBackResponse,
       completedAtIso8601,
+      returnSkillResponse,
+      exchangeCompletedAtIso8601,
     );
   }
 

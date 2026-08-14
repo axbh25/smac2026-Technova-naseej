@@ -1153,6 +1153,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Replay'**
   String get replayLabel;
+
+  /// No description provided for @familyThreadTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete the Family Thread'**
+  String get familyThreadTitle;
+
+  /// No description provided for @familyThreadBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{learner} learned from {teacher}. Now choose one skill {learner} can teach in return.'**
+  String familyThreadBody(String learner, String teacher);
+
+  /// No description provided for @familyThreadConnectionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{teacher} taught {learner}'**
+  String familyThreadConnectionLabel(String teacher, String learner);
+
+  /// No description provided for @familyThreadTaughtTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Shared skill'**
+  String get familyThreadTaughtTitle;
+
+  /// No description provided for @familyThreadLearnedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} explained'**
+  String familyThreadLearnedTitle(String name);
+
+  /// No description provided for @familyThreadSuggestionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Naseej suggests teaching in return'**
+  String get familyThreadSuggestionTitle;
+
+  /// No description provided for @familyThreadReturnSkillLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'What will {name} teach in return?'**
+  String familyThreadReturnSkillLabel(String name);
+
+  /// No description provided for @familyThreadReturnSkillHint.
+  ///
+  /// In en, this message translates to:
+  /// **'For example, how to send a voice note'**
+  String get familyThreadReturnSkillHint;
+
+  /// No description provided for @familyThreadReturnSkillHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Write at least {minimum} characters or use Naseej\'s suggestion.'**
+  String familyThreadReturnSkillHelper(int minimum);
+
+  /// No description provided for @familyThreadLocalNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'This family exchange stays on this phone.'**
+  String get familyThreadLocalNotice;
+
+  /// No description provided for @useNaseejSuggestionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Use Naseej\'s Suggestion'**
+  String get useNaseejSuggestionLabel;
+
+  /// No description provided for @completeFamilyThreadLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete Family Thread'**
+  String get completeFamilyThreadLabel;
+
+  /// No description provided for @familyThreadSavingLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving Family Thread…'**
+  String get familyThreadSavingLabel;
+
+  /// No description provided for @familyThreadCompletedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Family Thread Completed'**
+  String get familyThreadCompletedLabel;
+
+  /// No description provided for @familyThreadCompletedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'One Family Thread Completed'**
+  String get familyThreadCompletedTitle;
+
+  /// No description provided for @familyThreadCompletedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{teacher} shared one skill. {learner} chose one skill to teach in return.'**
+  String familyThreadCompletedBody(String teacher, String learner);
+
+  /// No description provided for @reviewFamilyThreadLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Review Family Thread'**
+  String get reviewFamilyThreadLabel;
+
+  /// No description provided for @familyThreadHomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Family Thread completed'**
+  String get familyThreadHomeTitle;
+
+  /// No description provided for @familyThreadHomeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{teacher} and {learner} completed a two-way skill exchange.'**
+  String familyThreadHomeBody(String teacher, String learner);
+
+  /// No description provided for @familyThreadReturnSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Return skill: {skill}'**
+  String familyThreadReturnSummary(String skill);
 }
 
 class _AppLocalizationsDelegate

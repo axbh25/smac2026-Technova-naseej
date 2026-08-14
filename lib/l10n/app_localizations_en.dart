@@ -612,4 +612,83 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get replayLabel => 'Replay';
+
+  @override
+  String get familyThreadTitle => 'Complete the Family Thread';
+
+  @override
+  String familyThreadBody(String learner, String teacher) {
+    return '$learner learned from $teacher. Now choose one skill $learner can teach in return.';
+  }
+
+  @override
+  String familyThreadConnectionLabel(String teacher, String learner) {
+    return '$teacher taught $learner';
+  }
+
+  @override
+  String get familyThreadTaughtTitle => 'Shared skill';
+
+  @override
+  String familyThreadLearnedTitle(String name) {
+    return '$name explained';
+  }
+
+  @override
+  String get familyThreadSuggestionTitle =>
+      'Naseej suggests teaching in return';
+
+  @override
+  String familyThreadReturnSkillLabel(String name) {
+    return 'What will $name teach in return?';
+  }
+
+  @override
+  String get familyThreadReturnSkillHint =>
+      'For example, how to send a voice note';
+
+  @override
+  String familyThreadReturnSkillHelper(int minimum) {
+    return 'Write at least $minimum characters or use Naseej\'s suggestion.';
+  }
+
+  @override
+  String get familyThreadLocalNotice =>
+      'This family exchange stays on this phone.';
+
+  @override
+  String get useNaseejSuggestionLabel => 'Use Naseej\'s Suggestion';
+
+  @override
+  String get completeFamilyThreadLabel => 'Complete Family Thread';
+
+  @override
+  String get familyThreadSavingLabel => 'Saving Family Thread…';
+
+  @override
+  String get familyThreadCompletedLabel => 'Family Thread Completed';
+
+  @override
+  String get familyThreadCompletedTitle => 'One Family Thread Completed';
+
+  @override
+  String familyThreadCompletedBody(String teacher, String learner) {
+    return '$teacher shared one skill. $learner chose one skill to teach in return.';
+  }
+
+  @override
+  String get reviewFamilyThreadLabel => 'Review Family Thread';
+
+  @override
+  String get familyThreadHomeTitle => 'Family Thread completed';
+
+  @override
+  String familyThreadHomeBody(String teacher, String learner) {
+    return '$teacher and $learner completed a two-way skill exchange.';
+  }
+
+  @override
+  String familyThreadReturnSummary(String skill) {
+    return 'Return skill: $skill';
+  }
 }
