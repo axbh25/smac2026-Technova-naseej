@@ -602,4 +602,82 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get replayLabel => 'إعادة الاستماع';
+
+  @override
+  String get familyThreadTitle => 'إكمال خيط العائلة';
+
+  @override
+  String familyThreadBody(String learner, String teacher) {
+    return 'تعلّم $learner من $teacher. حان الآن دور $learner في اختيار مهارة لمشاركتها في المقابل.';
+  }
+
+  @override
+  String familyThreadConnectionLabel(String teacher, String learner) {
+    return 'شارك $teacher مهارة مع $learner';
+  }
+
+  @override
+  String get familyThreadTaughtTitle => 'المهارة المشتركة';
+
+  @override
+  String familyThreadLearnedTitle(String name) {
+    return 'إعادة شرح $name';
+  }
+
+  @override
+  String get familyThreadSuggestionTitle =>
+      'يقترح نسيج مهارة للمشاركة في المقابل';
+
+  @override
+  String familyThreadReturnSkillLabel(String name) {
+    return 'ما المهارة التي سيشاركها $name في المقابل؟';
+  }
+
+  @override
+  String get familyThreadReturnSkillHint => 'مثل: كيفية إرسال رسالة صوتية';
+
+  @override
+  String familyThreadReturnSkillHelper(int minimum) {
+    return 'اكتب $minimum أحرف على الأقل أو استخدم اقتراح نسيج.';
+  }
+
+  @override
+  String get familyThreadLocalNotice =>
+      'يبقى هذا التبادل العائلي على هذا الهاتف.';
+
+  @override
+  String get useNaseejSuggestionLabel => 'استخدام اقتراح نسيج';
+
+  @override
+  String get completeFamilyThreadLabel => 'إكمال خيط العائلة';
+
+  @override
+  String get familyThreadSavingLabel => 'جارٍ حفظ خيط العائلة…';
+
+  @override
+  String get familyThreadCompletedLabel => 'اكتمل خيط العائلة';
+
+  @override
+  String get familyThreadCompletedTitle => 'اكتمل خيط عائلي واحد';
+
+  @override
+  String familyThreadCompletedBody(String teacher, String learner) {
+    return 'شارك $teacher مهارة، وحدد $learner مهارة للمشاركة بها في المقابل.';
+  }
+
+  @override
+  String get reviewFamilyThreadLabel => 'مراجعة خيط العائلة';
+
+  @override
+  String get familyThreadHomeTitle => 'اكتمل خيط عائلي';
+
+  @override
+  String familyThreadHomeBody(String teacher, String learner) {
+    return 'أكمل $teacher و$learner تبادلًا ثنائي الاتجاه للمهارات.';
+  }
+
+  @override
+  String familyThreadReturnSummary(String skill) {
+    return 'المهارة المقابلة: $skill';
+  }
 }

@@ -247,5 +247,93 @@
   "ttsPlaybackErrorBody": "The device could not read this step. You can continue reading, checking steps, and writing your response.",
   "listenLabel": "Listen",
   "stopSpeakingLabel": "Stop",
-  "replayLabel": "Replay"
+  "replayLabel": "Replay",
+  "familyThreadTitle": "Complete the Family Thread",
+  "familyThreadBody": "{learner} learned from {teacher}. Now choose one skill {learner} can teach in return.",
+  "@familyThreadBody": {
+    "placeholders": {
+      "learner": {
+        "type": "String"
+      },
+      "teacher": {
+        "type": "String"
+      }
+    }
+  },
+  "familyThreadConnectionLabel": "{teacher} taught {learner}",
+  "@familyThreadConnectionLabel": {
+    "placeholders": {
+      "teacher": {
+        "type": "String"
+      },
+      "learner": {
+        "type": "String"
+      }
+    }
+  },
+  "familyThreadTaughtTitle": "Shared skill",
+  "familyThreadLearnedTitle": "{name} explained",
+  "@familyThreadLearnedTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "familyThreadSuggestionTitle": "Naseej suggests teaching in return",
+  "familyThreadReturnSkillLabel": "What will {name} teach in return?",
+  "@familyThreadReturnSkillLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "familyThreadReturnSkillHint": "For example, how to send a voice note",
+  "familyThreadReturnSkillHelper": "Write at least {minimum} characters or use Naseej's suggestion.",
+  "@familyThreadReturnSkillHelper": {
+    "placeholders": {
+      "minimum": {
+        "type": "int"
+      }
+    }
+  },
+  "familyThreadLocalNotice": "This family exchange stays on this phone.",
+  "useNaseejSuggestionLabel": "Use Naseej's Suggestion",
+  "completeFamilyThreadLabel": "Complete Family Thread",
+  "familyThreadSavingLabel": "Saving Family Thread…",
+  "familyThreadCompletedLabel": "Family Thread Completed",
+  "familyThreadCompletedTitle": "One Family Thread Completed",
+  "familyThreadCompletedBody": "{teacher} shared one skill. {learner} chose one skill to teach in return.",
+  "@familyThreadCompletedBody": {
+    "placeholders": {
+      "teacher": {
+        "type": "String"
+      },
+      "learner": {
+        "type": "String"
+      }
+    }
+  },
+  "reviewFamilyThreadLabel": "Review Family Thread",
+  "familyThreadHomeTitle": "Family Thread completed",
+  "familyThreadHomeBody": "{teacher} and {learner} completed a two-way skill exchange.",
+  "@familyThreadHomeBody": {
+    "placeholders": {
+      "teacher": {
+        "type": "String"
+      },
+      "learner": {
+        "type": "String"
+      }
+    }
+  },
+  "familyThreadReturnSummary": "Return skill: {skill}",
+  "@familyThreadReturnSummary": {
+    "placeholders": {
+      "skill": {
+        "type": "String"
+      }
+    }
+  }
 }
