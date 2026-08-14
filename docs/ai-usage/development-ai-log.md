@@ -31,4 +31,4 @@ Every meaningful AI interaction used in the project is recorded here.
 9. Do not call a local template a live AI result.
 10. Do not use AI to fabricate GitHub history or a second contributor.
 
-
+| 16-08-2026| Abdullah Haider and Shoug Almaashari | ChatGPT | `prompts/<ACTUAL-DATE>-day-10-plan.md` | Audit Day 9 and plan optional spoken lesson-step playback | Repository audit, Android TTS setup, engine abstraction, playback controller, bilingual controls, non-blocking fallback, and test templates | The team reviewed each proposed file, verified device-language behavior, tested real Android speech and unavailable fallback, compared English and Arabic screens with Figma, and understood the playback lifecycle; AI did not generate the complete application | Replace with final Day 10 commit hashes |
