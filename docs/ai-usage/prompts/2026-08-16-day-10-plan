@@ -1,0 +1,891 @@
+Assume that all of Day 9 steps are complete and working correctly.
+
+I am continuing the SMAC 2026 Naseej Flutter project for Team Technova.
+
+I am a complete beginner with Flutter, Android, text-to-speech, Firebase, Git, testing, and mobile development, so guide me extremely carefully and do not skip steps.
+
+Important working rules:
+
+* Give me one clear step at a time.
+* Tell me the exact file path whenever I need to create or edit a file.
+* When a Dart file needs substantial changes, give me the complete corrected file rather than isolated snippets.
+* Give PowerShell commands one at a time and tell me which folder I must be in before running them.
+* Do not assume I know where Flutter, Android, VS Code, or device settings are.
+* Stop after each major step so I can show you the result before continuing.
+* Do not make unrelated refactors.
+* Preserve everything already working from Days 1–9.
+* The app must remain bilingual English/Arabic with correct RTL support.
+* The app must remain local-first and usable without internet.
+* Spoken playback must be optional.
+* A missing or unavailable device voice must never block the learner from reading or completing the lesson.
+* Day 10 must not add another Gemini/Firebase AI request.
+* Do not upload audio to Firebase.
+* Do not create cloud-generated speech.
+* Do not record the learner's voice.
+* Do not store generated audio files.
+* Do not send teach-back responses to text-to-speech.
+* Do not expose API keys, passwords, Firebase credentials, App Check debug tokens, service-account keys, or other secrets.
+* Do not place private family photographs, real family responses, or real teach-back answers in source code, tests, documentation, or Git.
+* Use synthetic examples for development and automated testing.
+* From Day 3 onward, only I perform VS Code, Flutter, PowerShell, Firebase CLI, Git, and GitHub work. Do not tell Shoug to run coding or Git commands.
+
+Current project:
+
+* App: Naseej
+* Team: Technova
+* Repository: axbh25/smac2026-Technova-naseej
+* Local project root: C:\dev\smac2026\naseej
+* Android package: com.axbh25.naseej
+* Flutter Android-first project
+* Reference emulator: Pixel 7 Pro
+* Reference logical size: approximately 412 × 892
+* State management: Provider / ChangeNotifier
+* Local persistence: SharedPreferences
+* English and Arabic localization already exist
+* RTL already works
+* Optional speech-to-text for creating a skill already exists
+* Optional context photo already exists and remains local
+* Firebase Core is configured
+* Firebase App Check is configured
+* Firebase AI Logic is configured
+* AI Readiness works
+* Day 8 generates structured Skill Cards with an offline fallback
+* Day 9 provides local learner practice, progress persistence, teach-back, and lesson completion
+* Existing tests must continue passing
+
+DAY 10 GOAL
+
+Add optional spoken playback to the Day 9 Learn a Skill experience so family members who prefer listening, including younger users, older users, and users who find reading difficult, can hear each saved Skill Card step spoken aloud by the device.
+
+The spoken playback feature should be:
+
+Saved Skill Card text
+→ device text-to-speech engine
+→ spoken lesson step
+
+It must NOT be:
+
+Skill Card
+→ Firebase
+→ Gemini
+→ cloud speech/audio
+
+Day 10 should use device text-to-speech only.
+
+The learner must still be able to read and complete the entire lesson if text-to-speech is unavailable.
+
+PART 1 — DAY 10 BRANCH
+
+Use the Day 10 branch:
+
+feature/day-10-spoken-playback
+
+Start from the latest completed Day 9 work.
+
+Give me the exact Git commands one at a time if branch setup is still required.
+
+Do not commit until implementation, localization, tests, and manual checks are complete.
+
+PART 2 — TTS FEATURE PRINCIPLES
+
+Text-to-speech is an accessibility and usability enhancement.
+
+It is not a required part of completing the lesson.
+
+The learner must always be able to:
+
+* read every lesson step
+* check and uncheck steps
+* write teach-back
+* complete the lesson
+* return Home
+
+even if:
+
+* the device has no matching voice
+* TTS initialization fails
+* speech playback fails
+* the device is offline
+* the user never presses Listen
+
+Do not disable the normal learning experience because of a TTS problem.
+
+PART 3 — TTS ENGINE ABSTRACTION
+
+Create a small abstraction under:
+
+lib/core/tts/
+
+Create something such as:
+
+lib/core/tts/text_to_speech_engine.dart
+
+The UI and controller should not depend directly on the third-party TTS plugin.
+
+The abstraction should cover only the functionality Naseej needs, such as:
+
+* prepare/select a language
+* speak text
+* stop speaking
+* completion callback or completion state
+* disposal/cleanup if needed
+
+Use a clear preparation result so the controller can distinguish:
+
+* ready
+* language unavailable
+
+Do not overengineer this abstraction.
+
+PART 4 — DEVICE TTS IMPLEMENTATION
+
+Create the real device implementation, for example:
+
+lib/core/tts/device_text_to_speech_engine.dart
+
+Use an appropriate Flutter text-to-speech package.
+
+The implementation should:
+
+* use the device's installed TTS engine
+* select a suitable installed language/voice where possible
+* support English cards
+* support Arabic cards
+* report gracefully when the requested language is unavailable
+* stop currently playing speech when requested
+
+Do not call any web service for speech synthesis.
+
+Do not require Firebase.
+
+Do not require Gemini.
+
+Do not save audio files.
+
+PART 5 — LANGUAGE SELECTION
+
+The spoken language must come from the saved Skill Card's:
+
+outputLanguageCode
+
+Do NOT automatically use the current interface language if the card was generated in another language.
+
+For example:
+
+* an English app UI may open an Arabic Skill Card
+* that Arabic card must still request Arabic speech
+
+Use practical device language matching such as:
+
+en → an installed English locale
+
+ar → an installed Arabic locale
+
+Prefer UAE Arabic such as ar-AE when available, but gracefully accept another installed Arabic voice if needed.
+
+Do not hard-crash if a particular locale is not installed.
+
+PART 6 — TEXT-TO-SPEECH CONTROLLER
+
+Create:
+
+lib/core/tts/text_to_speech_controller.dart
+
+Use ChangeNotifier so it fits the existing Provider architecture.
+
+Keep the state simple and understandable.
+
+Useful states include:
+
+* idle
+* preparing
+* speaking
+* unavailable
+* failure
+
+The controller should expose enough information for the UI to know:
+
+* current status
+* currently active lesson item
+* most recently completed lesson item
+* whether TTS is busy
+
+Provide a simple method such as:
+
+toggle(...)
+
+that can:
+
+* begin playback
+* stop active playback
+* replay completed playback
+
+Prevent conflicting speech requests.
+
+Do not let multiple steps speak over each other.
+
+PART 7 — TTS PROVIDER
+
+Add TextToSpeechController to the app's Provider setup.
+
+Preserve all existing providers, including:
+
+* AppController
+* SpeechController
+* AiReadinessController
+* SkillCardGenerationController
+
+Do not remove or break any existing provider.
+
+Automated widget tests must use a fake TTS engine instead of the real Android TTS plugin.
+
+PART 8 — LEARN SKILL SCREEN INTEGRATION
+
+Update:
+
+lib/features/learning/presentation/learn_skill_screen.dart
+
+Do not redesign the Day 9 learner flow.
+
+Keep:
+
+* lesson header
+* progress
+* local save status
+* safety note
+* practice steps
+* teach-back
+* reciprocal suggestion
+* completion
+* Back to Home
+
+Add spoken playback as an optional enhancement.
+
+PART 9 — SPEECH SUPPORT CARD
+
+Add a small TTS support/status card near the top of the learner screen.
+
+Use a stable key:
+
+speech_support_card
+
+The card should communicate that lesson steps can be read aloud by the device.
+
+It should show understandable states such as:
+
+Idle:
+Listen to the lesson steps.
+
+Preparing:
+Preparing voice...
+
+Speaking:
+Playing lesson audio...
+
+Unavailable:
+A suitable voice is not installed.
+
+Failure:
+Playback could not be completed.
+
+Also include a clear privacy/device notice explaining that playback uses the device's text-to-speech capability.
+
+Do not imply that Gemini is speaking.
+
+PART 10 — PER-STEP LISTEN BUTTON
+
+Add a spoken-playback control to each learning step.
+
+Use stable keys such as:
+
+learning_step_speak_0
+learning_step_speak_1
+learning_step_speak_2
+
+Initial label:
+
+Listen
+
+When that step is currently speaking:
+
+Stop
+
+After successful playback:
+
+Replay
+
+Use suitable icons such as:
+
+* volume
+* stop
+* replay
+
+Make each control a proper accessible button with a sufficiently large touch target.
+
+PART 11 — PLAYBACK CONTENT
+
+When the learner presses Listen on a step, speak only that Skill Card step.
+
+For example:
+
+Step 1 text
+→ device TTS
+
+Do not automatically speak:
+
+* learner nickname
+* teacher nickname
+* teach-back response
+* context photo information
+* private family profile data
+
+Day 10 only needs to speak lesson content already displayed on screen.
+
+PART 12 — STOP BEHAVIOR
+
+If a step is currently speaking and the learner presses Stop:
+
+* stop device speech
+* return the controller to a safe idle state
+
+If the learner starts another step:
+
+* stop or safely finish the previous speech first
+* never allow two speech items to overlap
+
+PART 13 — REPLAY BEHAVIOR
+
+After a lesson step finishes successfully:
+
+* remember which item completed
+* change that step's button from Listen to Replay
+
+Pressing Replay should speak the same saved step again.
+
+Do not create new content.
+
+PART 14 — LESSON PROGRESS MUST REMAIN INDEPENDENT
+
+Listening to a step must NOT automatically mark it completed.
+
+The learner must still deliberately check the practice-step checkbox.
+
+Similarly:
+
+* checking a step does not require listening
+* completing the lesson does not require listening
+* TTS status is not part of LearningProgress persistence
+
+Text-to-speech is assistance, not completion evidence.
+
+PART 15 — TTS UNAVAILABLE FALLBACK
+
+If the requested card language is not installed on the device:
+
+* set the controller to unavailable
+* show a clear message
+* leave all normal lesson features enabled
+
+Use wording similar to:
+
+A voice for the card language is not installed on this device. Continue reading the lesson or install the voice in Android Settings.
+
+Do not crash.
+
+Do not repeatedly retry automatically.
+
+Do not redirect the user away from the lesson.
+
+PART 16 — PLAYBACK ERROR FALLBACK
+
+If device TTS reports an unexpected playback error:
+
+* move to a failure state
+* show a short useful message
+* keep the lesson usable
+* allow another playback attempt if reasonable
+
+Do not delete:
+
+* Skill Card
+* learning progress
+* teach-back
+* profile
+* draft
+
+because speech failed.
+
+PART 17 — LIFECYCLE SAFETY
+
+Speech must stop when appropriate.
+
+Stop active TTS when:
+
+* the learner completes the lesson
+* the learner returns Home
+* the Learn Skill screen is disposed
+
+Avoid leaving Android speech playing after the learner leaves the screen.
+
+Do not create async lifecycle crashes.
+
+PART 18 — ENGLISH LOCALIZATION
+
+Add the required Day 10 English strings to:
+
+lib/l10n/app_en.arb
+
+Include strings for concepts such as:
+
+* Listen to steps
+* spoken-playback description
+* device TTS notice
+* Listen
+* Stop
+* Replay
+* Preparing voice
+* Speaking
+* voice unavailable
+* playback error
+
+Do not manually edit generated localization Dart files.
+
+PART 19 — ARABIC LOCALIZATION
+
+Add natural Arabic equivalents to:
+
+lib/l10n/app_ar.arb
+
+Arabic must remain RTL.
+
+Translate usability meaning naturally rather than word-for-word.
+
+After updating both ARB files, run:
+
+flutter gen-l10n
+
+There should be no untranslated Day 10 messages.
+
+PART 20 — PRIVACY
+
+Day 10 text-to-speech must remain local to the device as far as the implementation allows.
+
+Do not intentionally transmit spoken lesson text to:
+
+* Gemini
+* Firebase AI Logic
+* Firestore
+* Cloud Storage
+* custom web APIs
+
+Do not send or speak:
+
+* App Check debug token
+* API secrets
+* password
+* private context photograph
+* real teach-back answer
+* hidden personal user data
+
+The UI and documentation should not claim that TTS is AI-generated audio.
+
+PART 21 — FAKE TTS ENGINE
+
+Create:
+
+test/support/fake_text_to_speech_engine.dart
+
+The fake should allow deterministic control over:
+
+* successful preparation
+* unavailable language
+* spoken texts
+* requested language codes
+* active speech
+* speech completion
+* optional held speech for testing Stop state
+
+Do not invoke Android TTS from flutter test.
+
+PART 22 — TTS CONTROLLER TESTS
+
+Create focused tests for TextToSpeechController.
+
+Test important behavior such as:
+
+* successful preparation
+* speaking
+* stopping
+* completion
+* replay
+* unavailable language
+* failure handling
+* no overlapping playback
+
+Keep tests deterministic.
+
+PART 23 — LEARN SKILL WIDGET TESTS
+
+Extend:
+
+test/learn_skill_screen_test.dart
+
+Keep the existing Day 9 tests.
+
+Add tests such as:
+
+1. Listen changes to Stop and then Replay.
+2. Missing TTS language does not block learning.
+3. Speech uses the saved card language instead of blindly using the current UI locale.
+
+Use stable keys such as:
+
+learning_step_speak_0
+
+When testing the learner screen, remember that it uses a ListView.
+
+Widgets outside the current viewport may not yet be built.
+
+Use:
+
+tester.scrollUntilVisible(...)
+
+before accessing those widgets.
+
+If checking a status card near the top after scrolling to a lesson step near the bottom, scroll back upward before asserting the status message.
+
+PART 24 — SAVED CARD LANGUAGE TEST
+
+Add a test where:
+
+* current app UI locale is English
+* saved Skill Card outputLanguageCode is Arabic
+* Arabic step text is used
+* Listen is pressed
+
+Verify that the TTS engine receives:
+
+ar
+
+or the corresponding selected Arabic device locale.
+
+This proves spoken playback follows the lesson language rather than the navigation/UI language.
+
+PART 25 — TTS FAILURE MUST NOT BLOCK LEARNING TEST
+
+Test a language-unavailable scenario.
+
+After TTS becomes unavailable:
+
+* the unavailable status is visible
+* the learner can still check a practice step
+* LearningProgress still saves
+
+This test is important because it proves TTS is an optional accessibility enhancement rather than a dependency.
+
+PART 26 — EXISTING TEST SUITE
+
+Do not delete or weaken Days 1–9 tests.
+
+Preserve coverage for:
+
+* Welcome
+* localization
+* profile
+* local persistence
+* Teach a Skill
+* speech-to-text
+* context photo
+* Firebase/App Check
+* AI Readiness
+* Skill Card generation
+* offline fallback
+* learner progress
+* teach-back
+* lesson completion
+* RTL
+
+Keep automated tests free from real Firebase and real Android TTS dependencies.
+
+PART 27 — MANUAL ANDROID TEST
+
+Run Naseej on the Android emulator/device.
+
+Use synthetic lesson content.
+
+Verify:
+
+* Learn a Skill opens
+* Listen button appears
+* English step can speak
+* Stop works
+* Replay works
+* only one item speaks at a time
+* completing a checkbox does not depend on speech
+* teach-back works while TTS exists
+* completing lesson stops speech
+* returning Home stops speech
+
+PART 28 — MANUAL ARABIC TEST
+
+Use an Arabic Skill Card.
+
+Verify:
+
+* Arabic text displays properly
+* RTL remains correct
+* Arabic speech is requested
+* installed Arabic TTS voice speaks the text when available
+
+If Android reports that an Arabic voice is missing:
+
+* verify the app shows the safe unavailable message
+* verify reading and lesson completion still work
+
+Do not change application language merely to satisfy TTS.
+
+PART 29 — DEVICE SETTINGS GUIDANCE
+
+If the emulator/device lacks an Arabic or English TTS voice, guide me through Android settings carefully.
+
+Do not require installing a voice merely for the app to function.
+
+The app must still work without it.
+
+Do not hard-code a manufacturer-specific settings path into application code.
+
+PART 30 — OFFLINE TEST
+
+Once a Skill Card is saved locally:
+
+* disconnect internet
+* open Learn a Skill
+* press Listen
+* verify device TTS can operate without a Firebase AI request
+* complete learner steps
+* enter teach-back
+* verify local progress still saves
+
+The full Day 10 learning experience must not depend on network connectivity.
+
+PART 31 — FIGMA / HANDOFF
+
+If Day 10 requires Figma updates, add only the spoken-playback states needed for handoff.
+
+Possible states:
+
+* Listen
+* Speaking / Stop
+* Replay
+* TTS unavailable
+
+Keep English and Arabic/RTL consistency.
+
+Do not redesign unrelated screens.
+
+PART 32 — QUALITY CHECKS
+
+From:
+
+C:\dev\smac2026\naseej
+
+run:
+
+flutter pub get
+
+flutter gen-l10n
+
+dart format lib test
+
+dart format --output=none --set-exit-if-changed lib test
+
+flutter analyze
+
+flutter test
+
+Fix all real analyzer and test failures.
+
+Do not accept:
+
+* analyzer issues
+* failing tests
+* untranslated Day 10 strings
+* RenderFlex overflows
+* speech lifecycle exceptions
+* secrets in tracked files
+
+PART 33 — README / AI-USAGE DOCUMENTATION
+
+Update README only as needed.
+
+Document Day 10 at a high level:
+
+* optional spoken playback
+* device text-to-speech
+* no extra Gemini request
+* language follows the saved Skill Card
+* safe missing-language fallback
+* TTS does not affect lesson completion
+* TTS is not persisted as learner progress
+
+Update AI-assistance documentation to record that AI assisted with:
+
+* planning
+* architecture explanation
+* text-to-speech debugging
+* localization guidance
+* testing guidance
+
+Make clear that the student implemented, ran, tested, and reviewed the feature.
+
+PART 34 — STORE THIS EXACT DAY 10 PROMPT
+
+Create:
+
+docs/ai-usage/prompts/2026-08-14-day-10-plan.md
+
+Paste this exact current user prompt and the retained Day 10 planning notes into that file.
+
+Do not include:
+
+* tokens
+* API secrets
+* App Check debug tokens
+* Firebase login credentials
+* passwords
+* service-account keys
+* private family photographs
+* real family teach-back answers
+* personal user data
+
+Synthetic examples are allowed.
+
+RETAINED DAY 10 PLANNING NOTES
+
+* Day 10 scope is optional spoken playback for saved learner Skill Card steps.
+* Use device text-to-speech rather than AI/cloud-generated audio.
+* Keep TTS behind an engine abstraction so widget/unit tests can use a fake.
+* TextToSpeechController should use simple states: idle, preparing, speaking, unavailable, failure.
+* The spoken language must use SkillCard.outputLanguageCode, not blindly use the current UI locale.
+* Use per-step controls with stable keys such as learning_step_speak_0.
+* Button states should support Listen → Stop → Replay.
+* Keep a speech-support/status card with key speech_support_card.
+* Missing device language must not block the learner.
+* Lesson checkboxes, teach-back, autosave, completion, and local progress remain independent of TTS.
+* Stop speech when completing the lesson, returning Home, or disposing the learner screen.
+* Do not persist TTS status inside LearningProgress.
+* No additional Gemini request is required for Day 10.
+* No audio files need to be generated, uploaded, or saved.
+* Widget tests using the learner ListView must scroll widgets into the built viewport before accessing them.
+* If a TTS status message is near the top after a test scrolls to a lower lesson step, scroll back up before asserting it.
+
+PART 35 — PRIVACY REVIEW
+
+Before Git staging, verify that tracked files contain none of the following:
+
+* App Check debug token
+* Firebase/API secrets
+* passwords
+* private context photos
+* real family responses
+* real teach-back responses
+* device-specific private identifiers
+
+Do not commit generated runtime audio or local cache files.
+
+PART 36 — GIT REVIEW
+
+Before staging run:
+
+git status
+
+git diff
+
+Review all changes.
+
+Then stage carefully and inspect:
+
+git diff --cached
+
+Make sure the Day 10 prompt and documentation contain no secrets or private user data.
+
+PART 37 — COMMIT AND PUSH
+
+Only after:
+
+* text-to-speech works
+* missing-language fallback works
+* normal lesson flow still works
+* English works
+* Arabic works
+* RTL works
+* flutter analyze passes
+* flutter test passes
+* privacy review passes
+
+create meaningful Day 10 commits.
+
+Use:
+
+feature/day-10-spoken-playback
+
+Possible commit messages:
+
+Add optional device speech playback to learner steps
+
+Add language-aware TTS fallback and tests
+
+Document Day 10 spoken playback and privacy behavior
+
+Push the branch.
+
+Guide me through opening the pull request.
+
+Do not merge automatically.
+
+FINAL DAY 10 VERIFICATION
+
+At the end verify:
+
+1. Naseej still launches.
+2. English UI still works.
+3. Arabic UI still works.
+4. RTL still works.
+5. Profile persistence still works.
+6. SkillDraft persistence still works.
+7. Context photo remains optional and local.
+8. Day 8 Skill Card generation still works.
+9. Offline Skill Card fallback still works.
+10. Day 9 learner progress still works.
+11. Teach-back still works.
+12. Lesson completion still works.
+13. Listen appears for saved lesson steps.
+14. Listen starts device TTS.
+15. Speaking state shows Stop.
+16. Completed playback shows Replay.
+17. Only one step plays at a time.
+18. Speech follows SkillCard.outputLanguageCode.
+19. Arabic lesson speech requests Arabic.
+20. Missing TTS language shows a graceful fallback.
+21. Missing TTS language does not block learning.
+22. Listening does not automatically complete a lesson step.
+23. Speech stops when completing the lesson.
+24. Speech stops when leaving the screen.
+25. No Day 10 Gemini request was added.
+26. No learner voice is recorded.
+27. No cloud audio is generated.
+28. No TTS audio is uploaded.
+29. Learning progress remains local.
+30. flutter gen-l10n passes without untranslated Day 10 messages.
+31. flutter analyze passes.
+32. flutter test passes.
+33. No token/API secret/password is committed.
+34. No private family photograph is committed.
+35. No real teach-back response is committed.
+36. Day 10 prompt and retained notes are stored safely.
+37. All Day 10 work is on feature/day-10-spoken-playback.
+38. I can explain that Day 10 improves accessibility by reading existing saved lesson text aloud through the device, without adding another AI dependency.
+
+Do not jump ahead to Day 11 features.
+
+Day 10 is only optional, language-aware device spoken playback for the existing learner-practice experience.
