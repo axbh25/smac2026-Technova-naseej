@@ -9,68 +9,63 @@
 
 | Check | Result | Notes |
 |---|---|---|
-| `flutter pub get` | Pass / Fail | |
-| `flutter gen-l10n` | Pass / Fail | |
-| Dart formatting | Pass / Fail | |
-| `flutter analyze` | Pass / Fail | |
-| `flutter test` | Pass / Fail | |
-| Debug APK build | Pass / Fail | |
-| Old Day 9 JSON compatibility | Pass / Fail | |
-| Family Thread JSON round trip | Pass / Fail | |
-| Return skill required | Pass / Fail | |
-| Lesson completion required | Pass / Fail | |
-| Return-skill maximum enforced | Pass / Fail | |
-| Family Thread card visibility | Pass / Fail | |
-| Suggestion copying | Pass / Fail | |
-| Family Thread completion | Pass / Fail | |
-| Completion invalidation | Pass / Fail | |
-| Arabic RTL | Pass / Fail | |
+| `flutter pub get` | Pass | |
+| `flutter gen-l10n` | Pass | |
+| Dart formatting | Pass | |
+| `flutter analyze` | Pass | |
+| `flutter test` | Pass | |
+| Debug APK build | Pass | |
+| Old Day 9 JSON compatibility | Pass | |
+| Family Thread JSON round trip | Pass | |
+| Return skill required | Pass | |
+| Lesson completion required | Pass | |
+| Return-skill maximum enforced | Pass | |
+| Family Thread card visibility | Pass | |
+| Suggestion copying | Pass | |
+| Family Thread completion | Pass | |
+| Completion invalidation | Pass | |
+| Arabic RTL | Pass | |
 
 ## Real Device Checks
 
 | Check | Result | Notes |
 |---|---|---|
-| Thread hidden before lesson completion | Pass / Fail | |
-| Thread visible after lesson completion | Pass / Fail | |
-| Teacher nickname shown | Pass / Fail | |
-| Learner nickname shown | Pass / Fail | |
-| Shared skill shown | Pass / Fail | |
-| Teach-back shown | Pass / Fail | |
-| Suggestion shown | Pass / Fail | |
-| Suggestion copied correctly | Pass / Fail | |
-| Custom return skill saved | Pass / Fail | |
-| Three-character minimum enforced | Pass / Fail | |
-| Completion timestamp saved | Pass / Fail | |
-| Home summary shown | Pass / Fail | |
-| Restart restoration | Pass / Fail | |
-| Return-skill edit invalidates thread | Pass / Fail | |
-| Teach-back edit invalidates thread | Pass / Fail | |
-| Step change invalidates thread | Pass / Fail | |
-| Airplane Mode works | Pass / Fail | |
-| English UI works | Pass / Fail | |
-| Arabic RTL works | Pass / Fail | |
-| Physical Android phone tested | Pass / Fail | |
+| Thread hidden before lesson completion | Pass | |
+| Thread visible after lesson completion | Pass | |
+| Teacher nickname shown | Pass | |
+| Learner nickname shown | Pass | |
+| Shared skill shown | Pass | |
+| Teach-back shown | Pass | |
+| Suggestion shown | Pass | |
+| Suggestion copied correctly | Pass | |
+| Custom return skill saved | Pass | |
+| Three-character minimum enforced | Pass | |
+| Completion timestamp saved | Pass | |
+| Home summary shown | Pass | |
+| Restart restoration | Pass | |
+| Return-skill edit invalidates thread | Pass | |
+| Teach-back edit invalidates thread | Pass | |
+| Step change invalidates thread | Pass | |
+| Airplane Mode works | Pass | |
+| English UI works | Pass | |
+| Arabic RTL works | Pass | |
+| Physical Android phone tested | Pass | |
 
 ## Privacy Checks
 
 | Check | Result | Notes |
 |---|---|---|
-| No new Firebase request | Pass / Fail | |
-| No new Gemini request | Pass / Fail | |
-| No new storage key | Pass / Fail | |
-| Return skill remains local | Pass / Fail | |
-| Teach-back remains local | Pass / Fail | |
-| Completion timestamp remains local | Pass / Fail | |
-| Local-only notice visible | Pass / Fail | |
+| No new Firebase request | Pass | |
+| No new Gemini request | Pass | |
+| No new storage key | Pass | |
+| Return skill remains local | Pass | |
+| Teach-back remains local | Pass | |
+| Completion timestamp remains local | Pass | |
+| Local-only notice visible | Pass | |
 
 ## Evidence
 
-- `screenshots/day-11/family_thread_empty_en.png`
-- `screenshots/day-11/family_thread_suggestion_en.png`
 - `screenshots/day-11/family_thread_complete_en.png`
-- `screenshots/day-11/family_thread_home_en.png`
-- `screenshots/day-11/family_thread_empty_ar.png`
-- `screenshots/day-11/family_thread_complete_ar.png`
 
 ## Limitations
 

@@ -691,4 +691,140 @@ class AppLocalizationsEn extends AppLocalizations {
   String familyThreadReturnSummary(String skill) {
     return 'Return skill: $skill';
   }
+
+  @override
+  String get demoDataTooltip => 'Demo and local data';
+
+  @override
+  String get demoDataWelcomeLabel => 'Demo & Local Data';
+
+  @override
+  String get demoDataScreenTitle => 'Demo & Local Data';
+
+  @override
+  String get recoveryRepairedTitle => 'Local data repaired';
+
+  @override
+  String get recoveryRepairedBody =>
+      'Naseej found information that no longer matched the current family journey. Valid information was kept and invalid later steps were cleared.';
+
+  @override
+  String get recoveryStorageTitle => 'Local storage is unavailable';
+
+  @override
+  String get recoveryStorageBody =>
+      'Naseej could not safely read or save local family data. The app remains open, but changes may not survive a restart.';
+
+  @override
+  String get dismissLabel => 'Dismiss';
+
+  @override
+  String get localDataStatusTitle => 'Local journey status';
+
+  @override
+  String get localDataStatusBody =>
+      'Review which parts of the current family journey are stored on this phone.';
+
+  @override
+  String get profileDataLabel => 'Family profile';
+
+  @override
+  String get draftDataLabel => 'Skill draft';
+
+  @override
+  String get cardDataLabel => '3-Step Card';
+
+  @override
+  String get progressDataLabel => 'Learner progress';
+
+  @override
+  String get familyThreadDataLabel => 'Family Thread';
+
+  @override
+  String get statusPresentLabel => 'Available';
+
+  @override
+  String get statusMissingLabel => 'Missing';
+
+  @override
+  String get statusCompletedLabel => 'Completed';
+
+  @override
+  String get demoPreparationTitle => 'Prepare a reliable demo';
+
+  @override
+  String get demoPreparationBody =>
+      'Load clearly labeled local sample data without copying private family information into the public repository.';
+
+  @override
+  String get aiReadyDemoTitle => 'AI-ready sample';
+
+  @override
+  String get aiReadyDemoBody =>
+      'Loads a local profile and reviewed draft. Continue through the normal card screen to make the real AI request.';
+
+  @override
+  String get loadAiReadyDemoLabel => 'Load AI-Ready Sample';
+
+  @override
+  String get completedDemoTitle => 'Completed offline sample';
+
+  @override
+  String get completedDemoBody =>
+      'Loads a complete local Family Thread using an Offline Guide so later screens remain demonstrable without Wi-Fi.';
+
+  @override
+  String get loadCompletedDemoLabel => 'Load Completed Offline Sample';
+
+  @override
+  String get demoSampleNotice =>
+      'This sample contains no generated result. Use the normal Generate with AI action to demonstrate cloud AI.';
+
+  @override
+  String get completedSampleNotice =>
+      'This sample is an Offline Guide and is never presented as a live AI result.';
+
+  @override
+  String get resetDataTitle => 'Reset local family data';
+
+  @override
+  String get resetDataBody =>
+      'Remove the local profile, draft, card, learner progress, Family Thread, and current private context photo when possible. The selected language is kept.';
+
+  @override
+  String get resetLocalDataLabel => 'Reset Local Family Data';
+
+  @override
+  String get confirmDemoReplaceTitle => 'Replace current local data?';
+
+  @override
+  String get confirmDemoReplaceBody =>
+      'The current profile, draft, card, progress, and Family Thread will be replaced by clearly labeled sample data.';
+
+  @override
+  String get confirmResetDataTitle => 'Reset all local family data?';
+
+  @override
+  String get confirmResetDataBody =>
+      'This removes the local family journey from this phone. This action cannot be undone.';
+
+  @override
+  String get replaceDataLabel => 'Replace Data';
+
+  @override
+  String get resetDataConfirmLabel => 'Reset Data';
+
+  @override
+  String get demoLoadedSuccess => 'Local sample data loaded.';
+
+  @override
+  String get dataResetSuccess => 'Local family data reset.';
+
+  @override
+  String get dataOperationError =>
+      'The local-data operation could not be completed. Existing data was restored when possible.';
+
+  @override
+  String get photoCleanupWarning =>
+      'The previous private photo could not be deleted automatically.';
 }
