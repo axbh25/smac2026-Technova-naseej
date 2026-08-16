@@ -1273,6 +1273,252 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Return skill: {skill}'**
   String familyThreadReturnSummary(String skill);
+
+  /// No description provided for @demoDataTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Demo and local data'**
+  String get demoDataTooltip;
+
+  /// No description provided for @demoDataWelcomeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Demo & Local Data'**
+  String get demoDataWelcomeLabel;
+
+  /// No description provided for @demoDataScreenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Demo & Local Data'**
+  String get demoDataScreenTitle;
+
+  /// No description provided for @recoveryRepairedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Local data repaired'**
+  String get recoveryRepairedTitle;
+
+  /// No description provided for @recoveryRepairedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Naseej found information that no longer matched the current family journey. Valid information was kept and invalid later steps were cleared.'**
+  String get recoveryRepairedBody;
+
+  /// No description provided for @recoveryStorageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Local storage is unavailable'**
+  String get recoveryStorageTitle;
+
+  /// No description provided for @recoveryStorageBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Naseej could not safely read or save local family data. The app remains open, but changes may not survive a restart.'**
+  String get recoveryStorageBody;
+
+  /// No description provided for @dismissLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Dismiss'**
+  String get dismissLabel;
+
+  /// No description provided for @localDataStatusTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Local journey status'**
+  String get localDataStatusTitle;
+
+  /// No description provided for @localDataStatusBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Review which parts of the current family journey are stored on this phone.'**
+  String get localDataStatusBody;
+
+  /// No description provided for @profileDataLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Family profile'**
+  String get profileDataLabel;
+
+  /// No description provided for @draftDataLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Skill draft'**
+  String get draftDataLabel;
+
+  /// No description provided for @cardDataLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'3-Step Card'**
+  String get cardDataLabel;
+
+  /// No description provided for @progressDataLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Learner progress'**
+  String get progressDataLabel;
+
+  /// No description provided for @familyThreadDataLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Family Thread'**
+  String get familyThreadDataLabel;
+
+  /// No description provided for @statusPresentLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Available'**
+  String get statusPresentLabel;
+
+  /// No description provided for @statusMissingLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Missing'**
+  String get statusMissingLabel;
+
+  /// No description provided for @statusCompletedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get statusCompletedLabel;
+
+  /// No description provided for @demoPreparationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Prepare a reliable demo'**
+  String get demoPreparationTitle;
+
+  /// No description provided for @demoPreparationBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Load clearly labeled local sample data without copying private family information into the public repository.'**
+  String get demoPreparationBody;
+
+  /// No description provided for @aiReadyDemoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'AI-ready sample'**
+  String get aiReadyDemoTitle;
+
+  /// No description provided for @aiReadyDemoBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Loads a local profile and reviewed draft. Continue through the normal card screen to make the real AI request.'**
+  String get aiReadyDemoBody;
+
+  /// No description provided for @loadAiReadyDemoLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Load AI-Ready Sample'**
+  String get loadAiReadyDemoLabel;
+
+  /// No description provided for @completedDemoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed offline sample'**
+  String get completedDemoTitle;
+
+  /// No description provided for @completedDemoBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Loads a complete local Family Thread using an Offline Guide so later screens remain demonstrable without Wi-Fi.'**
+  String get completedDemoBody;
+
+  /// No description provided for @loadCompletedDemoLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Load Completed Offline Sample'**
+  String get loadCompletedDemoLabel;
+
+  /// No description provided for @demoSampleNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'This sample contains no generated result. Use the normal Generate with AI action to demonstrate cloud AI.'**
+  String get demoSampleNotice;
+
+  /// No description provided for @completedSampleNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'This sample is an Offline Guide and is never presented as a live AI result.'**
+  String get completedSampleNotice;
+
+  /// No description provided for @resetDataTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset local family data'**
+  String get resetDataTitle;
+
+  /// No description provided for @resetDataBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove the local profile, draft, card, learner progress, Family Thread, and current private context photo when possible. The selected language is kept.'**
+  String get resetDataBody;
+
+  /// No description provided for @resetLocalDataLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Local Family Data'**
+  String get resetLocalDataLabel;
+
+  /// No description provided for @confirmDemoReplaceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace current local data?'**
+  String get confirmDemoReplaceTitle;
+
+  /// No description provided for @confirmDemoReplaceBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The current profile, draft, card, progress, and Family Thread will be replaced by clearly labeled sample data.'**
+  String get confirmDemoReplaceBody;
+
+  /// No description provided for @confirmResetDataTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset all local family data?'**
+  String get confirmResetDataTitle;
+
+  /// No description provided for @confirmResetDataBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This removes the local family journey from this phone. This action cannot be undone.'**
+  String get confirmResetDataBody;
+
+  /// No description provided for @replaceDataLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace Data'**
+  String get replaceDataLabel;
+
+  /// No description provided for @resetDataConfirmLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Data'**
+  String get resetDataConfirmLabel;
+
+  /// No description provided for @demoLoadedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Local sample data loaded.'**
+  String get demoLoadedSuccess;
+
+  /// No description provided for @dataResetSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Local family data reset.'**
+  String get dataResetSuccess;
+
+  /// No description provided for @dataOperationError.
+  ///
+  /// In en, this message translates to:
+  /// **'The local-data operation could not be completed. Existing data was restored when possible.'**
+  String get dataOperationError;
+
+  /// No description provided for @photoCleanupWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'The previous private photo could not be deleted automatically.'**
+  String get photoCleanupWarning;
 }
 
 class _AppLocalizationsDelegate

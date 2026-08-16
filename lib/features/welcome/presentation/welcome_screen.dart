@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:naseej/core/theme/app_colors.dart';
 import 'package:naseej/core/theme/app_spacing.dart';
+import 'package:naseej/core/widgets/data_tools_button.dart';
 import 'package:naseej/features/welcome/presentation/widgets/language_segmented_control.dart';
 import 'package:naseej/l10n/app_localizations.dart';
 
@@ -15,6 +16,7 @@ class WelcomeScreen extends StatelessWidget {
 
   final String selectedLanguageCode;
   final Future<void> Function(Locale) onLocaleChanged;
+
   final VoidCallback onContinue;
 
   @override
@@ -78,6 +80,8 @@ class WelcomeScreen extends StatelessWidget {
                                   child: Text(localizations.continueLabel),
                                 ),
                               ),
+                              const SizedBox(height: AppSpacing.sm),
+                              const DataToolsButton(expanded: true),
                             ],
                           ),
                         ),

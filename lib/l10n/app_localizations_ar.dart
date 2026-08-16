@@ -680,4 +680,139 @@ class AppLocalizationsAr extends AppLocalizations {
   String familyThreadReturnSummary(String skill) {
     return 'المهارة المقابلة: $skill';
   }
+
+  @override
+  String get demoDataTooltip => 'بيانات العرض والبيانات المحلية';
+
+  @override
+  String get demoDataWelcomeLabel => 'العرض والبيانات المحلية';
+
+  @override
+  String get demoDataScreenTitle => 'العرض والبيانات المحلية';
+
+  @override
+  String get recoveryRepairedTitle => 'تم إصلاح البيانات المحلية';
+
+  @override
+  String get recoveryRepairedBody =>
+      'وجد نسيج معلومات لم تعد متوافقة مع رحلة العائلة الحالية، فاحتفظ بالمعلومات الصالحة ومسح المراحل اللاحقة غير الصالحة.';
+
+  @override
+  String get recoveryStorageTitle => 'التخزين المحلي غير متاح';
+
+  @override
+  String get recoveryStorageBody =>
+      'تعذر على نسيج قراءة بيانات العائلة المحلية أو حفظها بأمان. يبقى التطبيق مفتوحًا، لكن قد لا تستمر التغييرات بعد إعادة التشغيل.';
+
+  @override
+  String get dismissLabel => 'إخفاء';
+
+  @override
+  String get localDataStatusTitle => 'حالة الرحلة المحلية';
+
+  @override
+  String get localDataStatusBody =>
+      'راجع أجزاء رحلة العائلة الحالية المحفوظة على هذا الهاتف.';
+
+  @override
+  String get profileDataLabel => 'ملف العائلة';
+
+  @override
+  String get draftDataLabel => 'مسودة المهارة';
+
+  @override
+  String get cardDataLabel => 'البطاقة من ثلاث خطوات';
+
+  @override
+  String get progressDataLabel => 'تقدّم المتعلّم';
+
+  @override
+  String get familyThreadDataLabel => 'خيط العائلة';
+
+  @override
+  String get statusPresentLabel => 'متاح';
+
+  @override
+  String get statusMissingLabel => 'غير موجود';
+
+  @override
+  String get statusCompletedLabel => 'مكتمل';
+
+  @override
+  String get demoPreparationTitle => 'جهّز عرضًا موثوقًا';
+
+  @override
+  String get demoPreparationBody =>
+      'حمّل بيانات محلية نموذجية ومعلّمة بوضوح دون نسخ معلومات عائلية خاصة إلى المستودع العام.';
+
+  @override
+  String get aiReadyDemoTitle => 'نموذج جاهز للذكاء الاصطناعي';
+
+  @override
+  String get aiReadyDemoBody =>
+      'يحمّل ملفًا محليًا ومسودة تمت مراجعتها. تابع عبر شاشة البطاقة العادية لإرسال طلب الذكاء الاصطناعي الحقيقي.';
+
+  @override
+  String get loadAiReadyDemoLabel => 'تحميل النموذج الجاهز للذكاء الاصطناعي';
+
+  @override
+  String get completedDemoTitle => 'نموذج مكتمل دون اتصال';
+
+  @override
+  String get completedDemoBody =>
+      'يحمّل خيط عائلة محليًا مكتملًا باستخدام دليل دون اتصال لتبقى الشاشات اللاحقة قابلة للعرض دون شبكة.';
+
+  @override
+  String get loadCompletedDemoLabel => 'تحميل النموذج المكتمل دون اتصال';
+
+  @override
+  String get demoSampleNotice =>
+      'لا يحتوي هذا النموذج على نتيجة منشأة. استخدم إجراء الإنشاء بالذكاء الاصطناعي في المسار العادي لعرض الذكاء الاصطناعي السحابي.';
+
+  @override
+  String get completedSampleNotice =>
+      'هذا النموذج دليل دون اتصال ولا يُعرض أبدًا على أنه نتيجة حية للذكاء الاصطناعي.';
+
+  @override
+  String get resetDataTitle => 'إعادة ضبط بيانات العائلة المحلية';
+
+  @override
+  String get resetDataBody =>
+      'أزل الملف المحلي والمسودة والبطاقة وتقدّم المتعلّم وخيط العائلة والصورة التوضيحية الخاصة الحالية عند الإمكان. تبقى اللغة المحددة محفوظة.';
+
+  @override
+  String get resetLocalDataLabel => 'إعادة ضبط بيانات العائلة';
+
+  @override
+  String get confirmDemoReplaceTitle => 'استبدال البيانات المحلية الحالية؟';
+
+  @override
+  String get confirmDemoReplaceBody =>
+      'سيتم استبدال الملف والمسودة والبطاقة والتقدّم وخيط العائلة ببيانات نموذجية معلّمة بوضوح.';
+
+  @override
+  String get confirmResetDataTitle => 'إعادة ضبط جميع بيانات العائلة المحلية؟';
+
+  @override
+  String get confirmResetDataBody =>
+      'سيؤدي ذلك إلى إزالة رحلة العائلة المحلية من هذا الهاتف، ولا يمكن التراجع عن هذا الإجراء.';
+
+  @override
+  String get replaceDataLabel => 'استبدال البيانات';
+
+  @override
+  String get resetDataConfirmLabel => 'إعادة الضبط';
+
+  @override
+  String get demoLoadedSuccess => 'تم تحميل البيانات النموذجية المحلية.';
+
+  @override
+  String get dataResetSuccess => 'تمت إعادة ضبط بيانات العائلة المحلية.';
+
+  @override
+  String get dataOperationError =>
+      'تعذر إكمال عملية البيانات المحلية. تمت استعادة البيانات السابقة عند الإمكان.';
+
+  @override
+  String get photoCleanupWarning => 'تعذر حذف الصورة الخاصة السابقة تلقائيًا.';
 }
