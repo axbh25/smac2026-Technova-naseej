@@ -5,37 +5,38 @@ SMAC 2026.
 
 Naseej helps family members from different generations teach one another
 practical, cultural, and digital skills. One family member explains a skill,
-may add one private context photo, and can use AI to transform the reviewed
+may add one private context photo, and may use AI to transform the reviewed
 explanation into a safe three-step learning card. The learner practises the
-steps, may hear each step aloud, explains what they learned, and chooses one
-skill to teach in return.
+steps, may hear individual steps aloud, explains what they learned, and chooses
+one skill to teach in return.
 
 ## Current Development Status
 
-Day 11 reciprocal Family Thread:
+Day 12 reliability and demo readiness:
 
 - Android Flutter application runs on the Pixel 7 Pro reference device
 - English and Arabic interfaces support RTL
 - Profile, language, draft, photo, card, progress, and Family Thread persist locally
-- Teacher explanations support typed or short speech input
-- Context photos remain in private local app storage
 - Firebase AI Logic produces structured three-step cards
 - Firebase App Check protects Firebase AI requests
-- Structured output is validated before display or storage
 - Cloud failure creates a labeled Offline Guide
 - AI output requires teacher review before saving
-- Learners practise exactly three saved steps
-- Learners may hear one approved step at a time
+- Learners practise exactly three steps
 - Learner progress and teach-back remain local
-- Lesson completion requires all three steps and teach-back
-- Completed learners choose one skill to teach in return
-- Naseej's reciprocal suggestion may be copied and edited
-- Family Thread completion requires explicit user action
-- Completed Family Threads survive Android restart
-- Relevant edits invalidate stale completion
-- Day 11 works in Airplane Mode
-- Day 11 adds no Firebase AI request
-- Automated compatibility, persistence, invalidation, widget, and RTL tests are included
+- Spoken playback remains optional
+- Completed learners choose one return skill
+- Family Thread completion remains local
+- Invalid local data is repaired layer by layer
+- Valid upstream data is preserved
+- Storage-service failure is shown separately
+- Multi-layer writes use best-effort rollback
+- Demo & Local Data tools are available from Welcome and app bars
+- AI-ready sample data contains no generated result
+- Completed sample data uses a clearly labeled Offline Guide
+- Reset removes the local family journey while preserving language
+- Current context photos are deleted during replacement when possible
+- GitHub Actions verifies formatting, analysis, tests, and Android build
+- Fresh-install, Airplane Mode, large-font, and physical-phone checks are documented
 - Visual and device evidence is stored under `docs/testing/`
 
 ## Team Technova
@@ -49,13 +50,13 @@ competition team. No person is credited for work they did not perform.
 ## Current MVP Flow
 
 1. Create a local family profile
-2. Create a Teach-a-Skill draft
+2. Create a Teach-a-skill draft
 3. Type or dictate the explanation
 4. Optionally add one private context photo
 5. Generate a card or use an Offline Guide
 6. Review and save the three-step card
 7. Practise each step
-8. Optionally hear a step aloud
+8. Optionally hear one step aloud
 9. Answer the teach-back question
 10. Complete the family lesson
 11. Choose one skill to teach in return
@@ -63,21 +64,17 @@ competition team. No person is credited for work they did not perform.
 
 ## What Makes Naseej Different
 
-Naseej does not stop at generating content.
-
-It supports a reciprocal family interaction:
-
 ```text
 One generation teaches
-→ AI structures the explanation
+→ AI structures the reviewed explanation
 → another generation practises
 → the learner explains it back
 → the learner chooses what to teach in return
-→ a Family Thread is completed
+→ a reciprocal Family Thread is completed
 ```
 
-The teacher remains the authority over the family knowledge, while AI acts only
-as a structuring assistant.
+The teacher remains the authority over family knowledge. AI acts only as a
+structuring assistant.
 
 ## Technology
 
@@ -99,6 +96,9 @@ as a structuring assistant.
 - Local learner progress
 - Device text-to-speech
 - Reciprocal Family Thread
+- Controlled local-data recovery
+- Best-effort write rollback
+- GitHub Actions
 - Figma
 - Git and GitHub
 
@@ -112,7 +112,7 @@ The skill-card request sends:
 - Skill category
 - Output language
 
-It does not send:
+It does not add:
 
 - Stored nicknames
 - Context photo
@@ -128,27 +128,50 @@ It does not send:
 A personal detail typed inside the reviewed explanation is part of that text
 and will be sent unless the user removes it.
 
-Learner practice, spoken playback, and Family Thread completion add no Firebase
-AI request.
+Learner practice, spoken playback, Family Thread completion, local recovery,
+and Demo & Local Data tools make no Firebase AI request.
 
 See `docs/ai-usage/ai-data-boundary.md`.
 
-## Spoken Playback Boundary
+## Transparent Demo Samples
 
-- Playback uses the device's installed Android TTS service
-- Naseej does not record audio
-- Naseej does not store audio files
-- Naseej does not upload audio
-- Device voice availability varies
-- The lesson remains usable when speech is unavailable
+### AI-ready sample
 
-## Family Thread Boundary
+Contains:
 
-- Return-skill responses remain local
-- Family Thread completion timestamps remain local
-- The reciprocal suggestion comes from the reviewed SkillCard
-- Day 11 does not call AI again
-- The MVP stores one active Family Thread
+- Local profile
+- Local reviewed draft
+- No generated card
+- No learner progress
+
+The user must still start the normal real AI generation action.
+
+### Completed offline sample
+
+Contains:
+
+- Local profile
+- Local draft
+- Clearly labeled Offline Guide
+- Completed learner progress
+- Completed Family Thread
+
+It is not presented as live AI output.
+
+## Local Recovery
+
+Naseej validates the stored journey in dependency order:
+
+```text
+Profile
+→ Draft
+→ Card
+→ Learner progress
+→ Family Thread
+```
+
+When a later layer is invalid, valid earlier layers are preserved and invalid
+dependent data is cleared.
 
 ## Run the Project
 
@@ -160,16 +183,31 @@ flutter test
 flutter run
 ```
 
-## Build the Android Debug APK
+## Build Android APKs
 
 ```bash
 flutter build apk --debug
+flutter build apk --release
 ```
 
-The APK is created at:
+Expected paths:
 
 ```text
 build/app/outputs/flutter-apk/app-debug.apk
+build/app/outputs/flutter-apk/app-release.apk
+```
+
+## Automated GitHub Checks
+
+The workflow in `.github/workflows/flutter-checks.yml` runs:
+
+```text
+Dependency installation
+Localization generation
+Dart formatting check
+Flutter analysis
+Automated tests
+Android debug APK build
 ```
 
 ## Reference Device
@@ -178,13 +216,6 @@ build/app/outputs/flutter-apk/app-debug.apk
 - Android API 36
 - Approximately 412 × 892 logical pixels
 - Portrait orientation
-
-## Figma
-
-English and Arabic screens are reviewed separately against the Pixel 7 Pro
-reference frame.
-
-See `docs/design/figma-handoff.md`.
 
 ## Development Evidence
 
@@ -205,10 +236,6 @@ AI is not used to generate the complete application.
 Every meaningful prompt and contribution is recorded in
 `docs/ai-usage/development-ai-log.md`.
 
-The team remains responsible for implementing, testing, reviewing, and
-understanding the application and must be able to explain its architecture,
-data flow, privacy boundaries, and design decisions during competition Q&A.
-
 ## Privacy Direction
 
 - No unnecessary account
@@ -225,8 +252,5 @@ data flow, privacy boundaries, and design decisions during competition Q&A.
 - Return-skill responses remain local
 - Spoken playback is optional
 - Offline Guides remain distinguishable from AI output
-- Family Thread completion remains local
-- Day 11 adds no additional AI request
-
-Naseej is designed so that AI supports the family interaction rather than
-replacing it.
+- Demo samples are clearly labeled
+- Local recovery makes no cloud request
