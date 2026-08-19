@@ -15,10 +15,12 @@ class LanguageToggleButton extends StatelessWidget {
 
     final AppLocalizations localizations = AppLocalizations.of(context)!;
 
+    final bool isRootRoute = ModalRoute.of(context)?.isFirst ?? false;
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        DataToolsButton(enabled: enabled),
+        if (isRootRoute) DataToolsButton(enabled: enabled),
         IconButton(
           key: const ValueKey<String>('language_toggle_button'),
           tooltip: localizations.changeLanguageLabel,

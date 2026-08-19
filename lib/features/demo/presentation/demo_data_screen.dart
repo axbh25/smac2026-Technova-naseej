@@ -14,7 +14,9 @@ class DemoDataScreen extends StatefulWidget {
   final ContextPhotoService? contextPhotoService;
 
   @override
-  State<DemoDataScreen> createState() => _DemoDataScreenState();
+  State<DemoDataScreen> createState() {
+    return _DemoDataScreenState();
+  }
 }
 
 class _DemoDataScreenState extends State<DemoDataScreen> {
@@ -28,6 +30,11 @@ class _DemoDataScreenState extends State<DemoDataScreen> {
 
     _contextPhotoService =
         widget.contextPhotoService ?? DeviceContextPhotoService();
+  }
+
+  bool _requiresReplacementConfirmation(AppController controller) {
+    return controller.hasAnyFamilyData ||
+        controller.recoveryNotice == AppRecoveryNotice.storageUnavailable;
   }
 
   Future<bool> _confirm({
@@ -70,15 +77,22 @@ class _DemoDataScreenState extends State<DemoDataScreen> {
     return confirmed ?? false;
   }
 
-  Future<bool> _deleteCurrentPhoto(AppController controller) async {
+  Future<bool> _deleteReplacedPhoto({
+    required String? previousPhotoPath,
+    required AppController controller,
+  }) async {
+    if (previousPhotoPath == null) {
+      return true;
+    }
+
     final String? currentPhotoPath = controller.skillDraft?.contextPhotoPath;
 
-    if (currentPhotoPath == null) {
+    if (currentPhotoPath == previousPhotoPath) {
       return true;
     }
 
     try {
-      await _contextPhotoService.deleteStoredPhoto(currentPhotoPath);
+      await _contextPhotoService.deleteStoredPhoto(previousPhotoPath);
 
       return true;
     } catch (_) {
@@ -105,7 +119,7 @@ class _DemoDataScreenState extends State<DemoDataScreen> {
 
     final AppController controller = context.read<AppController>();
 
-    if (controller.hasAnyFamilyData) {
+    if (_requiresReplacementConfirmation(controller)) {
       final bool confirmed = await _confirm(
         title: localizations.confirmDemoReplaceTitle,
         body: localizations.confirmDemoReplaceBody,
@@ -114,16 +128,16 @@ class _DemoDataScreenState extends State<DemoDataScreen> {
         confirmKey: 'confirm_replace_demo_button',
       );
 
-      if (!confirmed || !mounted) {
+      if (!mounted || !confirmed) {
         return;
       }
     }
 
+    final String? previousPhotoPath = controller.skillDraft?.contextPhotoPath;
+
     setState(() {
       _isWorking = true;
     });
-
-    final bool photoDeleted = await _deleteCurrentPhoto(controller);
 
     try {
       final DemoJourney journey = journeyBuilder(
@@ -131,6 +145,11 @@ class _DemoDataScreenState extends State<DemoDataScreen> {
       );
 
       await controller.loadDemoJourney(journey);
+
+      final bool photoDeleted = await _deleteReplacedPhoto(
+        previousPhotoPath: previousPhotoPath,
+        controller: controller,
+      );
 
       if (!mounted) {
         return;
@@ -172,20 +191,25 @@ class _DemoDataScreenState extends State<DemoDataScreen> {
       confirmKey: 'confirm_reset_data_button',
     );
 
-    if (!confirmed || !mounted) {
+    if (!mounted || !confirmed) {
       return;
     }
+
+    final AppController controller = context.read<AppController>();
+
+    final String? previousPhotoPath = controller.skillDraft?.contextPhotoPath;
 
     setState(() {
       _isWorking = true;
     });
 
-    final AppController controller = context.read<AppController>();
-
-    final bool photoDeleted = await _deleteCurrentPhoto(controller);
-
     try {
       await controller.resetFamilyData();
+
+      final bool photoDeleted = await _deleteReplacedPhoto(
+        previousPhotoPath: previousPhotoPath,
+        controller: controller,
+      );
 
       if (!mounted) {
         return;
