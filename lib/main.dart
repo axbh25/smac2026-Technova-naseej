@@ -3,6 +3,7 @@ import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:naseej/app.dart';
 import 'package:naseej/core/ai/ai_readiness_controller.dart';
 import 'package:naseej/core/ai/ai_readiness_service.dart';
@@ -25,6 +26,10 @@ import 'package:provider/single_child_widget.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await SystemChrome.setPreferredOrientations(const <DeviceOrientation>[
+    DeviceOrientation.portraitUp,
+  ]);
 
   final AppController appController = AppController(
     SharedPreferencesAppStorage(),
@@ -106,5 +111,6 @@ class _AiServices {
   });
 
   final AiReadinessService readinessService;
+
   final SkillCardGenerationService generationService;
 }
